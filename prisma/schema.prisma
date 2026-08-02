@@ -1,0 +1,257 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum PriorityLevel {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model Lead {
+  id               String            @id @default(uuid())
+  inquiryId        String            @unique // e.g., XENO-2026-0042
+  fullName         String
+  email            String
+  phone            String?
+  company          String?
+  website          String?
+  country          String?
+  industry         String?
+  source           String?           @default("Website Wizard")
+  status           LeadStatus        @default(NEW)
+  priority         PriorityLevel     @default(MEDIUM)
+  assignedTo       String?           // E.g., user ID for admin
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  serviceInquiries ServiceInquiry[]
+  costEstimators   CostEstimator[]
+  contactMessages  ContactMessage[]
+  consultations    Consultation[]
+  attachments      Attachment[]
+  leadNotes        LeadNote[]
+}
+
+model ServiceInquiry {
+  id             String   @id @default(uuid())
+  leadId         String
+  service        String
+  package        String
+  estimatedPrice Decimal? @db.Decimal(10, 2)
+  timeline       String?
+  requirements   String?
+  budget         String?
+  status         String?  @default("Pending")
+  createdAt      DateTime @default(now())
+  lead           Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model CostEstimator {
+  id                String   @id @default(uuid())
+  leadId            String
+  websiteType       String?
+  pages             String?
+  designLevel       String?
+  features          Json?    @default("{}") // Store JSON like {"blog": true, "cms": true}
+  hosting           Boolean? @default(false)
+  domain            Boolean? @default(false)
+  maintenance       Boolean? @default(false)
+  estimatedPrice    Decimal? @db.Decimal(10, 2)
+  estimatedTimeline String?
+  submittedAt       DateTime @default(now())
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model ContactMessage {
+  id               String   @id @default(uuid())
+  leadId           String
+  subject          String?
+  message          String
+  preferredContact String?  // e.g., 'Email', 'Phone', 'WhatsApp'
+  createdAt        DateTime @default(now())
+  lead             Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model Consultation {
+  id          String   @id @default(uuid())
+  leadId      String
+  bookingDate DateTime @db.Date
+  bookingTime String   // e.g. "14:30"
+  timezone    String
+  meetingType String?  // e.g., 'Zoom', 'Google Meet'
+  notes       String?
+  status      String?  @default("Scheduled")
+  createdAt   DateTime @default(now())
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model Attachment {
+  id         String   @id @default(uuid())
+  leadId     String
+  fileName   String
+  url        String
+  fileType   String?
+  fileSize   Int?
+  uploadedAt DateTime @default(now())
+  lead       Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+model LeadNote {
+  id        String   @id @default(uuid())
+  leadId    String
+  note      String
+  createdBy String?
+  createdAt DateTime @default(now())
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+// -----------------------------------------------------------------------------
+// NEXTAUTH.JS MODELS
+// -----------------------------------------------------------------------------
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  role          String?   @default("USER") // To differentiate admin vs user
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// -----------------------------------------------------------------------------
+// CMS MODELS
+// -----------------------------------------------------------------------------
+
+model CmsService {
+  id          String       @id // e.g., "web", "ai", "brand"
+  title       String
+  description String
+  icon        String?      // Name of the lucide-react icon, e.g., "Code", "Cpu"
+  order       Int          @default(0) // For sorting
+  packages    CmsPackage[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model CmsPackage {
+  id          String     @id // e.g., "starter", "business"
+  serviceId   String
+  title       String
+  priceUsd    Int        @default(0)
+  priceInr    Int        @default(0)
+  time        String     // e.g., "2 Weeks"
+  features    String[]   // Array of strings for list of features included
+  detailedContent String? @db.Text // Markdown for detailed package popup
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  service     CmsService @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+}
+
+model CmsFeature {
+  id        String   @id // e.g., "cms", "payments"
+  category  String   @default("web") // e.g., "web", "ai", "growth"
+  stepGroup String   @default("Add-on Features") // e.g., "Hosting", "Timeline"
+  title     String
+  priceUsd  Int      @default(0)
+  priceInr  Int      @default(0)
+  isMultiplier Boolean @default(false)
+  multiplier   Float   @default(1.0)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CmsComparisonFeature {
+  id          String   @id @default(uuid())
+  serviceId   String   // "web", "ai", "growth"
+  name        String
+  starter     String
+  business    String
+  enterprise  String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CmsGlobalSetting {
+  id           String   @id @default("global")
+  exchangeRate Float    @default(83.5)
+  basePriceWeb Int      @default(2000)
+  basePriceAi  Int      @default(3000)
+  basePriceGr  Int      @default(2500)
+  updatedAt    DateTime @updatedAt
+}
+
+// -----------------------------------------------------------------------------
+// BLOG MODELS
+// -----------------------------------------------------------------------------
+
+model BlogPost {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?  @db.Text
+  content     String   @db.Text
+  category    String   @default("Engineering")
+  coverImage  String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

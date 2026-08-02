@@ -1,0 +1,66 @@
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+
+interface MagnetProps {
+  children: React.ReactNode;
+  padding?: number;
+  strength?: number;
+  activeTransition?: string;
+  inactiveTransition?: string;
+  className?: string;
+}
+
+export function Magnet({
+  children,
+  padding = 150,
+  strength = 3,
+  activeTransition = "transform 0.3s ease-out",
+  inactiveTransition = "transform 0.6s ease-in-out",
+  className,
+}: MagnetProps) {
+  const [isActive, setIsActive] = useState(false);
+  const [transform, setTransform] = useState("translate3d(0px, 0px, 0px)");
+  const magnetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      if (!magnetRef.current) return;
+      
+      const rect = magnetRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const distX = Math.abs(e.clientX - centerX);
+      const distY = Math.abs(e.clientY - centerY);
+      
+      const isWithinPadding = distX < rect.width / 2 + padding && distY < rect.height / 2 + padding;
+      
+      if (isWithinPadding) {
+        setIsActive(true);
+        const offsetX = (e.clientX - centerX) / strength;
+        const offsetY = (e.clientY - centerY) / strength;
+        setTransform(`translate3d(${offsetX}px, ${offsetY}px, 0px)`);
+      } else {
+        setIsActive(false);
+        setTransform("translate3d(0px, 0px, 0px)");
+      }
+    };
+    
+    window.addEventListener("mousemove", onMouseMove);
+    return () => window.removeEventListener("mousemove", onMouseMove);
+  }, [padding, strength]);
+
+  return (
+    <div 
+      ref={magnetRef} 
+      className={className}
+      style={{
+        transform,
+        transition: isActive ? activeTransition : inactiveTransition,
+        willChange: 'transform'
+      }}
+    >
+      {children}
+    </div>
+  );
+}
