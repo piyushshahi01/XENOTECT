@@ -121,6 +121,11 @@ export function ServicePricing({ service, tiers }: { service: "web" | "ai" | "gr
                 </div>
               
               <div className="mb-8 relative z-10">
+                {plan.category && plan.category !== "default" && (
+                  <div className="inline-block px-3 py-1 mb-4 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-widest text-[#00E5FF]">
+                    {plan.category}
+                  </div>
+                )}
                 <h3 className="text-xl text-white font-medium mb-4">{plan.name}</h3>
                 <div className="flex flex-col mb-4">
                   <div className="flex items-baseline gap-2">

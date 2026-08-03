@@ -86,7 +86,7 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
       if (isNavigating.current) return;
 
       const overlay = overlayRef.current;
-      const brand = brandRef.current;
+      const brand   = brandRef.current;
       if (!overlay || !brand) {
         router.push(href);
         return;
@@ -95,49 +95,38 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
       isNavigating.current = true;
       gsap.killTweensOf([overlay, brand]);
 
-      // Reset state
+      // Reset
       gsap.set(overlay, { opacity: 0, pointerEvents: "all" });
       gsap.set(brand, {
-        scale: 1.5,
+        scale: 1,
         opacity: 0,
         letterSpacing: "0em",
-        filter: "blur(20px)",
+        filter: "blur(8px)",
         visibility: "visible",
       });
 
-      const enterTl = gsap.timeline();
+      // ── Fire router IMMEDIATELY — don't wait for animation ──
+      router.push(href);
 
-      // 1. Overlay fades in
-      enterTl.to(overlay, {
-        opacity: 1,
+      // Run visual transition in parallel (pure cosmetic)
+      const tl = gsap.timeline();
+
+      tl.to(overlay, { opacity: 1, duration: 0.22, ease: "power2.out" });
+      tl.to(brand, {
+        opacity: 0.7,
+        filter: "blur(0px)",
+        duration: 0.25,
+        ease: "power2.out",
+      }, "-=0.1");
+
+      // Subtle pulse while new page loads
+      tl.to(brand, {
+        opacity: 0.35,
+        scale: 0.97,
         duration: 0.4,
-        ease: "power2.inOut",
-      });
-
-      // 2. Brand text sharpens
-      enterTl.to(
-        brand,
-        {
-          scale: 1,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.55,
-          ease: "power3.out",
-        },
-        "-=0.2"
-      );
-
-      // 3. Navigate + pulse while loading
-      enterTl.add(() => {
-        router.push(href);
-        gsap.to(brand, {
-          opacity: 0.4,
-          scale: 0.97,
-          duration: 0.5,
-          yoyo: true,
-          repeat: -1,
-          ease: "power1.inOut",
-        });
+        yoyo: true,
+        repeat: -1,
+        ease: "power1.inOut",
       });
     },
     [router, pathname]

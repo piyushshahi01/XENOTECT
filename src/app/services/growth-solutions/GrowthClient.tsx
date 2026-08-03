@@ -12,9 +12,11 @@ import { ServiceComparison } from "@/components/sections/services/ServiceCompari
 import { CostEstimator } from "@/components/sections/services/CostEstimator";
 import { ServiceFAQ } from "@/components/sections/services/ServiceFAQ";
 import { ServicePricing } from "@/components/sections/services/ServicePricing";
+import { GrowthCategoryCards } from "@/components/sections/services/growth/GrowthCategoryCards";
 import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
 import { useWizard } from "@/context/WizardContext";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
+import { HeroVerticalStripes } from "@/components/ui/HeroVerticalStripes";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -87,24 +89,14 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
   }, { scope: containerRef });
 
   return (
-    <main className="relative z-0 min-h-[100dvh] bg-transparent text-white selection:bg-rose-500/30 font-sans overflow-hidden perspective-[2000px]" ref={containerRef}>
+    <main className="relative z-0 min-h-[100dvh] bg-transparent text-white selection:bg-rose-500/30 font-sans" ref={containerRef}>
       <GlobalSplineBackground tintColor="bg-rose-900/30 mix-blend-color" />
       <XenotectNav />
       
       {/* 1. Hero Section (Floating Dashboard Marketing Edition - Dark Rose/Black) */}
       <section className="hero-section relative w-full pt-40 pb-16 min-h-[100dvh] flex flex-col justify-center items-center overflow-hidden">
-        {/* Dark Mode Shader Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-          <Shader>
-            <Swirl colorA="#020202" colorB="#0a0a0a" detail={1.7} />
-            <ChromaFlow baseColor="#000000" downColor="#f43f5e" leftColor="#f43f5e" rightColor="#ea580c" upColor="#ea580c" momentum={13} radius={3.5} />
-            <FlutedGlass aberration={0.61} angle={31} frequency={8} highlight={0.12} highlightSoftness={0} lightAngle={-90} refraction={4} shape="rounded" softness={1} speed={0.15} />
-            <FilmGrain strength={0.05} />
-          </Shader>
-          {/* Gradient blend into the next section */}
-          <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
-        </div>
-        
+        {/* Animated vertical stripes hero background */}
+        <HeroVerticalStripes variant="rose" />
         {/* Floating Reports / Graphs Parallax */}
         <div className="absolute top-[20%] left-[10%] w-64 h-48 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl p-6 hidden lg:flex flex-col gap-4 dash-layer-2 transform -rotate-6 shadow-[0_8px_40px_rgba(244,63,94,0.12)] z-10">
           <div className="flex items-center gap-4 text-white/50">
@@ -177,7 +169,7 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
               { icon: <Share2 />, title: "Social Acquisition", desc: "Viral organic loops combined with precise paid amplification." }
             ].map((service, i) => (
               <div key={i} className="reveal-up w-full p-2 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] group hover:bg-rose-900/10 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer">
-                <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-[#050505] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-10 md:p-16 flex flex-col md:flex-row items-start md:items-center gap-10 relative overflow-hidden">
+                <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-black/30 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-10 md:p-16 flex flex-col md:flex-row items-start md:items-center gap-10 relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(244,63,94,0.05),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" />
                   
                   <div className="w-20 h-20 shrink-0 rounded-full border border-white/10 bg-white/5 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]">
@@ -202,7 +194,7 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
       </section>
 
       {/* 3. 3D Growth Funnel */}
-      <section className="funnel-section relative w-full pt-32 pb-32 bg-transparent overflow-visible">
+      <section className="funnel-section relative w-full pt-32 pb-32 bg-transparent overflow-visible perspective-[1500px]">
         <div className="max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
           <div className="inline-flex rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium border border-rose-500/20 text-rose-400 mb-16">
             The Framework
@@ -220,7 +212,7 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
               { title: "Retention", stat: "$450 LTV", color: "from-orange-600 to-amber-500", width: "w-[55%]" }
             ].map((layer, i) => (
               <div key={i} className={`funnel-step ${layer.width} h-36 rounded-[2rem] bg-gradient-to-r ${layer.color} p-[1px] transform-style-3d shadow-[0_20px_50px_rgba(0,0,0,0.5)]`}>
-                <div className="w-full h-full bg-[#0A0A0A] rounded-[calc(2rem-1px)] flex items-center justify-between px-12 relative overflow-hidden backdrop-blur-md">
+                <div className="w-full h-full bg-black/60 rounded-[calc(2rem-1px)] flex items-center justify-between px-12 relative overflow-hidden backdrop-blur-xl">
                   <div className="absolute inset-0 bg-white/5 mix-blend-overlay" />
                   <span className="text-3xl font-bold text-white relative z-10">{layer.title}</span>
                   <span className="text-xl font-medium text-white/50 relative z-10">{layer.stat}</span>
@@ -239,14 +231,14 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
       />
 
       {/* Components from Existing Architecture (Wrapped in Premium Spacing) */}
-      <div className="relative z-20 pt-20 bg-transparent">
-        <ServicePricing tiers={growthTiers} service="growth" />
+      <div className="relative z-20 bg-transparent">
+        <GrowthCategoryCards tiers={growthTiers} service="growth" />
       </div>
 
-      <div className="relative z-20 py-20 max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative z-20 py-20 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-20 md:gap-40">
         {comparisonFeatures && comparisonFeatures.length > 0 && <div className="scroll-reveal"><ServiceComparison features={comparisonFeatures} /></div>}
-        <div className="scroll-reveal mt-40"><CostEstimator service="growth" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} /></div>
-        <div className="scroll-reveal mt-40"><ServiceFAQ service="growth" /></div>
+        <div className="scroll-reveal"><CostEstimator service="growth" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} /></div>
+        <div className="scroll-reveal"><ServiceFAQ service="growth" /></div>
       </div>
 
       {/* 5. Massive CTA */}

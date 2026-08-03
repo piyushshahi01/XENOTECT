@@ -12,9 +12,10 @@ import { ServiceComparison } from "@/components/sections/services/ServiceCompari
 import { CostEstimator } from "@/components/sections/services/CostEstimator";
 import { ServiceFAQ } from "@/components/sections/services/ServiceFAQ";
 import { Shader, Swirl, ChromaFlow, FlutedGlass, FilmGrain } from "shaders/react";
-import { ServicePricing } from "@/components/sections/services/ServicePricing";
+import { AICategoryCards } from "@/components/sections/services/ai/AICategoryCards";
 import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
 import { useWizard } from "@/context/WizardContext";
+import { HeroVerticalStripes } from "@/components/ui/HeroVerticalStripes";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -107,25 +108,14 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
   }, { scope: containerRef });
 
   return (
-    <main className="relative z-0 min-h-[100dvh] bg-transparent text-[#E6E6E6] selection:bg-[#00E5FF]/30 font-sans overflow-hidden" ref={containerRef}>
+    <main className="relative z-0 min-h-[100dvh] bg-transparent text-[#E6E6E6] selection:bg-[#00E5FF]/30 font-sans" ref={containerRef}>
       <GlobalSplineBackground tintColor="bg-blue-900/40 mix-blend-color" />
       <XenotectNav />
       
       {/* 1. Hero Section (Floating Dashboard AI Edition - Dark Blue/Black) */}
       <section className="hero-section relative w-full pt-40 pb-16 min-h-[100dvh] flex flex-col justify-center items-center overflow-hidden">
-        {/* Dark Mode Shader Background */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-          <Shader>
-            <Swirl colorA="#000000" colorB="#001188" detail={1.7} />
-            <ChromaFlow baseColor="#000000" downColor="#0044ff" leftColor="#001188" rightColor="#0044ff" upColor="#001188" momentum={13} radius={3.5} />
-            <FlutedGlass aberration={0.61} angle={31} frequency={8} highlight={0.12} highlightSoftness={0} lightAngle={-90} refraction={4} shape="rounded" softness={1} speed={0.15} />
-            <FilmGrain strength={0.05} />
-          </Shader>
-          {/* Gradient blend into the next section */}
-          <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
-        </div>
-        
-        {/* Floating Reports / Graphs Parallax */}
+        {/* Animated vertical stripes hero background */}
+        <HeroVerticalStripes variant="blue" />
         <div className="absolute top-[20%] left-[10%] w-64 h-48 rounded-[2rem] bg-white/[0.02] border border-white/10 backdrop-blur-xl p-6 hidden lg:flex flex-col gap-4 dash-layer-2 transform -rotate-6 shadow-[0_8px_40px_rgba(0,68,255,0.12)] z-10">
           <div className="flex items-center gap-4 text-white/50">
             <Cpu className="w-5 h-5 text-[#0044ff]" />
@@ -191,8 +181,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full auto-rows-[350px] md:auto-rows-[450px]">
           
           {/* Bento Large Feature (Col 8) */}
-          <div className="scroll-reveal md:col-span-8 p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-[#0A0A0A] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
+          <div className="scroll-reveal md:col-span-8 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
               <div className="absolute top-0 right-0 w-[60%] h-[60%] bg-[#00E5FF]/10 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="w-16 h-16 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700">
                 <Mic className="w-8 h-8 text-[#00E5FF]" strokeWidth={1.5} />
@@ -203,8 +193,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
           </div>
 
           {/* Bento Small Feature (Col 4) */}
-          <div className="scroll-reveal md:col-span-4 p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-[#0A0A0A] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
+          <div className="scroll-reveal md:col-span-4 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
               <div className="w-16 h-16 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700">
                 <Zap className="w-8 h-8 text-[#00E5FF]" strokeWidth={1.5} />
               </div>
@@ -214,8 +204,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
           </div>
 
           {/* Bento Small Feature (Col 5) */}
-          <div className="scroll-reveal md:col-span-5 p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-[#0A0A0A] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
+          <div className="scroll-reveal md:col-span-5 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
               <div className="w-16 h-16 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700">
                 <MessageSquare className="w-8 h-8 text-[#00E5FF]" strokeWidth={1.5} />
               </div>
@@ -225,8 +215,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
           </div>
 
           {/* Bento Wide Feature (Col 7) */}
-          <div className="scroll-reveal md:col-span-7 p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-[#0A0A0A] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
+          <div className="scroll-reveal md:col-span-7 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#00E5FF]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
               <div className="absolute top-0 left-0 w-[50%] h-[50%] bg-[#00E5FF]/10 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="w-16 h-16 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700">
                 <BrainCircuit className="w-8 h-8 text-[#00E5FF]" strokeWidth={1.5} />
@@ -239,7 +229,7 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
       </section>
 
       {/* 3. The Z-Axis Cascade (The Problem vs Solution) */}
-      <section className="relative w-full py-40 overflow-hidden perspective-[2000px]">
+      <section className="relative w-full py-40 overflow-visible">
         {/* Removed hardcoded background tint that was cutting across the Spline */}
         
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center mb-32 scroll-reveal">
@@ -257,8 +247,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col gap-12 pb-32">
           
-          <div className="cascade-card p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 shadow-2xl relative z-[3]">
-            <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-[#0A0A0A] p-12 flex flex-col md:flex-row items-center gap-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+          <div className="cascade-card p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 shadow-2xl relative z-[3]">
+            <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl p-12 flex flex-col md:flex-row items-center gap-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
               <div className="w-20 h-20 shrink-0 rounded-full bg-[#00E5FF]/5 border border-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] shadow-[0_0_30px_rgba(0,229,255,0.1)]">
                 <Activity className="w-10 h-10" strokeWidth={1.5} />
               </div>
@@ -269,8 +259,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
             </div>
           </div>
 
-          <div className="cascade-card p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 shadow-2xl relative z-[2] -mt-20 md:-mt-24 ml-0 md:ml-12 opacity-90 scale-[0.98]">
-            <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-[#070707] p-12 flex flex-col md:flex-row items-center gap-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.02)]">
+          <div className="cascade-card p-2 rounded-[2.5rem] bg-white/[0.02] border border-white/10 shadow-2xl relative z-[2] -mt-20 md:-mt-24 ml-0 md:ml-12 opacity-90 scale-[0.98]">
+            <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-black/35 backdrop-blur-xl p-12 flex flex-col md:flex-row items-center gap-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.02)]">
               <div className="w-20 h-20 shrink-0 rounded-full bg-[#00E5FF]/5 border border-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] shadow-[0_0_30px_rgba(0,229,255,0.1)]">
                 <Clock className="w-10 h-10" strokeWidth={1.5} />
               </div>
@@ -281,8 +271,8 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
             </div>
           </div>
 
-          <div className="cascade-card p-2 rounded-[2.5rem] bg-[#1D1D1D] border border-white/10 shadow-2xl relative z-[1] -mt-20 md:-mt-24 ml-0 md:ml-24 opacity-80 scale-[0.96]">
-            <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-[#050505] p-12 flex flex-col md:flex-row items-center gap-10 border border-white/5">
+          <div className="cascade-card p-2 rounded-[2.5rem] bg-white/[0.02] border border-white/10 shadow-2xl relative z-[1] -mt-20 md:-mt-24 ml-0 md:ml-24 opacity-80 scale-[0.96]">
+            <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-black/30 backdrop-blur-xl p-12 flex flex-col md:flex-row items-center gap-10 border border-white/5">
               <div className="w-20 h-20 shrink-0 rounded-full bg-[#00E5FF]/5 border border-[#00E5FF]/20 flex items-center justify-center text-[#00E5FF] shadow-[0_0_30px_rgba(0,229,255,0.1)]">
                 <BarChart3 className="w-10 h-10" strokeWidth={1.5} />
               </div>
@@ -306,14 +296,14 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
       {/* Components from Existing Architecture 
           Wrapped natively since we are back in dark mode! 
       */}
-      <div className="relative z-20 pt-20 bg-transparent">
-        <ServicePricing tiers={aiTiers} service="ai" />
+      <div className="relative z-20 bg-transparent">
+        <AICategoryCards tiers={aiTiers} service="ai" />
       </div>
 
-      <div className="relative z-20 py-20 max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative z-20 py-20 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-20 md:gap-40">
         {comparisonFeatures && comparisonFeatures.length > 0 && <div className="scroll-reveal"><ServiceComparison features={comparisonFeatures} /></div>}
-        <div className="scroll-reveal mt-40"><CostEstimator service="ai" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} /></div>
-        <div className="scroll-reveal mt-40"><ServiceFAQ service="ai" /></div>
+        <div className="scroll-reveal"><CostEstimator service="ai" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} /></div>
+        <div className="scroll-reveal"><ServiceFAQ service="ai" /></div>
       </div>
 
       {/* 5. Massive CTA (Double Bezel) */}

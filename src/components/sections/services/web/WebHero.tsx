@@ -45,8 +45,6 @@ export function WebHero() {
     <section ref={containerRef} className="web-hero relative w-full min-h-[100dvh] flex flex-col justify-start pt-[20vh] items-center overflow-hidden">
       <HLSBackground url="https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8" />
       
-
-
       <div className="relative z-20 max-w-6xl mx-auto px-6 w-full flex flex-col items-center text-center gap-8">
         
         {/* Badge */}

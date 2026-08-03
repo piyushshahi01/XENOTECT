@@ -24,7 +24,8 @@ export function PackageForm({ pkg, services, allFeatures, onSuccess }: { pkg?: a
     time: pkg?.time || "",
     detailedContent: pkg?.detailedContent || "",
     order: pkg?.order || 0,
-    serviceId: pkg?.serviceId || ""
+    serviceId: pkg?.serviceId || "",
+    category: pkg?.category || "default"
   });
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(pkg?.features || []);
   const [newFeature, setNewFeature] = useState("");
@@ -128,7 +129,8 @@ export function PackageForm({ pkg, services, allFeatures, onSuccess }: { pkg?: a
         time: formData.time,
         features: selectedFeatures,
         detailedContent: formData.detailedContent,
-        order: Number(formData.order)
+        order: Number(formData.order),
+        category: formData.category
       });
     } else {
       await createCmsPackage({
@@ -140,7 +142,8 @@ export function PackageForm({ pkg, services, allFeatures, onSuccess }: { pkg?: a
         time: formData.time,
         features: selectedFeatures,
         detailedContent: formData.detailedContent,
-        order: 0
+        order: 0,
+        category: formData.category
       });
     }
     setSaving(false);
@@ -257,6 +260,16 @@ export function PackageForm({ pkg, services, allFeatures, onSuccess }: { pkg?: a
                       required
                       value={formData.title}
                       onChange={e => setFormData({...formData, title: e.target.value})}
+                      className="w-full bg-[#050508] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2.5">
+                    <label className="text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-500">Table Category (e.g. Chatbots, Voice Agents)</label>
+                    <input 
+                      type="text" 
+                      value={formData.category}
+                      onChange={e => setFormData({...formData, category: e.target.value})}
                       className="w-full bg-[#050508] border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]"
                     />
                   </div>

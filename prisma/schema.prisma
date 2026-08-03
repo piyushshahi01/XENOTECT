@@ -198,6 +198,7 @@ model CmsPackage {
   features    String[]   // Array of strings for list of features included
   detailedContent String? @db.Text // Markdown for detailed package popup
   order       Int        @default(0)
+  category    String     @default("default")
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   

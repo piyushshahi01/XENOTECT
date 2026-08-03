@@ -49,7 +49,8 @@ export default async function PremiumAISolutions() {
       description: `Timeline: ${pkg.time}`,
       features: pkg.features,
       detailedContent: pkg.detailedContent,
-      isPopular: i === 1
+      isPopular: i === 1,
+      category: (pkg as any).category || "default"
     };
   }));
 
