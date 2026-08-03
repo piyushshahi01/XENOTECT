@@ -15,7 +15,7 @@ export function WizardModalClient({
   initialPackages: any[]; 
   initialFeatures: any[]; 
 }) {
-  const { isOpen, closeWizard, initialServiceId, initialPackageId } = useWizard();
+  const { isOpen, closeWizard, initialServiceId, initialPackageId, initialCategory } = useWizard();
 
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
@@ -81,6 +81,7 @@ export function WizardModalClient({
               initialFeatures={initialFeatures}
               preSelectedServiceId={initialServiceId}
               preSelectedPackageId={initialPackageId}
+              preSelectedCategory={initialCategory}
             />
           </motion.div>
         </motion.div>

@@ -160,7 +160,7 @@ export function AICategoryCards({ tiers, service }: { tiers: any[], service: str
                   </ul>
 
                   <button
-                    onClick={() => openWizard(service, category.toLowerCase().replace(/\s+/g, '-'))}
+                    onClick={() => openWizard(service, null, category.toLowerCase().replace(/\s+/g, '-'))}
                     className={`relative z-10 w-full py-4 rounded-xl text-sm font-semibold transition-all duration-300 mt-auto ${
                       isPopular
                         ? "bg-white text-black hover:bg-neutral-200"

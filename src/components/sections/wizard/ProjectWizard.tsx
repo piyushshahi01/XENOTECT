@@ -20,6 +20,7 @@ interface ProjectWizardProps {
   initialFeatures: any[];
   preSelectedServiceId?: string | null;
   preSelectedPackageId?: string | null;
+  preSelectedCategory?: string | null;
 }
 
 // --- COMPONENT ---
@@ -28,7 +29,8 @@ export function ProjectWizard({
   initialPackages, 
   initialFeatures,
   preSelectedServiceId,
-  preSelectedPackageId
+  preSelectedPackageId,
+  preSelectedCategory
 }: ProjectWizardProps) {
   // If we have a preSelected package or service, we might want to start at step 2 or 3
   const initialStep = preSelectedPackageId ? 3 : (preSelectedServiceId ? 2 : 1);
@@ -159,23 +161,30 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select the primary focus of your project so we can tailor the right solution.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 {initialServices.map(srv => (
                   <button
                     key={srv.id}
                     onClick={() => handleServiceSelect(srv.id)}
-                    className={`group relative p-6 rounded-2xl border transition-all duration-300 text-left overflow-hidden flex flex-col items-start justify-start h-full ${
+                    className={`group relative p-8 rounded-[2rem] border transition-all duration-500 text-left overflow-hidden flex flex-col items-start justify-start min-h-[220px] ${
                       data.service === srv.id 
-                        ? "border-white bg-white/5" 
-                        : "border-white/10 bg-transparent hover:border-white/30 hover:bg-white-[0.02]"
+                        ? "border-[#00E5FF]/40 bg-[#00E5FF]/[0.03] shadow-[0_0_30px_rgba(0,229,255,0.05)]" 
+                        : "border-white/10 bg-[#050508] hover:border-white/30 hover:bg-white/[0.02]"
                     }`}
                   >
+                    {/* Hover Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    
                     <div className="relative z-10 w-full flex flex-col flex-1">
-                      <div className="mb-4 p-3 rounded-xl bg-white/5 inline-block text-white">
-                        {ICON_MAP[srv.icon] || <Code className="w-5 h-5" />}
+                      <div className={`mb-6 p-4 rounded-2xl inline-block transition-colors duration-500 ${
+                        data.service === srv.id ? "bg-[#00E5FF]/20 text-[#00E5FF]" : "bg-white/5 text-white/70 group-hover:bg-white/10 group-hover:text-white"
+                      }`}>
+                        {ICON_MAP[srv.icon] || <Code className="w-6 h-6" />}
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2">{srv.title}</h3>
-                      <p className="text-xs text-neutral-400 leading-relaxed">{srv.description || srv.desc}</p>
+                      <h3 className={`text-xl font-bold mb-3 transition-colors duration-500 ${
+                        data.service === srv.id ? "text-white" : "text-white/90 group-hover:text-white"
+                      }`}>{srv.title}</h3>
+                      <p className="text-sm text-neutral-400 leading-relaxed font-light">{srv.description || srv.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -195,35 +204,50 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select a package that best fits the scale of your operation.</p>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
-                {initialPackages.filter(p => p.serviceId === data.service).map(pkg => (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+                {initialPackages
+                  .filter(p => p.serviceId === data.service)
+                  .filter(p => !preSelectedCategory || (p.category && p.category.toLowerCase().replace(/\s+/g, '-') === preSelectedCategory))
+                  .map(pkg => (
                   <button
                     key={pkg.id}
                     onClick={() => handlePackageSelect(pkg)}
-                    className="group relative p-8 rounded-2xl border border-white/10 bg-[#050508] hover:border-white/30 hover:bg-[#0a0a0f] transition-all duration-300 text-left flex flex-col justify-between min-h-[420px]"
+                    className="group relative p-8 md:p-10 rounded-[2rem] border border-white/10 bg-[#050508] hover:border-white/20 transition-all duration-500 text-left flex flex-col justify-between min-h-[460px] overflow-hidden"
                   >
-                    <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">{pkg.title}</h3>
-                      <p className="text-sm font-bold text-neutral-500 uppercase tracking-widest mb-6">{pkg.time}</p>
+                    {/* Hover Glow Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    
+                    <div className="relative z-10">
+                      <h3 className="text-2xl md:text-3xl font-serif text-white tracking-tight mb-4 group-hover:text-[#00E5FF] transition-colors">{pkg.title}</h3>
                       
-                      <ul className="space-y-3 mb-8">
+                      {pkg.time && pkg.time !== "TBD" && (
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.15em] mb-8">
+                          <span className="w-1 h-1 rounded-full bg-[#00E5FF]" />
+                          Timeline: {pkg.time}
+                        </div>
+                      )}
+                      
+                      <ul className="space-y-4 mb-10">
                         {pkg.features.map((feature: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-3 text-sm text-neutral-400">
-                            <Check className="w-4 h-4 text-white shrink-0 mt-0.5 opacity-50" />
+                          <li key={idx} className="flex items-start gap-3 text-sm text-neutral-300 leading-relaxed">
+                            <div className="mt-0.5 shrink-0 w-4 h-4 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#00E5FF]/10 transition-colors">
+                              <Check className="w-2.5 h-2.5 text-white/70 group-hover:text-[#00E5FF] transition-colors" />
+                            </div>
                             <span>{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div>
-                      <p className="text-neutral-400 text-sm mb-1">Starting from</p>
-                      <p className="text-3xl font-display text-white">${pkg.priceUsd.toLocaleString('en-US')}</p>
+                    
+                    <div className="relative z-10 pt-6 border-t border-white/10 mt-auto">
+                      <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-500 mb-2">Starting from</p>
+                      <p className="text-3xl md:text-4xl font-display text-white">${pkg.priceUsd.toLocaleString('en-US')}</p>
                     </div>
                   </button>
                 ))}
               </div>
               
-              <div className="mt-8 flex justify-start">
+              <div className="mt-12 flex justify-start">
                 <button onClick={prevStep} className="text-xs uppercase tracking-widest font-bold text-neutral-500 hover:text-white transition-colors flex items-center gap-2">
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>
@@ -243,30 +267,32 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select additional capabilities you need for your project.</p>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                {initialFeatures.map(feat => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                {initialFeatures
+                  .filter(feat => feat.category === data.service)
+                  .map(feat => (
                   <button
                     key={feat.id}
                     type="button"
                     onClick={() => toggleFeature(feat.id)}
-                    className={`group relative flex flex-col justify-between p-6 rounded-2xl border cursor-pointer transition-all duration-500 text-left overflow-hidden min-h-[140px] ${
+                    className={`group relative flex flex-col justify-between p-8 rounded-[2rem] border cursor-pointer transition-all duration-500 text-left overflow-hidden min-h-[160px] ${
                       data.features[feat.id]
-                        ? "border-white/40 bg-white/[0.05] shadow-[0_0_30px_rgba(255,255,255,0.05)]"
-                        : "border-white/5 bg-[#050508] hover:border-white/20 hover:bg-[#0a0a0f]"
+                        ? "border-[#00E5FF]/40 bg-[#00E5FF]/[0.03] shadow-[0_0_30px_rgba(0,229,255,0.05)]"
+                        : "border-white/10 bg-[#050508] hover:border-white/20 hover:bg-[#0a0a0f]"
                     }`}
                   >
                     {/* Background glow when selected */}
                     {data.features[feat.id] && (
-                       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none" />
+                       <div className="absolute inset-0 bg-gradient-to-br from-[#00E5FF]/[0.05] to-transparent pointer-events-none" />
                     )}
 
-                    <div className="flex items-start justify-between gap-4 relative z-10 w-full mb-4">
-                      <span className={`font-display text-lg font-bold leading-tight ${data.features[feat.id] ? "text-white" : "text-white/80 group-hover:text-white transition-colors"}`}>
+                    <div className="flex items-start justify-between gap-4 relative z-10 w-full mb-6">
+                      <span className={`font-serif text-xl tracking-tight leading-tight ${data.features[feat.id] ? "text-white" : "text-white/80 group-hover:text-white transition-colors"}`}>
                         {feat.title}
                       </span>
                       <div className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-all duration-500 ${
                         data.features[feat.id] 
-                          ? "bg-white border-white text-black scale-110 shadow-[0_0_15px_rgba(255,255,255,0.5)]" 
+                          ? "bg-[#00E5FF] border-[#00E5FF] text-black scale-110 shadow-[0_0_15px_rgba(0,229,255,0.3)]" 
                           : "border-white/20 text-transparent bg-black/50 group-hover:border-white/40"
                       }`}>
                         <Check className={`w-3.5 h-3.5 transition-transform duration-500 ${data.features[feat.id] ? "scale-100" : "scale-50"}`} />
@@ -274,8 +300,8 @@ export function ProjectWizard({
                     </div>
                     
                     <div className="relative z-10 w-full flex items-end justify-between mt-auto">
-                      <span className="text-[10px] uppercase tracking-widest font-bold text-neutral-500">Add-on</span>
-                      <span className={`text-sm font-bold tracking-wider ${data.features[feat.id] ? "text-white" : "text-neutral-400"}`}>
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-500">Add-on</span>
+                      <span className={`text-lg font-mono tracking-wider ${data.features[feat.id] ? "text-[#00E5FF]" : "text-neutral-400 group-hover:text-white transition-colors"}`}>
                         +${feat.priceUsd.toLocaleString('en-US')}
                       </span>
                     </div>
@@ -283,7 +309,7 @@ export function ProjectWizard({
                 ))}
               </div>
               
-              <div className="mt-8 flex items-center justify-between">
+              <div className="mt-12 flex items-center justify-between">
                 <button onClick={prevStep} className="text-xs uppercase tracking-widest font-bold text-neutral-500 hover:text-white transition-colors flex items-center gap-2">
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>

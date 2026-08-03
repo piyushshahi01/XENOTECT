@@ -105,11 +105,43 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
         visibility: "visible",
       });
 
-      // ── Fire router IMMEDIATELY — don't wait for animation ──
-      router.push(href);
+      // Run visual transition
+      const tl = gsap.timeline({
+        onComplete: () => {
+          // Subtle pulse while new page loads
+          gsap.to(brandRef.current, {
+            opacity: 0.35,
+            scale: 0.97,
+            duration: 0.4,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+          });
 
-      // Run visual transition in parallel (pure cosmetic)
-      const tl = gsap.timeline();
+          // Safety fallback: if navigation gets stuck or fails, clear the overlay after 4s
+          // We put this BEFORE router.push so it still runs even if router.push crashes
+          const timeoutId = setTimeout(() => {
+            if (isNavigating.current) {
+              isNavigating.current = false;
+              if (overlayRef.current && brandRef.current) {
+                gsap.killTweensOf([overlayRef.current, brandRef.current]);
+                gsap.to(overlayRef.current, { opacity: 0, pointerEvents: "none", duration: 0.5 });
+                gsap.to(brandRef.current, { opacity: 0, scale: 1.5, filter: "blur(20px)", visibility: "hidden", duration: 0.5 });
+              }
+            }
+          }, 4000);
+
+          try {
+            router.push(href);
+          } catch (error) {
+            console.error("Router push failed:", error);
+            // If it failed immediately, don't wait 4s
+            clearTimeout(timeoutId);
+            isNavigating.current = false;
+            gsap.to(overlayRef.current, { opacity: 0, pointerEvents: "none", duration: 0.5 });
+          }
+        }
+      });
 
       tl.to(overlay, { opacity: 1, duration: 0.22, ease: "power2.out" });
       tl.to(brand, {
@@ -118,16 +150,6 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
         duration: 0.25,
         ease: "power2.out",
       }, "-=0.1");
-
-      // Subtle pulse while new page loads
-      tl.to(brand, {
-        opacity: 0.35,
-        scale: 0.97,
-        duration: 0.4,
-        yoyo: true,
-        repeat: -1,
-        ease: "power1.inOut",
-      });
     },
     [router, pathname]
   );

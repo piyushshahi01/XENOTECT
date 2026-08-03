@@ -11,9 +11,16 @@ export interface ExchangeRates {
 export const getExchangeRates = unstable_cache(
   async (): Promise<ExchangeRates | null> => {
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      
       const response = await fetch("https://open.er-api.com/v6/latest/USD", {
         next: { revalidate: 3600 }, // Revalidate every hour
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }

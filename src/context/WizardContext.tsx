@@ -5,7 +5,8 @@ interface WizardContextType {
   isOpen: boolean;
   initialServiceId: string | null;
   initialPackageId: string | null;
-  openWizard: (serviceId?: string | null, packageId?: string | null) => void;
+  initialCategory: string | null;
+  openWizard: (serviceId?: string | null, packageId?: string | null, category?: string | null) => void;
   closeWizard: () => void;
 }
 
@@ -15,10 +16,12 @@ export function WizardProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [initialServiceId, setInitialServiceId] = useState<string | null>(null);
   const [initialPackageId, setInitialPackageId] = useState<string | null>(null);
+  const [initialCategory, setInitialCategory] = useState<string | null>(null);
 
-  const openWizard = (serviceId: string | null = null, packageId: string | null = null) => {
+  const openWizard = (serviceId: string | null = null, packageId: string | null = null, category: string | null = null) => {
     setInitialServiceId(serviceId);
     setInitialPackageId(packageId);
+    setInitialCategory(category);
     setIsOpen(true);
     // Optional: Lock body scroll when wizard is open
     document.body.style.overflow = "hidden";
@@ -28,11 +31,12 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     setIsOpen(false);
     setInitialServiceId(null);
     setInitialPackageId(null);
+    setInitialCategory(null);
     document.body.style.overflow = "unset";
   };
 
   return (
-    <WizardContext.Provider value={{ isOpen, initialServiceId, initialPackageId, openWizard, closeWizard }}>
+    <WizardContext.Provider value={{ isOpen, initialServiceId, initialPackageId, initialCategory, openWizard, closeWizard }}>
       {children}
     </WizardContext.Provider>
   );

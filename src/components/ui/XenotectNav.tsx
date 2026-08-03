@@ -18,11 +18,15 @@ const ease = [0.23, 1, 0.32, 1] as const;
 import { Magnet } from "./Magnet";
 import { usePageTransition } from "./PageTransition";
 
+import { usePathname } from "next/navigation";
+
 export function XenotectNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const { navigateWithTransition } = usePageTransition();
+  const pathname = usePathname();
+  const delay = pathname === "/" ? 2.5 : 0.5;
 
   const { scrollY } = useScroll();
 
@@ -38,7 +42,7 @@ export function XenotectNav() {
         ref={navRef}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease, delay: 2.5 }}
+        transition={{ duration: 1, ease, delay }}
         className={`fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none`}
       >
         <div
@@ -49,9 +53,9 @@ export function XenotectNav() {
           }`}
         >
           {/* Logo */}
-          <a href="#" className="text-sm font-medium tracking-[0.15em] uppercase text-white select-none">
+          <button onClick={() => navigateWithTransition("/")} className="text-sm font-medium tracking-[0.15em] uppercase text-white select-none cursor-pointer">
             XENOTECT
-          </a>
+          </button>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8">

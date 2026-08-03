@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
 import { SolarSystem } from './SolarSystem';
+import { usePageTransition } from "@/components/ui/PageTransition";
 
 // --- REUSABLE COMPONENTS ---
 
@@ -10,10 +11,11 @@ interface ContactButtonProps {
 }
 
 export function ContactButton({ className = '' }: ContactButtonProps) {
+  const { navigateWithTransition } = usePageTransition();
   return (
     <button
       type="button"
-      onClick={() => alert('Contacting Xeno — let’s build together!')}
+      onClick={() => navigateWithTransition('/contact')}
       className={`rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer outline outline-2 outline-white -outline-offset-3 ${className}`}
       style={{
         background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
@@ -25,15 +27,17 @@ export function ContactButton({ className = '' }: ContactButtonProps) {
   );
 }
 
-export function LiveProjectButton() {
+export function LiveProjectButton({ href }: { href?: string }) {
   return (
-    <button
-      type="button"
-      onClick={() => alert('Opening Live Project...')}
-      className="rounded-full border-2 border-[#D7E2EA] px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base font-medium uppercase tracking-widest text-[#D7E2EA] transition-colors duration-200 hover:bg-[#D7E2EA]/10 cursor-pointer"
+    <a
+      href={href || '#'}
+      target={href ? '_blank' : undefined}
+      rel={href ? 'noopener noreferrer' : undefined}
+      className="rounded-full border-2 border-[#D7E2EA] px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base font-medium uppercase tracking-widest text-[#D7E2EA] transition-colors duration-200 hover:bg-[#D7E2EA]/10 cursor-pointer inline-flex items-center justify-center"
+      style={{ textDecoration: 'none' }}
     >
       Live Project
-    </button>
+    </a>
   );
 }
 
@@ -289,6 +293,7 @@ function ServicesSparkles() {
 
 function ServiceCardReveal({ srv }: { srv: ServiceItem }) {
   const [hovered, setHovered] = useState(false);
+  const { navigateWithTransition } = usePageTransition();
 
   return (
     <div
@@ -426,10 +431,17 @@ function ServiceCardReveal({ srv }: { srv: ServiceItem }) {
           <p className="font-light text-white/90 text-sm sm:text-base line-clamp-3 mb-6">
             {srv.description}
           </p>
-          <div className="inline-flex items-center gap-3 font-bold uppercase text-xs sm:text-sm tracking-widest bg-white text-[#0C0C0C] px-6 py-3 rounded-full shadow-lg transition-transform duration-300">
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (srv.link) navigateWithTransition(srv.link);
+            }}
+            className="pointer-events-auto inline-flex items-center gap-3 font-bold uppercase text-xs sm:text-sm tracking-widest bg-white text-[#0C0C0C] px-6 py-3 rounded-full shadow-lg transition-transform duration-300 cursor-pointer hover:scale-105"
+          >
             <span>Explore Service</span>
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </div>
+          </button>
         </div>
       </motion.div>
     </div>
@@ -445,6 +457,7 @@ const SERVICES_DATA: ServiceItem[] = [
     image:
       'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
     icon: `<span class="text-3xl sm:text-4xl leading-none">🌐</span>`,
+    link: '/services/web-solutions',
   },
   {
     number: '02',
@@ -454,6 +467,7 @@ const SERVICES_DATA: ServiceItem[] = [
     image:
       'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
     icon: `<span class="text-3xl sm:text-4xl leading-none">🤖</span>`,
+    link: '/services/ai-solutions',
   },
   {
     number: '03',
@@ -463,6 +477,7 @@ const SERVICES_DATA: ServiceItem[] = [
     image:
       'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80',
     icon: `<span class="text-3xl sm:text-4xl leading-none">📈</span>`,
+    link: '/services/growth-solutions',
   },
   {
     number: '04',
@@ -472,15 +487,17 @@ const SERVICES_DATA: ServiceItem[] = [
     image:
       'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80',
     icon: `<span class="text-3xl sm:text-4xl leading-none">🎙️</span>`,
+    link: '/services/ai-solutions',
   },
   {
     number: '05',
     name: 'Social Media',
     description:
-      'Engaging content creation, strategic brand positioning, and community growth tailored for high-impact social media platforms.',
+      'Engaging content creation, community management, and paid social strategies that build brand loyalty and maximize audience engagement.',
     image:
       'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
     icon: `<span class="text-3xl sm:text-4xl leading-none">📱</span>`,
+    link: '/services/growth-solutions',
   },
   {
     number: '06',
@@ -490,42 +507,46 @@ const SERVICES_DATA: ServiceItem[] = [
     image:
       'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
     icon: `<span class="text-3xl sm:text-4xl leading-none">⚡</span>`,
+    link: '/services/ai-solutions',
   },
 ];
 
 const PROJECTS_DATA = [
   {
     id: '01',
-    title: 'Nextlevel Studio',
+    title: 'Velvet Roast',
     category: 'Client',
+    link: 'https://velvet-roast-alpha.vercel.app/',
     col1Img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1280&q=80',
     col1Img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1280&q=80',
     col2Img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1280&q=80',
   },
   {
     id: '02',
-    title: 'Aura Brand Identity',
-    category: 'Personal',
+    title: 'FORGE — Premium Fitness Club',
+    category: 'Client',
+    link: 'https://forge-orpin-eight.vercel.app/',
     col1Img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1280&q=80',
     col1Img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1280&q=80',
     col2Img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1280&q=80',
   },
   {
     id: '03',
-    title: 'Solaris Digital',
+    title: 'Himanshu Store — Grocery App',
     category: 'Client',
+    link: 'https://himanshu-store-grocery-app.vercel.app/',
     col1Img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1280&q=80',
     col1Img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=1280&q=80',
     col2Img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
+      'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1280&q=80',
   },
 ];
 
@@ -574,6 +595,7 @@ interface JackPortfolioProps {
 }
 
 export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
+  const { navigateWithTransition } = usePageTransition();
   const heroRef = useRef<HTMLDivElement>(null);
   const marqueeSectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
@@ -624,7 +646,7 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
               onClick={onBackToToonhub}
               className="hover:opacity-70 transition-opacity duration-200 cursor-pointer flex items-center gap-2 text-white bg-white/10 px-4 py-1.5 rounded-full text-xs sm:text-sm shrink-0 font-mono"
             >
-              ← TOONHUB
+              ← HOME
             </button>
             <div className="flex items-center justify-center flex-wrap gap-5 sm:gap-8 md:gap-12 lg:gap-16 mx-auto flex-1 px-4">
               <a href="#about" className="hover:opacity-70 transition-opacity duration-200 whitespace-nowrap">
@@ -642,9 +664,9 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
               <a href="#techstack" className="hover:opacity-70 transition-opacity duration-200 whitespace-nowrap">
                 TechStack
               </a>
-              <a href="#contact" className="hover:opacity-70 transition-opacity duration-200 whitespace-nowrap">
+              <button onClick={() => navigateWithTransition('/contact')} className="hover:opacity-70 transition-opacity duration-200 whitespace-nowrap uppercase cursor-pointer">
                 Contact
-              </a>
+              </button>
             </div>
           </nav>
         </FadeIn>
@@ -656,27 +678,13 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
         >
           <div className="w-full flex justify-center text-center">
             <StaggeredTitle 
-              text="HEY, I'M XENO"
-              className="hero-heading font-bold uppercase tracking-tighter leading-none whitespace-nowrap w-full text-center text-[11vw] sm:text-[12vw] md:text-[13vw] lg:text-[14vw]"
+              text="XENOTECT DIGITAL"
+              className="hero-heading font-bold uppercase tracking-tighter leading-none whitespace-nowrap w-full text-center text-[8vw] sm:text-[9vw] md:text-[10vw] lg:text-[11vw]"
             />
           </div>
         </motion.div>
 
-        {/* Hero Portrait with Parallax */}
-        <motion.div
-          style={{ y: heroImageY }}
-          className="absolute left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] pointer-events-auto"
-        >
-          <FadeIn delay={0.6} y={30}>
-            <Magnet padding={150} strength={3}>
-              <img
-                src="/robot.png"
-                alt="Spherical Pink Robot Mascot Head"
-                className="w-full h-auto object-cover aspect-square pointer-events-none select-none drop-shadow-2xl rounded-full border-4 border-white/10"
-              />
-            </Magnet>
-          </FadeIn>
-        </motion.div>
+
 
         {/* Bottom bar */}
         <div className="flex items-end justify-between w-full relative z-20">
@@ -915,34 +923,25 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
                     </span>
                   </div>
 
-                  <LiveProjectButton />
+                  <LiveProjectButton href={(proj as any).link} />
                 </div>
 
                 {/* Bottom row: Two-column image grid */}
                 <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
                   {/* Left Column (40%) - 2 stacked images */}
                   <div className="lg:w-[40%] flex flex-col gap-4 sm:gap-6">
-                    <div
-                      className="w-full overflow-hidden rounded-[30px] sm:rounded-[40px] md:rounded-[50px] bg-white/5"
-                      style={{ height: 'clamp(130px, 16vw, 230px)' }}
-                    >
+                    <div className="w-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-video">
                       <img src={proj.col1Img1} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
-                    <div
-                      className="w-full overflow-hidden rounded-[30px] sm:rounded-[40px] md:rounded-[50px] bg-white/5"
-                      style={{ height: 'clamp(160px, 22vw, 340px)' }}
-                    >
+                    <div className="w-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3]">
                       <img src={proj.col1Img2} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
                   </div>
 
                   {/* Right Column (60%) - 1 tall image */}
                   <div className="lg:w-[60%] flex">
-                    <div
-                      className="w-full overflow-hidden rounded-[30px] sm:rounded-[40px] md:rounded-[50px] bg-white/5"
-                      style={{ height: 'clamp(300px, 45vw, 600px)' }}
-                    >
-                      <img src={proj.col2Img} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                    <div className="w-full h-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3] lg:aspect-auto">
+                      <img src={(proj as any).col2Img} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
                   </div>
                 </div>

@@ -29,21 +29,21 @@ export const getCmsServices = unstable_cache(
 export async function createCmsService(data: { id: string; title: string; description: string; icon?: string; order: number }) {
   await checkAdmin();
   await prisma.cmsService.create({ data });
-  revalidateTag("cms-services");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
 export async function updateCmsService(id: string, data: { title: string; description: string; icon?: string; order: number }) {
   await checkAdmin();
   await prisma.cmsService.update({ where: { id }, data });
-  revalidateTag("cms-services");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
 export async function deleteCmsService(id: string) {
   await checkAdmin();
   await prisma.cmsService.delete({ where: { id } });
-  revalidateTag("cms-services");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
@@ -64,21 +64,21 @@ export const getCmsPackages = unstable_cache(
 export async function createCmsPackage(data: { id: string; serviceId: string; title: string; priceUsd: number; priceInr: number; time: string; features: string[]; detailedContent?: string | null; order: number; category?: string }) {
   await checkAdmin();
   await prisma.cmsPackage.create({ data });
-  revalidateTag("cms-packages");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
 export async function updateCmsPackage(id: string, data: { title: string; priceUsd: number; priceInr: number; time: string; features: string[]; detailedContent?: string | null; order: number; category?: string }) {
   await checkAdmin();
   await prisma.cmsPackage.update({ where: { id }, data });
-  revalidateTag("cms-packages");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
 export async function deleteCmsPackage(id: string) {
   await checkAdmin();
   await prisma.cmsPackage.delete({ where: { id } });
-  revalidateTag("cms-packages");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
@@ -106,21 +106,21 @@ export async function getCmsFeaturesByCategory(category: string) {
 export async function createCmsFeature(data: { id: string; category: string; stepGroup: string; title: string; priceUsd: number; priceInr: number; isMultiplier: boolean; multiplier: number; order: number }) {
   await checkAdmin();
   await prisma.cmsFeature.create({ data });
-  revalidateTag("cms-features");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
 export async function updateCmsFeature(id: string, data: { category: string; stepGroup: string; title: string; priceUsd: number; priceInr: number; isMultiplier: boolean; multiplier: number; order: number }) {
   await checkAdmin();
   await prisma.cmsFeature.update({ where: { id }, data });
-  revalidateTag("cms-features");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
 export async function deleteCmsFeature(id: string) {
   await checkAdmin();
   await prisma.cmsFeature.delete({ where: { id } });
-  revalidateTag("cms-features");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }
 
@@ -182,6 +182,6 @@ export async function updateCmsGlobalSettings(data: { exchangeRate?: number; bas
     update: data,
     create: { id: "global", ...data }
   });
-  revalidateTag("cms-global-settings");
+  // removed revalidateTag
   revalidatePath("/", "layout");
 }

@@ -255,7 +255,7 @@ export function GrowthCategoryCards({ tiers, service }: { tiers: any[]; service:
                       const slug = item.kind === "db"
                         ? item.cat.toLowerCase().replace(/\s+/g, "-")
                         : item.card.category.toLowerCase().replace(/\s+/g, "-");
-                      openWizard(service, slug);
+                      openWizard(service, null, slug);
                     }}
                     className={`relative z-10 w-full py-4 rounded-xl text-sm font-semibold transition-all duration-300 mt-auto ${
                       isPopular
