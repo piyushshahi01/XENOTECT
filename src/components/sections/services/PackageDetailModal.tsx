@@ -75,7 +75,7 @@ function ModalBody({ pkg, onClose, onGetStarted }: { pkg: any, onClose: () => vo
             transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
             className="absolute top-[10%] -right-[20%] w-[70%] h-[70%] bg-gradient-to-bl from-indigo-500/10 via-purple-500/5 to-transparent blur-[120px] rounded-full mix-blend-screen"
           />
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay" />
+          <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundRepeat: 'repeat', backgroundSize: '128px 128px' }} />
         </div>
 
         {/* Sticky Navigation / Header Bar */}
