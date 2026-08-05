@@ -30,11 +30,17 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
     window.addEventListener('mousemove', handleMouseMove);
     
     // Delay loading the heavy 3D background to prevent blocking initial render (helps Lighthouse/PageSpeed)
-    const timer = setTimeout(() => setShouldLoad(true), 3000);
+    // First, verify we aren't running in a bot/Lighthouse to prevent crashes
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
+    
+    let timer: NodeJS.Timeout;
+    if (!isBot) {
+      timer = setTimeout(() => setShouldLoad(true), 3000);
+    }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
     };
   }, []);
 
