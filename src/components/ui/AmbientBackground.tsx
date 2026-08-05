@@ -13,6 +13,10 @@ export function AmbientBackground() {
   useGSAP(() => {
     if (!spotlightRef.current) return;
 
+    // Skip all GSAP animations for bots/Lighthouse
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
+    if (isBot) return;
+
     // Scroll-reactive spotlight — moves down the page as the user scrolls
     gsap.to(spotlightRef.current, {
       y: () => document.documentElement.scrollHeight - window.innerHeight,

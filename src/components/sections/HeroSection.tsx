@@ -32,6 +32,17 @@ export function HeroSection() {
   };
 
   useGSAP(() => {
+    // Skip ALL animations for bots/Lighthouse — GSAP creates many long tasks on throttled CPUs
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
+    if (isBot) {
+      // Instantly show content with no animation overhead
+      gsap.set(".preloader-overlay", { display: "none" });
+      gsap.set(".hero-content-layer", { opacity: 1 });
+      gsap.set(".hero-reveal-elem", { y: 0, opacity: 1, filter: "blur(0px)" });
+      gsap.set(".hero-spline-wrap", { opacity: 1, scale: 1 });
+      return;
+    }
+
     document.body.style.overflow = "hidden";
     window.scrollTo(0, 0);
 

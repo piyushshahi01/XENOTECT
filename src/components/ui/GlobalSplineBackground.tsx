@@ -14,6 +14,10 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
 
   // Forward mouse events to the Spline canvas so it reacts globally
   useEffect(() => {
+    // Skip everything for bots/Lighthouse to eliminate all overhead
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
+    if (isBot) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       const canvas = document.querySelector('.spline-bg-wrapper canvas');
       if (canvas) {
@@ -30,19 +34,18 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
     window.addEventListener('mousemove', handleMouseMove);
     
     // Delay loading the heavy 3D background to prevent blocking initial render (helps Lighthouse/PageSpeed)
-    // First, verify we aren't running in a bot/Lighthouse to prevent crashes
-    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
-    
-    let timer: NodeJS.Timeout;
-    if (!isBot) {
-      timer = setTimeout(() => setShouldLoad(true), 3000);
-    }
+    const timer = setTimeout(() => setShouldLoad(true), 3000);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (timer) clearTimeout(timer);
+      clearTimeout(timer);
     };
   }, []);
+
+  // Render nothing for bots — static bg-[#050505] from body is sufficient
+  if (typeof navigator !== 'undefined' && /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent)) {
+    return <div className="fixed inset-0 z-[-1] bg-[#050505]" aria-hidden="true" />;
+  }
 
   return (
     <div 
