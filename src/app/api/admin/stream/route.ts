@@ -8,7 +8,10 @@ export const runtime = "nodejs";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  if (!session || (session.user as any)?.email !== process.env.ADMIN_EMAIL) {
+  const adminEmails = process.env.ADMIN_EMAIL ? process.env.ADMIN_EMAIL.split(',').map(e => e.trim()) : [];
+  const userEmail = (session?.user as any)?.email;
+
+  if (!session || !userEmail || !adminEmails.includes(userEmail)) {
     return new Response("Unauthorized", { status: 401 });
   }
 

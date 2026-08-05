@@ -13,18 +13,18 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user }) {
-      const adminEmail = process.env.ADMIN_EMAIL;
+      const adminEmails = process.env.ADMIN_EMAIL ? process.env.ADMIN_EMAIL.split(',').map(e => e.trim()) : [];
       
-      console.log("LOGIN ATTEMPT - User Email:", user.email, "Admin Email:", adminEmail);
+      console.log("LOGIN ATTEMPT - User Email:", user.email, "Allowed Admin Emails:", adminEmails);
 
       // If no admin email is set, warn but allow for dev purposes
-      if (!adminEmail) {
+      if (adminEmails.length === 0) {
         console.warn("ADMIN_EMAIL is not set in .env! Allowing all logins.");
         return true; 
       }
 
-      // Restrict login to ONLY the specified admin email
-      if (user.email === adminEmail) {
+      // Restrict login to ONLY the specified admin emails
+      if (user.email && adminEmails.includes(user.email)) {
         return true;
       }
 

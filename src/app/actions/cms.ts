@@ -7,7 +7,9 @@ import { authOptions } from "@/lib/auth";
 
 async function checkAdmin() {
   const session = await getServerSession(authOptions);
-  if (!session || !session.user || session.user.email !== process.env.ADMIN_EMAIL) {
+  const adminEmails = process.env.ADMIN_EMAIL ? process.env.ADMIN_EMAIL.split(',').map(e => e.trim()) : [];
+  
+  if (!session || !session.user || !session.user.email || !adminEmails.includes(session.user.email)) {
     throw new Error("Unauthorized");
   }
 }

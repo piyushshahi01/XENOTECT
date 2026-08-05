@@ -1,7 +1,6 @@
 "use client";
 
-import React, { Suspense, lazy, useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import the Spline component with SSR disabled to avoid 'document is not defined' runtime errors
@@ -11,6 +10,8 @@ const Spline = dynamic(() => import("@splinetool/react-spline"), {
 });
 
 export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string }) {
+  const [shouldLoad, setShouldLoad] = useState(false);
+
   // Forward mouse events to the Spline canvas so it reacts globally
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -27,7 +28,14 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       }
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    
+    // Delay loading the heavy 3D background to prevent blocking initial render (helps Lighthouse/PageSpeed)
+    const timer = setTimeout(() => setShouldLoad(true), 3000);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -36,12 +44,14 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       aria-hidden="true"
     >
       <div className="absolute inset-0 w-full h-full opacity-90">
-        <Suspense fallback={<div className="absolute inset-0 bg-[#050505]" />}>
+        {shouldLoad ? (
           <Spline 
             scene="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode" 
             className="w-full h-full"
           />
-        </Suspense>
+        ) : (
+          <div className="absolute inset-0 bg-[#050505]" />
+        )}
       </div>
       
       {/* Optional Tint Overlay */}
@@ -56,7 +66,7 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#050505_100%)] opacity-40 z-[2] pointer-events-none" />
       
       {/* Noise grain for cinematic quality */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay z-[3] pointer-events-none" />
+      <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg viewBox=''0 0 256 256'' xmlns=''http://www.w3.org/2000/svg''%3E%3Cfilter id=''n''%3E%3CfeTurbulence type=''fractalNoise'' baseFrequency=''0.9'' numOctaves=''4'' stitchTiles=''stitch''/%3E%3C/filter%3E%3Crect width=''100%25'' height=''100%25'' filter=''url(%23n)''/%3E%3C/svg%3E')] mix-blend-overlay z-[3] pointer-events-none" style={{ backgroundRepeat: 'repeat', backgroundSize: '128px 128px' }} />
     </div>
   );
 }
