@@ -3,7 +3,7 @@ import { formatDualCurrency } from "@/lib/currency";
 import AIClientPage from "./AIClient";
 import { getExchangeRates } from "@/lib/currency";
 import type { Metadata } from "next";
-import { ServiceSchema } from "@/components/seo/JsonLd";
+import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "AI Solutions & Automation Agency — Voice AI, Chatbots & AI Agents",
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: "AI Solutions & Automation | XENOTECT",
     description: "Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate.",
     url: "https://xenotect.com/services/ai-solutions",
+    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "AI Solutions by XENOTECT" }],
   },
   alternates: { canonical: "https://xenotect.com/services/ai-solutions" },
 };
@@ -71,6 +72,11 @@ export default async function PremiumAISolutions() {
         description="Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate." 
         url="https://xenotect.com/services/ai-solutions" 
       />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://xenotect.com" },
+        { name: "Services", url: "https://xenotect.com/#services" },
+        { name: "AI Solutions", url: "https://xenotect.com/services/ai-solutions" },
+      ]} />
       <AIClientPage 
         aiTiers={aiTiers} 
         exchangeRate={exchangeRate} 

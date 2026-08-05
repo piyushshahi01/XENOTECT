@@ -3,7 +3,7 @@ import { formatDualCurrency } from "@/lib/currency";
 import GrowthClientPage from "./GrowthClient";
 import { getExchangeRates } from "@/lib/currency";
 import type { Metadata } from "next";
-import { ServiceSchema } from "@/components/seo/JsonLd";
+import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Digital Marketing Agency — SEO, Performance Ads & Brand Growth",
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: "Digital Marketing & SEO Agency | XENOTECT",
     description: "SEO, Google Ads, Meta campaigns and brand growth strategies that generate real business results.",
     url: "https://xenotect.com/services/growth-solutions",
+    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "Digital Marketing Agency by XENOTECT" }],
   },
   alternates: { canonical: "https://xenotect.com/services/growth-solutions" },
 };
@@ -70,6 +71,11 @@ export default async function PremiumGrowthSolutions() {
         description="Data-driven marketing, SEO, and paid acquisition designed to scale digital businesses predictably." 
         url="https://xenotect.com/services/growth-solutions" 
       />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://xenotect.com" },
+        { name: "Services", url: "https://xenotect.com/#services" },
+        { name: "Growth & Marketing", url: "https://xenotect.com/services/growth-solutions" },
+      ]} />
       <GrowthClientPage 
         growthTiers={growthTiers} 
         exchangeRate={exchangeRate} 

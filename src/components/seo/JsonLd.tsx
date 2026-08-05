@@ -1,6 +1,6 @@
 /**
  * JSON-LD structured data for the homepage.
- * Adds Organization schema and FAQPage schema for Google rich results.
+ * Adds Organization, WebSite, LocalBusiness and FAQPage schema for Google rich results.
  */
 export function OrganizationSchema() {
   const schema = {
@@ -147,6 +147,121 @@ export function ServiceSchema({
       "@id": "https://xenotect.com/#organization",
     },
     url,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/**
+ * BreadcrumbList schema for service and inner pages.
+ * items: array of { name, url } in order from home → current page
+ */
+export function BreadcrumbSchema({ items }: { items: { name: string; url: string }[] }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/**
+ * BlogPosting / Article schema for individual blog post pages.
+ */
+export function ArticleSchema({
+  title,
+  description,
+  url,
+  imageUrl,
+  datePublished,
+  dateModified,
+  authorName = "XENOTECT Team",
+}: {
+  title: string;
+  description: string;
+  url: string;
+  imageUrl?: string;
+  datePublished: string;
+  dateModified?: string;
+  authorName?: string;
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    url,
+    datePublished,
+    dateModified: dateModified || datePublished,
+    image: imageUrl || "https://xenotect.com/og-image.png",
+    author: {
+      "@type": "Organization",
+      name: authorName,
+      url: "https://xenotect.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "XENOTECT",
+      "@id": "https://xenotect.com/#organization",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://xenotect.com/og-image.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/**
+ * WebPage schema for standalone pages (Portfolio, Privacy, etc.)
+ */
+export function WebPageSchema({
+  name,
+  description,
+  url,
+}: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url,
+    isPartOf: {
+      "@id": "https://xenotect.com/#website",
+    },
+    publisher: {
+      "@id": "https://xenotect.com/#organization",
+    },
   };
 
   return (

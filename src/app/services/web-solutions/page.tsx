@@ -3,7 +3,7 @@ import { formatDualCurrency } from "@/lib/currency";
 import WebClientPage from "./WebClient";
 import { getExchangeRates } from "@/lib/currency";
 import type { Metadata } from "next";
-import { ServiceSchema } from "@/components/seo/JsonLd";
+import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
   title: "Custom Web Development Services — Next.js, React & SaaS",
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: "Custom Web Development — Next.js, React & SaaS | XENOTECT",
     description: "High-performance custom websites and web apps built with Next.js, React & TypeScript.",
     url: "https://xenotect.com/services/web-solutions",
+    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "Custom Web Development by XENOTECT" }],
   },
   alternates: { canonical: "https://xenotect.com/services/web-solutions" },
 };
@@ -70,6 +71,11 @@ export default async function PremiumWebSolutions() {
         description="Premium web development, SaaS platforms, and enterprise digital experiences engineered for performance." 
         url="https://xenotect.com/services/web-solutions" 
       />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://xenotect.com" },
+        { name: "Services", url: "https://xenotect.com/#services" },
+        { name: "Web Development", url: "https://xenotect.com/services/web-solutions" },
+      ]} />
       <WebClientPage 
         webTiers={webTiers} 
         exchangeRate={exchangeRate} 
