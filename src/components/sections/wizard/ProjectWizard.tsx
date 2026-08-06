@@ -161,7 +161,7 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select the primary focus of your project so we can tailor the right solution.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 xl:gap-6 mt-8">
                 {initialServices.map(srv => (
                   <button
                     key={srv.id}
@@ -204,21 +204,31 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select a package that best fits the scale of your operation.</p>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 xl:gap-6 mt-8">
                 {initialPackages
                   .filter(p => p.serviceId === data.service)
                   .filter(p => !preSelectedCategory || (p.category && p.category.toLowerCase().replace(/\s+/g, '-') === preSelectedCategory))
+                  .sort((a, b) => a.priceUsd - b.priceUsd)
                   .map(pkg => (
                   <button
                     key={pkg.id}
                     onClick={() => handlePackageSelect(pkg)}
                     className="group relative p-8 md:p-10 rounded-[2rem] border border-white/10 bg-[#050508] hover:border-white/20 transition-all duration-500 text-left flex flex-col justify-between min-h-[460px] overflow-hidden"
                   >
+                    {/* Premium Most Popular Badge */}
+                    {pkg.title.toLowerCase().includes('popular') && (
+                      <div className="absolute top-6 right-6 px-3 py-1 bg-gradient-to-r from-[#00E5FF] to-[#007AFF] rounded-full z-20">
+                        <span className="text-[9px] font-black text-black uppercase tracking-[0.15em]">Most Popular</span>
+                      </div>
+                    )}
+
                     {/* Hover Glow Background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     
                     <div className="relative z-10">
-                      <h3 className="text-2xl md:text-3xl font-serif text-white tracking-tight mb-4 group-hover:text-[#00E5FF] transition-colors">{pkg.title}</h3>
+                      <h3 className="text-2xl md:text-3xl font-serif text-white tracking-tight mb-4 group-hover:text-[#00E5FF] transition-colors">
+                        {pkg.title.replace(/⭐/g, '').replace(/\(most popular\)/i, '').replace(/\(Most Popular\)/i, '').trim()}
+                      </h3>
                       
                       {pkg.time && pkg.time !== "TBD" && (
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.15em] mb-8">

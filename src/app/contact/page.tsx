@@ -36,7 +36,7 @@ export default async function ContactPage() {
       <XenotectNav />
       
       {/* Left Column: Client Project Wizard */}
-      <div className="w-full md:w-1/2 h-[100dvh] pt-24 pb-12 px-6 sm:px-12 md:px-16 lg:px-24 flex flex-col justify-start relative z-10 bg-[#020203] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="w-full lg:w-1/2 h-[100dvh] pt-24 pb-24 px-6 md:px-12 xl:px-20 flex flex-col justify-start relative z-10 bg-[#020203] overflow-y-auto">
         
         <Link href="/" className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors mb-8 w-max text-[10px] uppercase tracking-[0.2em] font-bold mt-8 md:mt-0">
           <ArrowLeft className="w-4 h-4" /> Back to Home
