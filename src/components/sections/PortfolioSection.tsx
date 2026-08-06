@@ -31,23 +31,22 @@ export function PortfolioSection() {
         </motion.p>
         
         {/* Placeholder for future portfolio grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
-            { id: 1, title: "Venture Past Our Sky", imageUrl: "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif", projectUrl: "#" },
-            { id: 2, title: "Launch Your Coding Career", imageUrl: "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif", projectUrl: "#" },
-            { id: 3, title: "Shaping Tomorrow", imageUrl: "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif", projectUrl: "#" },
-            { id: 4, title: "Work Smarter. AI Powers.", imageUrl: "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif", projectUrl: "#" },
-            { id: 5, title: "Cinepass", videoUrl: "/videos/cinepass.mp4", projectUrl: "https://cinepass-pink.vercel.app/" }
+            { id: 1, title: "Velvet Roast", videoUrl: "/videos/project-1.mp4", projectUrl: "https://velvet-roast-alpha.vercel.app/" },
+            { id: 2, title: "FORGE — Premium Fitness Club", videoUrl: "/videos/project-2.mp4", projectUrl: "https://forge-orpin-eight.vercel.app/" },
+            { id: 3, title: "Himanshu Store — Grocery App", videoUrl: "/videos/project-3.mp4", projectUrl: "https://himanshu-store-grocery-app.vercel.app/" },
+            { id: 4, title: "ÉTHÉR — Immersive Web Experience", videoUrl: "/videos/project-4.mp4", projectUrl: "https://ether-eight-dusky.vercel.app/" }
           ].map((project, index) => (
             <motion.div 
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
-              className={`group relative aspect-video bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center pointer-events-auto overflow-hidden cursor-default ${index === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
+              className="group relative aspect-video bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center pointer-events-auto overflow-hidden cursor-default"
             >
               {/* Video or Fallback Background */}
-              {'videoUrl' in project && project.videoUrl ? (
+              {project.videoUrl ? (
                 <div className="absolute inset-0 w-full h-full bg-[#0a0a0a]">
                   <video 
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
@@ -59,19 +58,11 @@ export function PortfolioSection() {
                     <source src={project.videoUrl} type="video/mp4" />
                   </video>
                 </div>
-              ) : project.imageUrl ? (
-                <div className="absolute inset-0 w-full h-full bg-[#0a0a0a]">
-                  <img 
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                  />
-                </div>
               ) : (
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-neutral-800 to-neutral-900 transition-transform duration-700 group-hover:scale-105" />
               )}
               
-              {(!('videoUrl' in project) || !project.videoUrl) && !project.imageUrl && (
+              {!project.videoUrl && (
                 <div className="relative z-10 flex flex-col items-center gap-2 group-hover:opacity-0 transition-opacity duration-300">
                   <span className="text-white/40 font-medium tracking-widest uppercase text-sm">
                     Project Slot {project.id}

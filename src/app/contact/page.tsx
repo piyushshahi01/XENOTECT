@@ -66,11 +66,7 @@ export default async function ContactPage() {
       {/* Right Column: 3D Robot */}
       <div className="hidden md:block w-1/2 min-h-screen relative overflow-hidden bg-[#020203] border-l border-white/5 fixed right-0 top-0 bottom-0">
         <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[150%] xl:w-[120%] flex items-center justify-center">
-          <SplineScene 
-            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
-            className="w-full h-full scale-75 origin-center" 
-            fallbackImage="/robot.png"
-          />
+          <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full scale-75 origin-center" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#020203_100%)] pointer-events-none"></div>
       </div>
