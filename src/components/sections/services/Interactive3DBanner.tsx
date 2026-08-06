@@ -47,6 +47,7 @@ export function Interactive3DBanner({ title, subtitle }: { title?: string, subti
         <SplineScene 
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" 
           className="w-full h-full scale-[0.8] md:scale-100"
+          fallbackImage="/robot.png"
         />
       </div>
       
