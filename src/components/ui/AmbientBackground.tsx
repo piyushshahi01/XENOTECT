@@ -56,7 +56,6 @@ export function AmbientBackground() {
         className="aurora-blob-1 absolute -top-[20%] -left-[15%] w-[800px] h-[800px] rounded-full opacity-[0.12]"
         style={{
           background: "radial-gradient(circle, #00C853 0%, #00E676 30%, transparent 70%)",
-          filter: "blur(130px)",
           willChange: "transform",
         }}
       />
@@ -66,7 +65,6 @@ export function AmbientBackground() {
         className="aurora-blob-2 absolute top-[25%] -right-[10%] w-[700px] h-[700px] rounded-full opacity-[0.09]"
         style={{
           background: "radial-gradient(circle, #00BFA5 0%, #1DE9B6 30%, transparent 70%)",
-          filter: "blur(110px)",
           willChange: "transform",
         }}
       />
@@ -76,7 +74,6 @@ export function AmbientBackground() {
         className="aurora-blob-3 absolute bottom-[10%] left-[20%] w-[900px] h-[900px] rounded-full opacity-[0.10]"
         style={{
           background: "radial-gradient(circle, #1565C0 0%, #42A5F5 30%, transparent 70%)",
-          filter: "blur(150px)",
           willChange: "transform",
         }}
       />
@@ -86,7 +83,6 @@ export function AmbientBackground() {
         className="aurora-blob-1 absolute top-[50%] left-[60%] w-[600px] h-[600px] rounded-full opacity-[0.07]"
         style={{
           background: "radial-gradient(circle, #7C4DFF 0%, #B388FF 30%, transparent 70%)",
-          filter: "blur(120px)",
           willChange: "transform",
           animationDelay: "-12s",
         }}
@@ -97,7 +93,6 @@ export function AmbientBackground() {
         className="aurora-blob-2 absolute bottom-[30%] right-[30%] w-[500px] h-[500px] rounded-full opacity-[0.05]"
         style={{
           background: "radial-gradient(circle, #FF5656 0%, #FF8A80 30%, transparent 70%)",
-          filter: "blur(110px)",
           willChange: "transform",
           animationDelay: "-8s",
         }}
@@ -108,7 +103,6 @@ export function AmbientBackground() {
         className="aurora-blob-3 absolute top-[15%] right-[25%] w-[450px] h-[450px] rounded-full opacity-[0.04]"
         style={{
           background: "radial-gradient(circle, #FFC107 0%, #FFD54F 30%, transparent 70%)",
-          filter: "blur(100px)",
           willChange: "transform",
           animationDelay: "-20s",
         }}
@@ -124,7 +118,6 @@ export function AmbientBackground() {
         style={{
           background:
             "radial-gradient(ellipse at center, rgba(0, 200, 83, 0.1) 0%, rgba(0, 122, 255, 0.05) 30%, rgba(124, 77, 255, 0.03) 50%, transparent 70%)",
-          filter: "blur(80px)",
           willChange: "transform, opacity",
         }}
       />

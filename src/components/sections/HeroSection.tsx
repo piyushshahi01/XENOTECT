@@ -48,9 +48,9 @@ export function HeroSection() {
 
     // Initial states
     gsap.set(".preloader-overlay", { opacity: 1 });
-    gsap.set(".preloader-brand", { scale: 1.5, opacity: 0, filter: "blur(20px)" });
+    // preloader-brand starts visible automatically via CSS!
     gsap.set(".hero-content-layer", { opacity: 0 });
-    gsap.set(".hero-reveal-elem", { y: 40, opacity: 0, filter: "blur(10px)" });
+    gsap.set(".hero-reveal-elem", { y: 40, opacity: 0 }); // removed blur
     gsap.set(".hero-spline-wrap", { opacity: 0, scale: 0.95 });
 
     const tl = gsap.timeline({
@@ -59,27 +59,17 @@ export function HeroSection() {
       }
     });
 
-    // 1. XENOTECT brand text fades in — large, centered, blur → sharp
+    // 1. Hold brand text, then disperse outward
     tl.to(".preloader-brand", {
-      scale: 1,
-      opacity: 1,
-      filter: "blur(0px)",
-      duration: 1.2,
-      ease: "power3.out",
-      delay: 0.3
-    })
-
-    // 3. Brand text disperses outward — scale up, fade out, letter-spacing widens (with 0.6s hold)
-    .to(".preloader-brand", {
-      scale: 2,
+      scale: 1.5,
       opacity: 0,
       letterSpacing: "0.5em",
-      filter: "blur(15px)",
-      duration: 0.8,
-      ease: "power2.inOut"
-    }, "+=0.6")
+      duration: 1.0,
+      ease: "power2.inOut",
+      delay: 0.8
+    })
 
-    // 4. Fade out the preloader overlay
+    // 2. Fade out the preloader overlay
     .to(".preloader-overlay", {
       opacity: 0,
       duration: 0.4,
@@ -90,24 +80,23 @@ export function HeroSection() {
       }
     }, "-=0.4")
 
-    // 5. Hero content layer fades in
+    // 3. Hero content layer fades in
     .to(".hero-content-layer", {
       opacity: 1,
       duration: 0.6,
       ease: "power2.out"
     }, "-=0.4")
 
-    // 7. Staggered content blur reveals
+    // 4. Staggered content reveals (NO BLUR)
     .to(".hero-reveal-elem", {
       y: 0,
       opacity: 1,
-      filter: "blur(0px)",
-      duration: 1.2,
-      stagger: 0.18,
+      duration: 1.0,
+      stagger: 0.15,
       ease: "power3.out"
-    }, "-=1.2")
+    }, "-=0.8")
 
-    // 8. Spline 3D scene fades in with scale
+    // 5. Spline 3D scene fades in with scale
     .to(".hero-spline-wrap", {
       opacity: 1,
       scale: 1,
@@ -122,7 +111,7 @@ export function HeroSection() {
       
       {/* PRELOADER OVERLAY — sits on top of everything */}
       <div className="preloader-overlay fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-none">
-        <div className="preloader-brand font-display font-black text-white text-[clamp(2rem,6vw,5rem)] uppercase tracking-tighter leading-none select-none opacity-0 scale-150 blur-[20px]">
+        <div className="preloader-brand font-display font-black text-white text-[clamp(2rem,6vw,5rem)] uppercase tracking-tighter leading-none select-none">
           XENOTECT
         </div>
       </div>
@@ -137,7 +126,7 @@ export function HeroSection() {
 
         <div className="relative z-10 flex-1 px-6 sm:px-12 md:px-16 lg:px-24 py-20 flex flex-col justify-center max-w-4xl pt-32 md:pt-32">
           
-          <div className="hero-reveal-elem flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-12 opacity-0 translate-y-10 blur-[10px]">
+          <div className="hero-reveal-elem flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-12 opacity-0 translate-y-10">
             <span className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">
               <span className="w-8 h-[1px] bg-neutral-600"></span>
               Xenotect Studio
@@ -149,18 +138,18 @@ export function HeroSection() {
             </span>
           </div>
 
-          <h1 className="hero-reveal-elem font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 translate-y-10 blur-[10px]">
+          <h1 className="hero-reveal-elem font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 translate-y-10">
             <span className="block opacity-90 transition-opacity duration-500 group-hover/title:opacity-100 drop-shadow-xl">DIGITAL</span>
             <span className="block text-neutral-500 italic font-light tracking-tight transition-colors duration-500 group-hover/title:text-white">ENGINEERING</span>
           </h1>
 
-          <p className="hero-reveal-elem text-lg md:text-xl text-neutral-400 max-w-lg leading-[1.7] mb-14 font-light tracking-wide opacity-0 translate-y-10 blur-[10px]">
+          <p className="hero-reveal-elem text-lg md:text-xl text-neutral-400 max-w-lg leading-[1.7] mb-14 font-light tracking-wide opacity-0 translate-y-10">
             Bridging Business with Intelligent Digital Solutions. We craft premium web experiences, UI/UX design, AI agents, and business automation.
           </p>
 
-          <div className="hero-reveal-elem flex flex-wrap items-center gap-8 opacity-0 translate-y-10 blur-[10px]">
+          <div className="hero-reveal-elem flex flex-col sm:flex-row items-center gap-6 opacity-0 translate-y-10">
             <RadialGlowButton
-              className="group flex items-center gap-4"
+              className="group flex items-center gap-4 w-full sm:w-auto"
               onClick={() => navigateWithTransition("/contact")}
             >
               <span className="uppercase tracking-[0.2em] text-[11px] font-bold text-white">Start Project</span>
