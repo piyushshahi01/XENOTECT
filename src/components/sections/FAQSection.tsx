@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { usePageTransition } from '../ui/PageTransition';
 
 const faqs = [
   { q: "How long does a typical project take?", a: "Project timelines vary based on scope and complexity. A standard landing page takes 2-4 weeks, while a full web application might take 2-4 months. We always provide a detailed timeline before starting." },
@@ -12,6 +13,7 @@ const faqs = [
 ];
 
 export function FAQSection() {
+  const { navigateWithTransition } = usePageTransition();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -87,7 +89,10 @@ export function FAQSection() {
 
           {/* Right Column: Contact Card */}
           <div className="lg:col-span-5 xl:col-span-4 lg:sticky top-32">
-            <div className="group relative flex flex-col p-8 md:p-10 rounded-2xl bg-[#0A0A0A] w-full border border-white/5 shadow-2xl cursor-pointer pointer-events-auto">
+            <div 
+              onClick={() => navigateWithTransition('/contact')}
+              className="group relative flex flex-col p-8 md:p-10 rounded-2xl bg-[#0A0A0A] w-full border border-white/5 shadow-2xl cursor-pointer pointer-events-auto"
+            >
               
               <div className="mb-6">
                 <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-3">

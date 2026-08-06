@@ -190,7 +190,6 @@ export function ServicesSection() {
                   backgroundPosition: slice.position
                 }} 
               >
-                <div className={`laptop-overlay-${i} absolute inset-0 bg-black/10`} />
                 {/* Dynamic Specular Glare */}
                 <div className={`glare-${i} absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 mix-blend-overlay rounded-[24px] pointer-events-none`} />
               </div>
@@ -268,6 +267,7 @@ function CardInnerContent({ card, index }: { card: any, index: number }) {
 
   return (
     <div 
+      suppressHydrationWarning
       className="service-content relative z-30 flex h-full flex-col"
       {...stringProps}
     >

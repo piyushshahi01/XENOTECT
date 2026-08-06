@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Space_Grotesk, Kanit } from "next/font/google";
+import { Outfit, Space_Grotesk, Kanit, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { SmoothScroller } from "@/components/ui/SmoothScroller";
 import { PageTransitionProvider } from "@/components/ui/PageTransition";
@@ -24,6 +24,13 @@ const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   variable: "--font-kanit",
+});
+
+const instrument = Instrument_Serif({
+  weight: ["400"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-instrument",
 });
 
 const BASE_URL = "https://xenotect.com";
@@ -113,7 +120,7 @@ export default async function RootLayout({
   const packages = await getCmsPackages();
   const features = await getCmsFeatures();
   return (
-    <html lang="en" className={`${outfit.variable} ${spaceGrotesk.variable} ${kanit.variable} bg-black`}>
+    <html lang="en" className={`${outfit.variable} ${spaceGrotesk.variable} ${kanit.variable} ${instrument.variable} bg-black`}>
       <body className="antialiased bg-black text-[#e5e5e5] font-sans overflow-x-hidden w-full max-w-full">
         <AuthProvider>
         <StringTuneProvider>

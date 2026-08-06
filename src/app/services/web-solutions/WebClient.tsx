@@ -6,8 +6,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
-import { XenotectNav } from "@/components/ui/XenotectNav";
 import { Footer } from "@/components/sections/Footer";
+import { NotchNavbar } from "@/components/ui/notch-navbar";
 
 // Web Solution Specific Sections
 import { WebHero } from "@/components/sections/services/web/WebHero";
@@ -49,9 +49,9 @@ export default function WebClientPage({ webTiers, exchangeRate, basePrice, compa
   }, { scope: containerRef });
 
   return (
-    <main className="relative z-0 min-h-[100dvh] bg-transparent text-white font-sans overflow-x-hidden selection:bg-white/30" ref={containerRef}>
-      <GlobalSplineBackground tintColor="bg-slate-900/30 mix-blend-color" />
-      <XenotectNav />
+    <main className="relative z-0 min-h-[100dvh] bg-transparent text-[#E6E6E6] selection:bg-[#00E5FF]/30 font-sans" ref={containerRef}>
+      <GlobalSplineBackground tintColor="bg-emerald-900/40 mix-blend-color" />
+      <NotchNavbar />
       
       {/* 1. Hero Section */}
       <WebHero />

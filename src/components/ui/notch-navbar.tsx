@@ -53,7 +53,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
     ],
     right: [
       { label: "Blog", href: "/blog", icon: User },
-      { label: "Contact", href: "/#contact", icon: Home }
+      { label: "Contact", href: "/contact", icon: Home }
     ]
   }
 
@@ -128,7 +128,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
                 ))}
                 
                 <div className="flex gap-4 pl-4 border-l border-white/10 shrink-0 items-center">
-                  <Link href="/#contact" className="whitespace-nowrap">
+                  <Link href="/contact" className="whitespace-nowrap">
                     <RadialGlowButton style={{ minWidth: 'auto', minHeight: 'auto', padding: '10px 20px', borderRadius: '9999px', fontSize: '14px' }}>
                       Start a Project
                     </RadialGlowButton>

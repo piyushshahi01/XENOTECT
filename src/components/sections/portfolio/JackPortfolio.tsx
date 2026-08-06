@@ -206,27 +206,13 @@ export function AnimatedText({ text, className = '', style = {} }: AnimatedTextP
 // --- DATA ---
 
 const MARQUEE_IMAGES = [
-  'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
-  'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
-  'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
-  'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
-  'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
-  'https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif',
-  'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
-  'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
-  'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
-  'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
-  'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
-  'https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif',
-  'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
-  'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
-  'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
-  'https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif',
-  'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
-  'https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif',
-  'https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif',
-  'https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif',
-  'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
+  ...Array(4).fill([
+    { url: '/videos/project-1.mp4', link: 'https://velvet-roast-alpha.vercel.app/' },
+    { url: '/videos/project-2.mp4', link: 'https://forge-orpin-eight.vercel.app/' },
+    { url: '/videos/project-3.mp4', link: 'https://himanshu-store-grocery-app.vercel.app/' },
+    { url: '/videos/project-4.mp4', link: 'https://ether-eight-dusky.vercel.app/' },
+    { url: '/videos/cinepass.mp4', link: 'https://cinepass-pink.vercel.app/' },
+  ]).flat()
 ];
 
 // --- BLINDS REVEAL EFFECT (Framer Remix for Services) ---
@@ -713,14 +699,32 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
           className="flex gap-3 will-change-transform"
           style={{ transform: `translate3d(${scrollOffset - 200}px, 0, 0)` }}
         >
-          {row1Items.map((src, i) => (
-            <img
+          {row1Items.map((item, i) => (
+            <a 
               key={`row1-${i}`}
-              src={src}
-              alt=""
-              loading="lazy"
-              className="w-[420px] h-[270px] rounded-2xl object-cover shrink-0 bg-white/5"
-            />
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block cursor-pointer transition-transform duration-300 hover:scale-[1.02] shrink-0 w-[420px]"
+            >
+              {item.url.endsWith('.mp4') ? (
+                <video
+                  src={item.url}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-[270px] rounded-2xl object-cover bg-white/5"
+                />
+              ) : (
+                <img
+                  src={item.url}
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-[270px] rounded-2xl object-cover bg-white/5"
+                />
+              )}
+            </a>
           ))}
         </div>
 
@@ -729,14 +733,32 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
           className="flex gap-3 will-change-transform"
           style={{ transform: `translate3d(${-(scrollOffset - 200)}px, 0, 0)` }}
         >
-          {row2Items.map((src, i) => (
-            <img
+          {row2Items.map((item, i) => (
+            <a 
               key={`row2-${i}`}
-              src={src}
-              alt=""
-              loading="lazy"
-              className="w-[420px] h-[270px] rounded-2xl object-cover shrink-0 bg-white/5"
-            />
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block cursor-pointer transition-transform duration-300 hover:scale-[1.02] shrink-0 w-[420px]"
+            >
+              {item.url.endsWith('.mp4') ? (
+                <video
+                  src={item.url}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-[270px] rounded-2xl object-cover bg-white/5"
+                />
+              ) : (
+                <img
+                  src={item.url}
+                  alt=""
+                  loading="lazy"
+                  className="w-full h-[270px] rounded-2xl object-cover bg-white/5"
+                />
+              )}
+            </a>
           ))}
         </div>
       </section>

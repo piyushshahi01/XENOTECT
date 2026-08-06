@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { name: "Portfolio", href: "/portfolio" },
   { name: "Pricing", href: "/#pricing" },
   { name: "Blog", href: "/#blog" },
-  { name: "Contact", href: "/#contact" }
+  { name: "Contact", href: "/contact" }
 ];
 
 const ease = [0.23, 1, 0.32, 1] as const;

@@ -34,8 +34,8 @@ export function PortfolioSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {[
             { id: 1, title: "Velvet Roast", videoUrl: "/videos/project-1.mp4", projectUrl: "https://velvet-roast-alpha.vercel.app/" },
-            { id: 2, title: "FORGE — Premium Fitness Club", videoUrl: "/videos/project-2.mp4", projectUrl: "https://forge-orpin-eight.vercel.app/" },
-            { id: 3, title: "Himanshu Store — Grocery App", videoUrl: "/videos/project-3.mp4", projectUrl: "https://himanshu-store-grocery-app.vercel.app/" },
+            { id: 2, title: "FORGE — Premium Fitness", videoUrl: "/videos/project-2.mp4", projectUrl: "https://forge-orpin-eight.vercel.app/" },
+            { id: 3, title: "Himanshu Store", videoUrl: "/videos/project-3.mp4", projectUrl: "https://himanshu-store-grocery-app.vercel.app/" },
             { id: 4, title: "ÉTHÉR — Immersive Web Experience", videoUrl: "/videos/project-4.mp4", projectUrl: "https://ether-eight-dusky.vercel.app/" }
           ].map((project, index) => (
             <motion.div 

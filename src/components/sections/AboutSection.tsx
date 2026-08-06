@@ -14,9 +14,34 @@ interface BentoCardProps {
   desc: string;
   icon: React.ReactNode;
   className?: string;
+  theme?: "green" | "blue" | "purple";
 }
 
-function BentoCard({ title, desc, icon, className }: BentoCardProps) {
+function getCardStyles(theme: "green" | "blue" | "purple") {
+  if (theme === "green") return "bg-[#050505] border-emerald-500/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_40px_rgba(16,185,129,0.05)] hover:border-emerald-500/30 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_40px_rgba(16,185,129,0.15)]";
+  if (theme === "blue") return "bg-[#050505] border-blue-500/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_40px_rgba(59,130,246,0.05)] hover:border-blue-500/30 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_40px_rgba(59,130,246,0.15)]";
+  return "bg-[#050505] border-purple-500/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_40px_rgba(168,85,247,0.05)] hover:border-purple-500/30 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_0_40px_rgba(168,85,247,0.15)]";
+}
+
+function getGlowColor(theme: "green" | "blue" | "purple") {
+  if (theme === "green") return "bg-emerald-500";
+  if (theme === "blue") return "bg-blue-500";
+  return "bg-purple-500";
+}
+
+function getHoverColor(theme: "green" | "blue" | "purple") {
+  if (theme === "green") return "group-hover:border-emerald-500/50 group-hover:text-emerald-500";
+  if (theme === "blue") return "group-hover:border-blue-500/50 group-hover:text-blue-500";
+  return "group-hover:border-purple-500/50 group-hover:text-purple-500";
+}
+
+function getIconBgColor(theme: "green" | "blue" | "purple") {
+  if (theme === "green") return "group-hover:bg-emerald-500/10";
+  if (theme === "blue") return "group-hover:bg-blue-500/10";
+  return "group-hover:bg-purple-500/10";
+}
+
+function BentoCard({ title, desc, icon, className, theme = "green" }: BentoCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -51,17 +76,22 @@ function BentoCard({ title, desc, icon, className }: BentoCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`about-bento-card glass-card-shimmer relative rounded-[2rem] p-1.5 bg-white/5 flex flex-col overflow-hidden group shadow-[0_20px_60px_rgba(0,0,0,0.4)] pointer-events-auto ${className}`}
+      className={`about-bento-card relative rounded-[2rem] p-1.5 flex flex-col overflow-hidden group shadow-[0_20px_60px_rgba(0,0,0,0.4)] pointer-events-auto ${className}`}
     >
       {/* Inner Core */}
-      <div className="relative z-10 flex flex-col h-full rounded-[calc(2rem-0.375rem)] surface-elevated p-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 pointer-events-none" />
+      <div className={`relative z-10 flex flex-col h-full rounded-[calc(2rem-0.375rem)] border p-8 overflow-hidden transition-all duration-500 ${getCardStyles(theme)}`}>
         
+        {/* Glow Orb */}
+        <div className={`absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[80px] opacity-20 pointer-events-none transition-opacity duration-700 group-hover:opacity-40 ${getGlowColor(theme)}`} />
+
+        {/* Noise overlay for glass effect */}
+        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
+
         {/* 3D Inner Content */}
         <motion.div style={{ translateZ: 50 }} className="relative z-20 flex flex-col h-full">
-          <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-auto group-hover:scale-110 group-hover:-translate-y-1 group-hover:border-[#00C853]/50 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] relative">
-            <div className="absolute inset-0 rounded-full bg-[#00C853]/0 group-hover:bg-[#00C853]/10 blur-md transition-all duration-500" />
-            {React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "w-5 h-5 text-white/70 group-hover:text-[#00C853] transition-colors duration-500 relative z-10" })}
+          <div className={`w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-auto group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] relative ${getHoverColor(theme)}`}>
+            <div className={`absolute inset-0 rounded-full blur-md transition-all duration-500 opacity-0 group-hover:opacity-100 ${getIconBgColor(theme)}`} />
+            {React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "w-5 h-5 text-white/70 transition-colors duration-500 relative z-10" })}
           </div>
           <div className="mt-12">
             <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">{title}</h3>
@@ -135,18 +165,21 @@ export function AboutSection() {
             icon={<Code2 />}
             title="Elite Web Engineering"
             desc="React, Next.js, and WebGL architectures that feel instantaneous and rank perfectly. We don't use templates; we build highly bespoke digital products from the ground up."
+            theme="green"
           />
           <BentoCard 
             className="md:col-span-4"
             icon={<Sparkles />}
             title="AI Integration"
             desc="Automate workflows and delight users with custom LLMs, Voice Agents, and intelligent search implementations."
+            theme="blue"
           />
           <BentoCard 
             className="md:col-span-12"
             icon={<TrendingUp />}
             title="Strategic Growth & Marketing"
             desc="Traffic is meaningless without conversion. We align our technical builds with aggressive SEO strategies, performance marketing, and conversion rate optimization to ensure your investment returns multiple times over."
+            theme="purple"
           />
         </div>
 

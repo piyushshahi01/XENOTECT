@@ -2,8 +2,8 @@
 
 import React, { useRef } from "react";
 import { ArrowRight, BarChart, TrendingUp, Search, Megaphone, Target, Share2 } from "lucide-react";
-import { XenotectNav } from "@/components/ui/XenotectNav";
 import { Footer } from "@/components/sections/Footer";
+import { NotchNavbar } from "@/components/ui/notch-navbar";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -91,7 +91,7 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
   return (
     <main className="relative z-0 min-h-[100dvh] bg-transparent text-white selection:bg-rose-500/30 font-sans" ref={containerRef}>
       <GlobalSplineBackground tintColor="bg-rose-900/30 mix-blend-color" />
-      <XenotectNav />
+      <NotchNavbar />
       
       {/* 1. Hero Section (Floating Dashboard Marketing Edition - Dark Rose/Black) */}
       <section className="hero-section relative w-full pt-40 pb-16 min-h-[100dvh] flex flex-col justify-center items-center overflow-hidden">

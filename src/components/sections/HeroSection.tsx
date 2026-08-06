@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { SplineScene } from "../ui/splite";
@@ -31,24 +31,36 @@ export function HeroSection() {
     mouseY.set(20);
   };
 
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined' && sessionStorage.getItem('preloaderPlayed') === 'true') {
+        setShowPreloader(false);
+      }
+    } catch (e) {}
+  }, []);
+
   useGSAP(() => {
     // Skip ALL animations for bots/Lighthouse — GSAP creates many long tasks on throttled CPUs
     const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
-    if (isBot) {
+
+    if (isBot || !showPreloader) {
       // Instantly show content with no animation overhead
-      gsap.set(".preloader-overlay", { display: "none" });
       gsap.set(".hero-content-layer", { opacity: 1 });
       gsap.set(".hero-reveal-elem", { y: 0, opacity: 1, filter: "blur(0px)" });
       gsap.set(".hero-spline-wrap", { opacity: 1, scale: 1 });
       return;
     }
 
+    try {
+      sessionStorage.setItem('preloaderPlayed', 'true');
+    } catch (e) {}
+
     document.body.style.overflow = "hidden";
     window.scrollTo(0, 0);
 
     // Initial states
-    gsap.set(".preloader-overlay", { opacity: 1 });
-    // preloader-brand starts visible automatically via CSS!
     gsap.set(".hero-content-layer", { opacity: 0 });
     gsap.set(".hero-reveal-elem", { y: 40, opacity: 0 }); // removed blur
     gsap.set(".hero-spline-wrap", { opacity: 0, scale: 0.95 });
@@ -73,11 +85,7 @@ export function HeroSection() {
     .to(".preloader-overlay", {
       opacity: 0,
       duration: 0.3,
-      ease: "power2.out",
-      onComplete: () => {
-        // Remove from DOM flow after animation
-        gsap.set(".preloader-overlay", { display: "none" });
-      }
+      ease: "power2.out"
     }, "-=0.2")
 
     // 3. Hero content layer fades in FAST
@@ -104,17 +112,19 @@ export function HeroSection() {
       ease: "power3.out"
     }, "-=0.6");
 
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [showPreloader] });
 
   return (
     <section ref={containerRef} className="relative h-[100dvh] w-full bg-black pointer-events-auto">
       
       {/* PRELOADER OVERLAY — sits on top of everything */}
-      <div className="preloader-overlay fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-none">
-        <div className="preloader-brand font-display font-black text-white text-[clamp(2rem,6vw,5rem)] uppercase tracking-tighter leading-none select-none">
-          XENOTECT
+      {showPreloader && (
+        <div className="preloader-overlay fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-none">
+          <div className="preloader-brand font-display font-black text-white text-[clamp(2rem,6vw,5rem)] uppercase tracking-tighter leading-none select-none">
+            XENOTECT
+          </div>
         </div>
-      </div>
+      )}
 
       {/* HERO CONTENT LAYER */}
       <div 
