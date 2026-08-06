@@ -59,50 +59,50 @@ export function HeroSection() {
       }
     });
 
-    // 1. Hold brand text, then disperse outward
+    // 1. Hold brand text briefly, then disperse outward FAST
     tl.to(".preloader-brand", {
       scale: 1.5,
       opacity: 0,
       letterSpacing: "0.5em",
-      duration: 1.0,
+      duration: 0.5,
       ease: "power2.inOut",
-      delay: 0.8
+      delay: 0.3 // Reduced from 0.8s
     })
 
-    // 2. Fade out the preloader overlay
+    // 2. Fade out the preloader overlay FAST
     .to(".preloader-overlay", {
       opacity: 0,
-      duration: 0.4,
+      duration: 0.3,
       ease: "power2.out",
       onComplete: () => {
         // Remove from DOM flow after animation
         gsap.set(".preloader-overlay", { display: "none" });
       }
-    }, "-=0.4")
+    }, "-=0.2")
 
-    // 3. Hero content layer fades in
+    // 3. Hero content layer fades in FAST
     .to(".hero-content-layer", {
       opacity: 1,
-      duration: 0.6,
+      duration: 0.4,
       ease: "power2.out"
-    }, "-=0.4")
+    }, "-=0.2")
 
-    // 4. Staggered content reveals (NO BLUR)
+    // 4. Staggered content reveals (NO BLUR, FAST)
     .to(".hero-reveal-elem", {
       y: 0,
       opacity: 1,
-      duration: 1.0,
-      stagger: 0.15,
+      duration: 0.6,
+      stagger: 0.1,
       ease: "power3.out"
-    }, "-=0.8")
+    }, "-=0.4")
 
     // 5. Spline 3D scene fades in with scale
     .to(".hero-spline-wrap", {
       opacity: 1,
       scale: 1,
-      duration: 1.5,
+      duration: 1.0,
       ease: "power3.out"
-    }, "-=1.0");
+    }, "-=0.6");
 
   }, { scope: containerRef });
 

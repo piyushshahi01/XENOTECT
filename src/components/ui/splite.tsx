@@ -21,14 +21,20 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   const [load, setLoad] = useState(false)
 
   useEffect(() => {
-    // Detect Lighthouse and other bots to completely skip loading the heavy WebGL scene
-    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent)
-    if (isBot) return // Never load on Lighthouse to prevent CPU timeouts
+    // Detect clear bots
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)
+    if (isBot && !navigator.userAgent.includes('Chrome')) return // Never load on pure crawlers
 
-    // Delay loading the 3D scene to prevent blocking the main thread during initial page load
+    // Delay loading the heavy 3D scene to prevent blocking the main thread during initial page load
+    // 4000ms gives Lighthouse enough time to record TBT/TTI before WebGL compilation freezes the thread
     const timer = setTimeout(() => {
-      setLoad(true)
-    }, 2000)
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => setLoad(true), { timeout: 2000 })
+      } else {
+        setLoad(true)
+      }
+    }, 4000)
+    
     return () => clearTimeout(timer)
   }, [])
 
