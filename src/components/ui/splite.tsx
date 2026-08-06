@@ -25,17 +25,13 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)
     if (isBot && !navigator.userAgent.includes('Chrome')) return // Never load on pure crawlers
 
-    // Delay loading the heavy 3D scene to prevent blocking the main thread during initial page load
-    // 4000ms gives Lighthouse enough time to record TBT/TTI before WebGL compilation freezes the thread
-    const timer = setTimeout(() => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => setLoad(true), { timeout: 2000 })
-      } else {
-        setLoad(true)
-      }
-    }, 4000)
-    
-    return () => clearTimeout(timer)
+    // Load the 3D scene immediately after the initial render
+    // We use requestIdleCallback to ensure it doesn't block the very first paint
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => setLoad(true))
+    } else {
+      setTimeout(() => setLoad(true), 100)
+    }
   }, [])
 
   if (!load) {
