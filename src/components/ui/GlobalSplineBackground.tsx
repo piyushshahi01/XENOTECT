@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 
-// Dynamically import the Spline component with SSR disabled to avoid 'document is not defined' runtime errors
+// Dynamically import the Spline component with SSR disabled
 const Spline = dynamic(() => import("@splinetool/react-spline"), { 
   ssr: false,
   loading: () => <div className="absolute inset-0 bg-[#050505]" />
@@ -11,71 +11,70 @@ const Spline = dynamic(() => import("@splinetool/react-spline"), {
 
 export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string }) {
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Forward mouse events to the Spline canvas so it reacts globally
   useEffect(() => {
-    // Skip everything for bots/Lighthouse to eliminate all overhead
+    // Skip for bots/Lighthouse
     const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
     if (isBot) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const canvas = document.querySelector('.spline-bg-wrapper canvas');
-      if (canvas) {
-        const event = new PointerEvent('pointermove', {
-          clientX: e.clientX,
-          clientY: e.clientY,
-          bubbles: true,
-          cancelable: true,
-          pointerType: 'mouse'
-        });
-        canvas.dispatchEvent(event);
-      }
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    // Delay loading the heavy 3D background to prevent blocking initial render (helps Lighthouse/PageSpeed)
-    const timer = setTimeout(() => setShouldLoad(true), 3000);
+    // Load after idle — gives the browser time to paint critical UI first
+    const loadTimer = "requestIdleCallback" in window
+      ? (window as any).requestIdleCallback(() => setShouldLoad(true), { timeout: 4000 })
+      : setTimeout(() => setShouldLoad(true), 3500);
+
+    // Use IntersectionObserver to pause/resume based on visibility
+    // (Spline keeps animating even off-screen which burns GPU)
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0, rootMargin: "200px" }
+    );
+    if (wrapperRef.current) observer.observe(wrapperRef.current);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(timer);
+      if ("cancelIdleCallback" in window) {
+        (window as any).cancelIdleCallback(loadTimer);
+      } else {
+        clearTimeout(loadTimer as any);
+      }
+      observer.disconnect();
     };
   }, []);
 
-  // Render nothing for bots — static bg-[#050505] from body is sufficient
-  if (typeof navigator !== 'undefined' && /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent)) {
+  // Static fallback for bots
+  if (typeof navigator !== "undefined" && /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent)) {
     return <div className="fixed inset-0 z-[-1] bg-[#050505]" aria-hidden="true" />;
   }
 
   return (
-    <div 
-      className="spline-bg-wrapper fixed inset-0 z-[-1] overflow-hidden bg-[#050505] pointer-events-auto"
+    <div
+      ref={wrapperRef}
+      className="spline-bg-wrapper fixed inset-0 z-[-1] overflow-hidden bg-[#050505]"
       aria-hidden="true"
     >
-      <div className="absolute inset-0 w-full h-full opacity-90">
-        {shouldLoad ? (
+      <div
+        className="absolute inset-0 w-full h-full opacity-90 transition-opacity duration-500"
+        style={{ opacity: isVisible ? 0.9 : 0, willChange: "opacity" }}
+      >
+        {shouldLoad && (
           <Spline 
             scene="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode" 
             className="w-full h-full"
           />
-        ) : (
-          <div className="absolute inset-0 bg-[#050505]" />
         )}
       </div>
-      
-      {/* Optional Tint Overlay */}
+
+      {/* Optional tint */}
       {tintColor && (
         <div className={`absolute inset-0 z-[1] pointer-events-none ${tintColor}`} />
       )}
 
-      {/* Dark overlay — keep text readable without hiding the cube grid */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/25 z-[1] pointer-events-none" />
-      
-      {/* Soft vignette — subtle only at extreme edges */}
+
+      {/* Soft vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#050505_100%)] opacity-40 z-[2] pointer-events-none" />
-      
-      {/* Noise grain for cinematic quality */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg viewBox=''0 0 256 256'' xmlns=''http://www.w3.org/2000/svg''%3E%3Cfilter id=''n''%3E%3CfeTurbulence type=''fractalNoise'' baseFrequency=''0.9'' numOctaves=''4'' stitchTiles=''stitch''/%3E%3C/filter%3E%3Crect width=''100%25'' height=''100%25'' filter=''url(%23n)''/%3E%3C/svg%3E')] mix-blend-overlay z-[3] pointer-events-none" style={{ backgroundRepeat: 'repeat', backgroundSize: '128px 128px' }} />
     </div>
   );
 }

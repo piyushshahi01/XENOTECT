@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface TechItem {
   name: string;
@@ -101,11 +102,12 @@ export function SolarSystem() {
                 className="group relative flex flex-col items-center justify-center w-[60px] sm:w-[72px] md:w-[84px] h-[72px] sm:h-[86px] md:h-[98px] p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-white/[0.03] hover:bg-[#B600A8]/15 border border-white/10 hover:border-[#B600A8]/80 backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:scale-110 hover:shadow-[0_8px_30px_rgba(182,0,168,0.35)] cursor-pointer no-underline"
               >
                 {/* Tech Icon */}
-                <div className="w-7 sm:w-8 md:w-10 h-7 sm:h-8 md:h-10 flex items-center justify-center mb-1 sm:mb-1.5 transition-transform duration-300 group-hover:scale-110">
-                  <img
+                <div className="relative w-7 sm:w-8 md:w-10 h-7 sm:h-8 md:h-10 flex items-center justify-center mb-1 sm:mb-1.5 transition-transform duration-300 group-hover:scale-110">
+                  <Image
                     src={tech.icon}
                     alt={tech.name}
-                    className="w-full h-full object-contain grayscale contrast-125 brightness-150 opacity-80 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 group-hover:opacity-100 transition-all duration-300"
+                    fill
+                    className="object-contain grayscale contrast-125 brightness-150 opacity-80 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 group-hover:opacity-100 transition-all duration-300"
                   />
                 </div>
 

@@ -50,7 +50,7 @@ export default function WebClientPage({ webTiers, exchangeRate, basePrice, compa
 
   return (
     <main className="relative z-0 min-h-[100dvh] bg-transparent text-[#E6E6E6] selection:bg-[#00E5FF]/30 font-sans" ref={containerRef}>
-      <GlobalSplineBackground tintColor="bg-emerald-900/40 mix-blend-color" />
+      <GlobalSplineBackground tintColor="bg-blue-900/50 mix-blend-color" />
       <NotchNavbar />
       
       {/* 1. Hero Section */}
@@ -84,20 +84,7 @@ export default function WebClientPage({ webTiers, exchangeRate, basePrice, compa
         </div>
       )}
 
-      {/* 8. Website Cost Calculator */}
-      <div className="relative z-20 py-24 bg-transparent">
-        <div className="max-w-7xl mx-auto px-6 reveal-up">
-          <div className="flex flex-col items-center text-center gap-4 mb-20">
-            <div className="inline-flex rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-white/70">
-              Transparent Pricing
-            </div>
-            <h2 className="font-sans text-4xl md:text-5xl font-bold tracking-tighter text-white">
-              Website Cost Calculator
-            </h2>
-          </div>
-          <CostEstimator service="web" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} />
-        </div>
-      </div>
+
 
       {/* 9. What's Included */}
       <WebIncludedFeatures />

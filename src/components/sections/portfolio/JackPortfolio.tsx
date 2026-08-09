@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { animate, utils } from 'animejs';
 import { ReactLenis } from 'lenis/react';
 import { SolarSystem } from './SolarSystem';
 import { usePageTransition } from "@/components/ui/PageTransition";
+import Image from 'next/image';
 
 // --- REUSABLE COMPONENTS ---
 
@@ -598,6 +600,17 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
   useEffect(() => {
     document.title = 'Xeno — 3D Creator';
 
+    // --- Premium Entrance Animation ---
+    if (typeof window !== "undefined") {
+      animate('.portfolio-curtain', {
+        scaleY: [1, 0],
+        transformOrigin: ['50% 100%', '50% 0%'],
+        duration: 1200,
+        ease: 'inOutExpo',
+        delay: utils.stagger(150)
+      });
+    }
+
     const handleScroll = () => {
       if (!marqueeSectionRef.current) return;
       const sectionTop = marqueeSectionRef.current.offsetTop;
@@ -615,6 +628,14 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
 
   return (
     <ReactLenis root>
+      {/* Entrance Curtains */}
+      <div className="fixed inset-0 z-[9999] pointer-events-none flex">
+        <div className="portfolio-curtain w-1/4 h-full bg-[#0C0C0C] origin-top border-r border-white/5"></div>
+        <div className="portfolio-curtain w-1/4 h-full bg-[#0C0C0C] origin-top border-r border-white/5"></div>
+        <div className="portfolio-curtain w-1/4 h-full bg-[#0C0C0C] origin-top border-r border-white/5"></div>
+        <div className="portfolio-curtain w-1/4 h-full bg-[#0C0C0C] origin-top"></div>
+      </div>
+
       <div
         className="w-full bg-[#0C0C0C] text-white font-kanit overflow-x-clip"
         style={{ fontFamily: "'Kanit', sans-serif" }}
@@ -952,18 +973,18 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
                 <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
                   {/* Left Column (40%) - 2 stacked images */}
                   <div className="lg:w-[40%] flex flex-col gap-4 sm:gap-6">
-                    <div className="w-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-video">
-                      <img src={proj.col1Img1} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                    <div className="w-full relative overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-video">
+                      <Image src={proj.col1Img1} alt="" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
-                    <div className="w-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3]">
-                      <img src={proj.col1Img2} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                    <div className="w-full relative overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3]">
+                      <Image src={proj.col1Img2} alt="" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
                   </div>
 
                   {/* Right Column (60%) - 1 tall image */}
                   <div className="lg:w-[60%] flex">
-                    <div className="w-full h-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3] lg:aspect-auto">
-                      <img src={(proj as any).col2Img} alt="" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                    <div className="w-full relative h-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3] lg:aspect-auto">
+                      <Image src={(proj as any).col2Img} alt="" fill sizes="(max-width: 768px) 100vw, 60vw" className="object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
                   </div>
                 </div>

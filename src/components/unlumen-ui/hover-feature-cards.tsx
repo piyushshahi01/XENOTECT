@@ -51,9 +51,9 @@ function HoverFeatureCard({
     >
       <div
         className={cn(
-          "flex flex-col rounded-3xl border h-64 z-5 bg-[#0a0a0a] transition-colors w-full",
+          "flex flex-col rounded-3xl border h-64 z-5 bg-[#050505]/60 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] transition-colors w-full",
           !item.soon && item.href ? "hover:border-white/20" : "",
-          item.soon ? "border-dashed border-white/5" : "border-white/5",
+          item.soon ? "border-dashed border-white/5" : "border-white/10",
         )}
       >
         {item.soon && (
@@ -115,7 +115,7 @@ function HoverFeatureCard({
         transition={{ type: "spring", stiffness: 200, damping: 15 }}
         className="overflow-hidden z-1 w-11/12 self-center -mt-4 relative"
       >
-        <div className="py-4 px-6 rounded-2xl border border-white/10 bg-[#050505] shadow-2xl">
+        <div className="py-4 px-6 rounded-2xl border border-white/10 bg-[#050505]/80 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] shadow-2xl">
           <p className="text-sm font-light leading-relaxed text-white/60 text-center">
             {item.description}
           </p>

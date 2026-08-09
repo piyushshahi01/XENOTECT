@@ -3,16 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { getBlogPosts, deleteBlogPost } from "@/app/actions/blog";
 import { BlogForm } from "./BlogForm";
-import { useAnimeReveal } from "@/hooks/useAnimeReveal";
 import { Trash2 } from "lucide-react";
 
 export default function BlogCmsPage() {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Animejs reveals
-  const headerRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '30px' });
-  const contentRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '20px', delay: 200 });
 
   const fetchPosts = () => {
     setLoading(true);
@@ -35,7 +30,7 @@ export default function BlogCmsPage() {
 
   return (
     <div className="flex flex-col gap-12 max-w-6xl mx-auto pb-32">
-      <div ref={headerRef} className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
         <div className="flex flex-col gap-3">
           <div className="inline-flex items-center rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-neutral-400 w-max mb-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
             Content Module
@@ -53,7 +48,7 @@ export default function BlogCmsPage() {
           {[1, 2, 3, 4].map(i => <div key={i} className="h-64 rounded-[2rem] bg-white/[0.02] border border-white/5 animate-pulse" />)}
         </div>
       ) : (
-        <div ref={contentRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 relative z-10">
           {posts.map((post) => (
             <div key={post.id} className="p-1.5 rounded-[2.5rem] bg-white/[0.02] border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl hover:border-white/10 transition-colors group">
               <div className="h-full rounded-[calc(2.5rem-6px)] bg-[#0A0A0F]/90 border border-white/5 p-8 flex flex-col justify-between shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] relative overflow-hidden">

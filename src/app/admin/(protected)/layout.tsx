@@ -7,15 +7,11 @@ import { LayoutDashboard, Component, Box, FileBox, Menu, X, ArrowUpRight, FileTe
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { SignOutButton } from "./SignOutButton";
-import { useAnimeReveal } from "@/hooks/useAnimeReveal";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Use anime.js reveal for sidebar items
-  const sidebarNavRef = useAnimeReveal<HTMLDivElement>({ stagger: 50, direction: 'up', distance: '10px' });
 
   if (status === "unauthenticated") {
     redirect("/admin/login");
@@ -47,7 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
         </div>
         
-        <nav ref={sidebarNavRef} className="flex-1 px-4 py-4 flex flex-col gap-2 relative z-10">
+        <nav className="flex-1 px-4 py-4 flex flex-col gap-2 relative z-10">
           {navItems.map((item) => {
             const isActive = pathname === item.path;
             return (

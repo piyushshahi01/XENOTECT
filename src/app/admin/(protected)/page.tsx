@@ -6,7 +6,6 @@ import {
   Mail, Phone, Calendar, ArrowRight, CircleDot, User,
   ArrowUpRight, Search, Filter, X, TrendingUp, Zap, BellRing
 } from "lucide-react";
-import { useAnimeReveal } from "@/hooks/useAnimeReveal";
 import { LeadDetailModal } from "@/components/admin/LeadDetailModal";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -63,10 +62,6 @@ export default function AdminDashboardPage() {
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [isLive, setIsLive] = useState(false);
   const esRef = useRef<EventSource | null>(null);
-
-  // Anime.js reveals
-  const headerRef = useAnimeReveal<HTMLDivElement>({ direction: "up", distance: "30px", duration: 1000 });
-  const metricsRef = useAnimeReveal<HTMLDivElement>({ stagger: 100, direction: "up", distance: "20px" });
 
   // ── Fetch leads from DB ──────────────────────────────────────────────────────
   const fetchLeads = useCallback(async () => {
@@ -184,7 +179,7 @@ export default function AdminDashboardPage() {
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-12 pb-32">
 
         {/* ── Header ── */}
-        <div ref={headerRef} className="flex flex-col gap-3 relative z-10">
+        <div className="flex flex-col gap-3 relative z-10">
           <div className="flex items-center gap-3">
             <div className="inline-flex items-center rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-neutral-400 w-max shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
               Dashboard Overview
@@ -202,13 +197,13 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* ── Metric Cards ── */}
-        <div ref={metricsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 relative z-10">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
             return (
               <div
                 key={i}
-                className="anime-child p-1.5 rounded-[2rem] bg-white/[0.02] border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+                className="p-1.5 rounded-[2rem] bg-white/[0.02] border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl"
               >
                 <div className="h-full rounded-[calc(2rem-6px)] bg-[#0A0A0F]/90 border border-white/5 p-6 flex flex-col justify-between gap-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] group hover:bg-white/[0.03] transition-colors relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.02] rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-white/[0.05] transition-colors pointer-events-none" />

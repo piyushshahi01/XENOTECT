@@ -3,11 +3,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { SplineScene } from "../ui/splite";
+import dynamic from "next/dynamic";
 import { RadialGlowButton } from "../ui/radial-glow-button";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { usePageTransition } from "../ui/PageTransition";
+
+const SplineScene = dynamic(() => import("../ui/splite").then(mod => mod.SplineScene), { 
+  ssr: false,
+  loading: () => <div className="absolute inset-0 w-full h-full bg-transparent" />
+});
 
 gsap.registerPlugin(useGSAP);
 
@@ -31,38 +36,24 @@ export function HeroSection() {
     mouseY.set(20);
   };
 
-  const [showPreloader, setShowPreloader] = useState(true);
-
-  useEffect(() => {
-    try {
-      if (typeof window !== 'undefined' && sessionStorage.getItem('preloaderPlayed') === 'true') {
-        setShowPreloader(false);
-      }
-    } catch (e) {}
-  }, []);
-
   useGSAP(() => {
-    // Skip ALL animations for bots/Lighthouse — GSAP creates many long tasks on throttled CPUs
+    // Skip ALL animations for bots/Lighthouse
     const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent);
 
-    if (isBot || !showPreloader) {
-      // Instantly show content with no animation overhead
+    if (isBot) {
+      // Instantly show content with no animation overhead for bots
       gsap.set(".hero-content-layer", { opacity: 1 });
       gsap.set(".hero-reveal-elem", { y: 0, opacity: 1, filter: "blur(0px)" });
       gsap.set(".hero-spline-wrap", { opacity: 1, scale: 1 });
       return;
     }
 
-    try {
-      sessionStorage.setItem('preloaderPlayed', 'true');
-    } catch (e) {}
-
     document.body.style.overflow = "hidden";
     window.scrollTo(0, 0);
 
     // Initial states
     gsap.set(".hero-content-layer", { opacity: 0 });
-    gsap.set(".hero-reveal-elem", { y: 40, opacity: 0 }); // removed blur
+    gsap.set(".hero-reveal-elem", { y: 40, opacity: 0 }); 
     gsap.set(".hero-spline-wrap", { opacity: 0, scale: 0.95 });
 
     const tl = gsap.timeline({
@@ -71,31 +62,15 @@ export function HeroSection() {
       }
     });
 
-    // 1. Hold brand text briefly, then disperse outward FAST
-    tl.to(".preloader-brand", {
-      scale: 1.5,
-      opacity: 0,
-      letterSpacing: "0.5em",
-      duration: 0.5,
-      ease: "power2.inOut",
-      delay: 0.3 // Reduced from 0.8s
-    })
-
-    // 2. Fade out the preloader overlay FAST
-    .to(".preloader-overlay", {
-      opacity: 0,
-      duration: 0.3,
-      ease: "power2.out"
-    }, "-=0.2")
-
-    // 3. Hero content layer fades in FAST
-    .to(".hero-content-layer", {
+    // 1. Hero content layer fades in FAST
+    tl.to(".hero-content-layer", {
       opacity: 1,
       duration: 0.4,
-      ease: "power2.out"
-    }, "-=0.2")
+      ease: "power2.out",
+      delay: 0.2
+    })
 
-    // 4. Staggered content reveals (NO BLUR, FAST)
+    // 4. Staggered content reveals
     .to(".hero-reveal-elem", {
       y: 0,
       opacity: 1,
@@ -104,7 +79,7 @@ export function HeroSection() {
       ease: "power3.out"
     }, "-=0.4")
 
-    // 5. Spline 3D scene fades in with scale
+    // 5. Spline 3D scene fades in
     .to(".hero-spline-wrap", {
       opacity: 1,
       scale: 1,
@@ -112,20 +87,10 @@ export function HeroSection() {
       ease: "power3.out"
     }, "-=0.6");
 
-  }, { scope: containerRef, dependencies: [showPreloader] });
+  }, { scope: containerRef, dependencies: [] });
 
   return (
     <section ref={containerRef} className="relative h-[100dvh] w-full bg-black pointer-events-auto">
-      
-      {/* PRELOADER OVERLAY — sits on top of everything */}
-      {showPreloader && (
-        <div className="preloader-overlay fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-none">
-          <div className="preloader-brand font-display font-black text-white text-[clamp(2rem,6vw,5rem)] uppercase tracking-tighter leading-none select-none">
-            XENOTECT
-          </div>
-        </div>
-      )}
-
       {/* HERO CONTENT LAYER */}
       <div 
         className="hero-content-layer absolute inset-0 w-full h-full flex flex-col md:flex-row z-10 opacity-0"

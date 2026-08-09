@@ -45,15 +45,15 @@ export function PortfolioSection() {
               transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
               className="group relative aspect-video bg-white/[0.02] border border-white/5 rounded-2xl flex items-center justify-center pointer-events-auto overflow-hidden cursor-default"
             >
-              {/* Video or Fallback Background */}
               {project.videoUrl ? (
                 <div className="absolute inset-0 w-full h-full bg-[#0a0a0a]">
                   <video 
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                    autoPlay 
-                    loop 
-                    muted 
+                    autoPlay
                     playsInline
+                    muted
+                    loop
+                    preload="metadata"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                   >
                     <source src={project.videoUrl} type="video/mp4" />
                   </video>

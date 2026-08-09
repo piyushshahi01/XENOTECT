@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Space_Grotesk, Kanit, Instrument_Serif } from "next/font/google";
+import { Inter, Kanit, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { SmoothScroller } from "@/components/ui/SmoothScroller";
 import { PageTransitionProvider } from "@/components/ui/PageTransition";
@@ -10,24 +10,19 @@ import { AuthProvider } from "@/components/providers/AuthProvider";
 import { StringTuneProvider } from "@/components/providers/StringTuneProvider";
 import Script from "next/script";
 
-const outfit = Outfit({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-inter",
 });
 
 const kanit = Kanit({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
-  variable: "--font-kanit",
+  variable: "--font-kanit-custom",
 });
 
 const instrument = Instrument_Serif({
-  weight: ["400"],
+  weight: "400",
   style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-instrument",
@@ -120,8 +115,8 @@ export default async function RootLayout({
   const packages = await getCmsPackages();
   const features = await getCmsFeatures();
   return (
-    <html lang="en" className={`${outfit.variable} ${spaceGrotesk.variable} ${kanit.variable} ${instrument.variable} bg-black`}>
-      <body className="antialiased bg-black text-[#e5e5e5] font-sans overflow-x-hidden w-full max-w-full">
+    <html lang="en" className={`bg-black`}>
+      <body className={`antialiased bg-black text-[#e5e5e5] ${inter.className} overflow-x-hidden w-full max-w-full`}>
         <AuthProvider>
         <StringTuneProvider>
           <SmoothScroller>

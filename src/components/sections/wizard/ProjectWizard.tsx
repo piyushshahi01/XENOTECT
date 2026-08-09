@@ -41,17 +41,38 @@ export function ProjectWizard({
   // Find base price if package is preselected
   let preSelectedBasePrice = 0;
   let preSelectedTimeline = "";
+  let resolvedPackageId = preSelectedPackageId || "";
+
   if (preSelectedPackageId) {
-    const pkg = initialPackages.find(p => p.id === preSelectedPackageId);
+    let pkg = initialPackages.find(p => p.id === preSelectedPackageId);
+    
+    // Fallback for dynamic IDs (if the DB uses CUIDs instead of 'web-starter')
+    if (!pkg && preSelectedServiceId) {
+      const servicePackages = initialPackages
+        .filter(p => p.serviceId === preSelectedServiceId)
+        .sort((a, b) => a.priceInr - b.priceInr);
+        
+      if (servicePackages.length > 0) {
+        if (preSelectedPackageId.includes("starter") || preSelectedPackageId.includes("basic")) {
+          pkg = servicePackages[0]; // Cheapest
+        } else if (preSelectedPackageId.includes("business") || preSelectedPackageId.includes("voice-agent")) {
+          pkg = servicePackages[Math.min(1, servicePackages.length - 1)]; // Middle
+        } else {
+          pkg = servicePackages[servicePackages.length - 1]; // Highest
+        }
+      }
+    }
+
     if (pkg) {
-      preSelectedBasePrice = pkg.priceUsd;
+      resolvedPackageId = pkg.id;
+      preSelectedBasePrice = pkg.priceInr;
       preSelectedTimeline = pkg.time;
     }
   }
 
   const [data, setData] = useState({
     service: preSelectedServiceId || "",
-    package: preSelectedPackageId || "",
+    package: resolvedPackageId,
     basePrice: preSelectedBasePrice,
     timeline: preSelectedTimeline,
     features: {} as Record<string, boolean>,
@@ -71,7 +92,7 @@ export function ProjectWizard({
       .filter(([_, isSelected]) => isSelected)
       .reduce((total, [featId]) => {
         const feature = initialFeatures.find(f => f.id === featId);
-        return total + (feature ? feature.priceUsd : 0);
+        return total + (feature ? feature.priceInr : 0);
       }, 0);
 
   const nextStep = () => setStep(prev => Math.min(prev + 1, 6));
@@ -86,7 +107,7 @@ export function ProjectWizard({
     setData(prev => ({ 
       ...prev, 
       package: pkg.id, 
-      basePrice: pkg.priceUsd,
+      basePrice: pkg.priceInr,
       timeline: pkg.time
     }));
     nextStep();
@@ -132,7 +153,7 @@ export function ProjectWizard({
         <div className="mb-12">
           <div className="flex justify-between mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
             <span>Step {step} of 5</span>
-            <span className="text-white">${estimatedPrice.toLocaleString('en-US')} Est.</span>
+            <span className="text-white">₹{estimatedPrice.toLocaleString('en-IN')} Est.</span>
           </div>
           <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
             <motion.div 
@@ -161,7 +182,7 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select the primary focus of your project so we can tailor the right solution.</p>
               </div>
               
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 xl:gap-6 mt-8">
+              <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4 xl:gap-6 mt-8">
                 {initialServices.map(srv => (
                   <button
                     key={srv.id}
@@ -204,54 +225,58 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select a package that best fits the scale of your operation.</p>
               </div>
               
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 xl:gap-6 mt-8">
+              <div className="flex flex-col gap-3 mt-8">
                 {initialPackages
                   .filter(p => p.serviceId === data.service)
                   .filter(p => !preSelectedCategory || (p.category && p.category.toLowerCase().replace(/\s+/g, '-') === preSelectedCategory))
-                  .sort((a, b) => a.priceUsd - b.priceUsd)
+                  .sort((a, b) => a.priceInr - b.priceInr)
                   .map(pkg => (
                   <button
                     key={pkg.id}
                     onClick={() => handlePackageSelect(pkg)}
-                    className="group relative p-8 md:p-10 rounded-[2rem] border border-white/10 bg-[#050508] hover:border-white/20 transition-all duration-500 text-left flex flex-col justify-between min-h-[460px] overflow-hidden"
+                    className="group relative w-full p-5 rounded-2xl border border-white/10 bg-[#050508] hover:border-[#00E5FF]/30 hover:bg-[#00E5FF]/[0.03] transition-all duration-300 text-left flex items-center gap-5 overflow-hidden"
                   >
-                    {/* Premium Most Popular Badge */}
+                    {/* Most Popular badge */}
                     {pkg.title.toLowerCase().includes('popular') && (
-                      <div className="absolute top-6 right-6 px-3 py-1 bg-gradient-to-r from-[#00E5FF] to-[#007AFF] rounded-full z-20">
-                        <span className="text-[9px] font-black text-black uppercase tracking-[0.15em]">Most Popular</span>
+                      <div className="absolute top-3 right-4 px-2.5 py-0.5 bg-gradient-to-r from-[#00E5FF] to-[#007AFF] rounded-full z-20">
+                        <span className="text-[8px] font-black text-black uppercase tracking-[0.15em]">Most Popular</span>
                       </div>
                     )}
+                    {/* Hover glow */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#00E5FF]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-                    {/* Hover Glow Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                    
-                    <div className="relative z-10">
-                      <h3 className="text-2xl md:text-3xl font-serif text-white tracking-tight mb-4 group-hover:text-[#00E5FF] transition-colors">
-                        {pkg.title.replace(/⭐/g, '').replace(/\(most popular\)/i, '').replace(/\(Most Popular\)/i, '').trim()}
-                      </h3>
-                      
-                      {pkg.time && pkg.time !== "TBD" && (
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] font-bold text-neutral-400 uppercase tracking-[0.15em] mb-8">
-                          <span className="w-1 h-1 rounded-full bg-[#00E5FF]" />
-                          Timeline: {pkg.time}
-                        </div>
-                      )}
-                      
-                      <ul className="space-y-4 mb-10">
-                        {pkg.features.map((feature: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-3 text-sm text-neutral-300 leading-relaxed">
-                            <div className="mt-0.5 shrink-0 w-4 h-4 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#00E5FF]/10 transition-colors">
-                              <Check className="w-2.5 h-2.5 text-white/70 group-hover:text-[#00E5FF] transition-colors" />
-                            </div>
-                            <span>{feature}</span>
-                          </li>
+                    {/* Left: Name + Timeline + Features preview */}
+                    <div className="flex-1 min-w-0 relative z-10">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-base font-bold text-white group-hover:text-[#00E5FF] transition-colors">
+                          {pkg.title.replace(/⭐/g, '').replace(/💼/g, '').replace(/\(most popular\)/i, '').replace(/\(Most Popular\)/i, '').trim()}
+                        </h3>
+                        {pkg.time && pkg.time !== "TBD" && (
+                          <span className="text-[9px] font-bold text-neutral-500 uppercase tracking-wider bg-white/5 border border-white/10 px-2 py-0.5 rounded-md whitespace-nowrap">
+                            {pkg.time}
+                          </span>
+                        )}
+                      </div>
+                      {/* Show first 3 features as small pills */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {pkg.features.slice(0, 3).map((f: string, i: number) => (
+                          <span key={i} className="text-[10px] text-neutral-500 bg-white/[0.04] px-2 py-0.5 rounded-md">
+                            {f}
+                          </span>
                         ))}
-                      </ul>
+                        {pkg.features.length > 3 && (
+                          <span className="text-[10px] text-neutral-600 px-1">+{pkg.features.length - 3} more</span>
+                        )}
+                      </div>
                     </div>
-                    
-                    <div className="relative z-10 pt-6 border-t border-white/10 mt-auto">
-                      <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-500 mb-2">Starting from</p>
-                      <p className="text-3xl md:text-4xl font-display text-white">${pkg.priceUsd.toLocaleString('en-US')}</p>
+
+                    {/* Right: Price + Arrow */}
+                    <div className="shrink-0 text-right relative z-10">
+                      <p className="text-xs text-neutral-500 uppercase tracking-wider mb-0.5">From</p>
+                      <p className="text-xl font-display font-bold text-white">₹{pkg.priceInr.toLocaleString('en-IN')}</p>
+                    </div>
+                    <div className="shrink-0 text-neutral-600 group-hover:text-[#00E5FF] group-hover:translate-x-0.5 transition-all duration-300 relative z-10">
+                      <ArrowRight className="w-5 h-5" />
                     </div>
                   </button>
                 ))}
@@ -277,49 +302,78 @@ export function ProjectWizard({
                 <p className="text-neutral-400 max-w-lg text-sm md:text-base">Select additional capabilities you need for your project.</p>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              {/* Selected Package Banner / Suggestion */}
+              {data.package && (
+                <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-2xl border border-white/10 bg-[#050508] relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-[#00E5FF]/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative z-10 mb-4 sm:mb-0">
+                    <p className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold mb-1">Selected Package</p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-white font-medium">{initialPackages.find(p => p.id === data.package)?.title || "Custom Package"}</span>
+                      <span className="text-neutral-400 text-sm">— ₹{(data.basePrice || 0).toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setStep(2)} 
+                    className="relative z-10 shrink-0 text-xs font-bold uppercase tracking-widest text-[#00E5FF] hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    Change Package <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+              
+              {/* Premium horizontal feature toggle rows */}
+              <div className="flex flex-col gap-2 mt-4">
                 {initialFeatures
                   .filter(feat => feat.category === data.service)
-                  .map(feat => (
-                  <button
-                    key={feat.id}
-                    type="button"
-                    onClick={() => toggleFeature(feat.id)}
-                    className={`group relative flex flex-col justify-between p-8 rounded-[2rem] border cursor-pointer transition-all duration-500 text-left overflow-hidden min-h-[160px] ${
-                      data.features[feat.id]
-                        ? "border-[#00E5FF]/40 bg-[#00E5FF]/[0.03] shadow-[0_0_30px_rgba(0,229,255,0.05)]"
-                        : "border-white/10 bg-[#050508] hover:border-white/20 hover:bg-[#0a0a0f]"
-                    }`}
-                  >
-                    {/* Background glow when selected */}
-                    {data.features[feat.id] && (
-                       <div className="absolute inset-0 bg-gradient-to-br from-[#00E5FF]/[0.05] to-transparent pointer-events-none" />
-                    )}
+                  .map(feat => {
+                    const isSelected = data.features[feat.id];
+                    const price = feat.priceInr > 0 ? `+₹${feat.priceInr.toLocaleString('en-IN')}` : 'Included';
+                    return (
+                      <button
+                        key={feat.id}
+                        type="button"
+                        onClick={() => toggleFeature(feat.id)}
+                        className={`group relative w-full flex items-center gap-4 px-5 py-4 rounded-xl border transition-all duration-300 text-left overflow-hidden ${
+                          isSelected
+                            ? "border-[#00E5FF]/30 bg-[#00E5FF]/[0.04] shadow-[0_0_20px_rgba(0,229,255,0.05)]"
+                            : "border-white/[0.07] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04]"
+                        }`}
+                      >
+                        {/* Selection glow */}
+                        {isSelected && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-[#00E5FF]/[0.04] to-transparent pointer-events-none" />
+                        )}
 
-                    <div className="flex items-start justify-between gap-4 relative z-10 w-full mb-6">
-                      <span className={`font-serif text-xl tracking-tight leading-tight ${data.features[feat.id] ? "text-white" : "text-white/80 group-hover:text-white transition-colors"}`}>
-                        {feat.title}
-                      </span>
-                      <div className={`shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-all duration-500 ${
-                        data.features[feat.id] 
-                          ? "bg-[#00E5FF] border-[#00E5FF] text-black scale-110 shadow-[0_0_15px_rgba(0,229,255,0.3)]" 
-                          : "border-white/20 text-transparent bg-black/50 group-hover:border-white/40"
-                      }`}>
-                        <Check className={`w-3.5 h-3.5 transition-transform duration-500 ${data.features[feat.id] ? "scale-100" : "scale-50"}`} />
-                      </div>
-                    </div>
-                    
-                    <div className="relative z-10 w-full flex items-end justify-between mt-auto">
-                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-500">Add-on</span>
-                      <span className={`text-lg font-mono tracking-wider ${data.features[feat.id] ? "text-[#00E5FF]" : "text-neutral-400 group-hover:text-white transition-colors"}`}>
-                        +${feat.priceUsd.toLocaleString('en-US')}
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                        {/* Checkbox circle */}
+                        <div className={`shrink-0 w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-300 relative z-10 ${
+                          isSelected
+                            ? "bg-[#00E5FF] border-[#00E5FF] shadow-[0_0_12px_rgba(0,229,255,0.4)]"
+                            : "border-white/20 bg-transparent group-hover:border-white/40"
+                        }`}>
+                          <Check className={`w-3 h-3 text-black transition-all duration-300 ${isSelected ? "opacity-100 scale-100" : "opacity-0 scale-50"}`} />
+                        </div>
+
+                        {/* Feature name */}
+                        <span className={`flex-1 text-sm font-medium relative z-10 transition-colors duration-300 ${
+                          isSelected ? "text-white" : "text-white/70 group-hover:text-white/90"
+                        }`}>
+                          {feat.title}
+                        </span>
+
+                        {/* Price badge */}
+                        <span className={`shrink-0 text-xs font-mono font-bold tracking-wide relative z-10 transition-colors duration-300 ${
+                          isSelected ? "text-[#00E5FF]" : "text-neutral-500 group-hover:text-neutral-300"
+                        }`}>
+                          {price}
+                        </span>
+                      </button>
+                    );
+                  })
+                }
               </div>
-              
-              <div className="mt-12 flex items-center justify-between">
+
+              <div className="mt-8 flex items-center justify-between">
                 <button onClick={prevStep} className="text-xs uppercase tracking-widest font-bold text-neutral-500 hover:text-white transition-colors flex items-center gap-2">
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>
@@ -354,7 +408,7 @@ export function ProjectWizard({
                   </div>
                   <div className="text-left md:text-right">
                     <p className="text-neutral-500 uppercase tracking-[0.2em] text-xs font-bold mb-2">Estimated Investment</p>
-                    <h2 className="text-4xl md:text-5xl font-display font-bold text-white">${estimatedPrice.toLocaleString('en-US')}</h2>
+                    <h2 className="text-4xl md:text-5xl font-display font-bold text-white">₹{estimatedPrice.toLocaleString('en-IN')}</h2>
                     <p className="text-neutral-400 text-sm md:text-base">Timeline: ~{data.timeline}</p>
                   </div>
                 </div>

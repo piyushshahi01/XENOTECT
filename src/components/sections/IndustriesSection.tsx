@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Laptop, ShoppingCart, Wallet, HeartPulse, Hexagon, Building2, MonitorPlay, ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -50,31 +51,22 @@ const industriesCol2 = [
 
 export function IndustriesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useGSAP(() => {
-    // Parallax effect on columns
-    gsap.fromTo(".ind-col-1", 
-      { y: 100 }, 
-      { y: -50, ease: "none", scrollTrigger: { trigger: containerRef.current, start: "top bottom", end: "bottom top", scrub: true } }
-    );
-    gsap.fromTo(".ind-col-2", 
-      { y: 180 }, 
-      { y: -20, ease: "none", scrollTrigger: { trigger: containerRef.current, start: "top bottom", end: "bottom top", scrub: true } }
-    );
-
-    // Staggered card reveals per column
+    // Staggered card reveals
     gsap.fromTo(".ind-card",
-      { y: 60, opacity: 0, scale: 0.95 },
+      { y: 50, opacity: 0, scale: 0.96 },
       {
-        y: 0, opacity: 1, scale: 1, duration: 1, stagger: 0.15, ease: "power3.out",
+        y: 0, opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 85%" }
       }
     );
 
-    // Blur reveal for right-side text
+    // Right-side text reveal
     gsap.fromTo(".ind-text-reveal",
-      { opacity: 0, y: 30, filter: "blur(15px)" },
-      { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: containerRef.current, start: "top 85%" } }
+      { opacity: 0, y: 24, filter: "blur(10px)" },
+      { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: containerRef.current, start: "top 80%" } }
     );
   }, { scope: containerRef });
 
@@ -147,7 +139,10 @@ export function IndustriesSection() {
               Don't see your industry? Let's discuss your specific needs.
             </p>
             
-            <button className="ind-text-reveal group relative flex items-center h-14 pl-8 pr-2 rounded-full bg-white text-black font-bold tracking-wide transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-[0.98] pointer-events-auto">
+            <button
+              onClick={() => router.push('/contact')}
+              className="ind-text-reveal group relative flex items-center h-14 pl-8 pr-2 rounded-full bg-white text-black font-bold tracking-wide transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-[0.98] pointer-events-auto"
+            >
               <span className="mr-6">Let's Talk</span>
               <div className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center transition-transform group-hover:translate-x-1 group-hover:-translate-y-[1px] group-hover:scale-105">
                 <ArrowRight className="w-5 h-5 text-black" />

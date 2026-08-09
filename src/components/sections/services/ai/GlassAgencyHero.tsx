@@ -39,8 +39,6 @@ export function GlassAgencyHero() {
         {/* Bottom Blend Gradient to fade into next section */}
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
       </div>
-
-
       {/* Headline Row */}
       <section className="relative z-10 mt-auto flex flex-col lg:flex-row lg:items-end justify-between gap-10 px-6 pb-10 sm:px-12 sm:pb-14">
         

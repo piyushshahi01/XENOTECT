@@ -37,10 +37,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.lumalabs.ai",
       },
-      // Any other domains you use for blog cover images
       {
         protocol: "https",
         hostname: "**.vercel.app",
+      },
+      // Figma prototypes / external assets
+      {
+        protocol: "https",
+        hostname: "*.figma.site",
       },
     ],
     // Enable next-gen WebP/AVIF formats for automatic image optimization

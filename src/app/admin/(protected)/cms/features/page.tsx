@@ -3,15 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { getCmsFeatures } from "@/app/actions/cms";
 import { FeatureForm } from "./FeatureForm";
-import { useAnimeReveal } from "@/hooks/useAnimeReveal";
 
 export default function FeaturesCmsPage() {
   const [features, setFeatures] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Animejs reveals
-  const headerRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '30px' });
-  const contentRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '20px', delay: 200 });
 
   const loadData = () => {
     getCmsFeatures().then(data => {
@@ -26,7 +21,7 @@ export default function FeaturesCmsPage() {
 
   return (
     <div className="flex flex-col gap-12 max-w-6xl mx-auto pb-32">
-      <div ref={headerRef} className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
         <div className="flex flex-col gap-3">
           <div className="inline-flex items-center rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-neutral-400 w-max mb-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
             CMS Module
@@ -44,7 +39,7 @@ export default function FeaturesCmsPage() {
           {[1, 2, 3].map(i => <div key={i} className="h-48 rounded-[2rem] bg-white/[0.02] border border-white/5 animate-pulse" />)}
         </div>
       ) : (
-        <div ref={contentRef} className="flex flex-col gap-16 relative z-10">
+        <div className="flex flex-col gap-16 relative z-10">
           {["web", "ai", "growth"].map(category => {
             const categoryFeatures = features.filter(f => f.category === category);
             const title = category === "web" ? "Web Services" : category === "ai" ? "AI Solutions" : "Growth & Marketing";

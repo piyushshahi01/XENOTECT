@@ -13,6 +13,7 @@ import { StatsSection } from "@/components/sections/StatsSection";
 import { OrganizationSchema } from "@/components/seo/JsonLd";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
 import { BlogSection } from "@/components/sections/BlogSection";
+import { PricingSection } from "@/components/sections/PricingSection";
 import { getBlogPosts } from "@/app/actions/blog";
 
 function SectionDivider() {
@@ -39,6 +40,8 @@ export default async function Home() {
         <ServicesSection />
         <SectionDivider />
         <PortfolioSection />
+        <SectionDivider />
+        <PricingSection />
         <SectionDivider />
         <WhySection />
         <SectionDivider />

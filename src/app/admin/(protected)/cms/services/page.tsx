@@ -3,15 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { getCmsServices } from "@/app/actions/cms";
 import { ServiceForm } from "./ServiceForm";
-import { useAnimeReveal } from "@/hooks/useAnimeReveal";
 
 export default function ServicesCmsPage() {
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Use animejs for reveal
-  const headerRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '30px' });
-  const gridRef = useAnimeReveal<HTMLDivElement>({ stagger: 100, direction: 'up', distance: '20px', delay: 200 });
 
   const loadData = () => {
     getCmsServices().then(data => {
@@ -26,7 +21,7 @@ export default function ServicesCmsPage() {
 
   return (
     <div className="flex flex-col gap-12 max-w-6xl mx-auto pb-32">
-      <div ref={headerRef} className="flex flex-col gap-3 relative z-10">
+      <div className="flex flex-col gap-3 relative z-10">
         <div className="inline-flex items-center rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-neutral-400 w-max mb-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
           CMS Module
         </div>
@@ -39,7 +34,7 @@ export default function ServicesCmsPage() {
           {[1, 2].map(i => <div key={i} className="h-64 rounded-[2.5rem] bg-white/[0.02] border border-white/5 animate-pulse" />)}
         </div>
       ) : (
-        <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
           {services.map((service) => (
             <div key={service.id} className="anime-child p-1.5 rounded-[2.5rem] bg-white/[0.02] border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-xl hover:border-white/10 transition-colors group">
               <div className="h-full rounded-[calc(2.5rem-6px)] bg-[#0A0A0F]/90 border border-white/5 p-8 flex flex-col gap-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] relative overflow-hidden">

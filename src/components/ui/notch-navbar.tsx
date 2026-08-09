@@ -62,7 +62,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
       <header className={cn("fixed top-0 inset-x-0 z-50 h-16 flex px-0 pointer-events-auto", className)} {...props}>
         
         {/* Left Side Bar - Flexible width */}
-        <div className="flex-1 h-10 bg-[#0C0C0C] z-20 relative min-w-0">
+        <div className="flex-1 h-10 bg-[#0C0C0C]/50 backdrop-blur-md z-20 relative min-w-0">
           <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
             <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
             <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -75,7 +75,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
           {/* Left Slice (Corner) */}
           <div className="w-[50px] h-full relative shrink-0">
             {/* Glass Background */}
-            <div className="absolute inset-0 bg-[#0C0C0C]" style={{ clipPath: "path('M0 0 H50 V64 C25 64 25 40 0 40 Z')" }} />
+            <div className="absolute inset-0 bg-[#0C0C0C]/50 backdrop-blur-md" style={{ clipPath: "path('M0 0 H50 V64 C25 64 25 40 0 40 Z')" }} />
             {/* Outlines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 50 64">
               <path d="M0 39.5 C25 39.5 25 63.5 50 63.5" fill="none" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -86,7 +86,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
           {/* Center Slice (Flexible Content Area) */}
           <div className="flex-1 h-full relative min-w-0 -ml-px">
              {/* Background & Lines Layer */}
-             <div className="absolute inset-0 bg-[#0C0C0C]">
+             <div className="absolute inset-0 bg-[#0C0C0C]/50 backdrop-blur-md">
                  <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
                    <line x1="0" y1="63.5" x2="100%" y2="63.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
                    <line x1="0" y1="60.5" x2="100%" y2="60.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />

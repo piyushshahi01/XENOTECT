@@ -17,22 +17,39 @@ import { useWizard } from "@/context/WizardContext";
 import { HeroVerticalStripes } from "@/components/ui/HeroVerticalStripes";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 import { GlassAgencyHero } from "@/components/sections/services/ai/GlassAgencyHero";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AIClientPage({ aiTiers, exchangeRate, basePrice, comparisonFeatures = [], cmsFeatures = [] }: { aiTiers: any[], exchangeRate: number, basePrice: number, comparisonFeatures?: any[], cmsFeatures?: any[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { openWizard } = useWizard();
 
-  // Initialize anime.js scroll reveal hook for all elements with .scroll-reveal
-  useAnimeReveal({
-    selector: ".scroll-reveal",
-    threshold: 0.1,
-    animationProps: {
-      y: [80, 0],
-      opacity: [0, 1],
-      duration: 1200,
-      ease: "outCubic",
-    }
-  });
+  // Initialize GSAP scroll reveal hook for all elements with .scroll-reveal
+  useEffect(() => {
+    // Reveal animations (Pop-up scale reveal)
+    const reveals = gsap.utils.toArray('.scroll-reveal');
+    
+    reveals.forEach((element: any) => {
+      gsap.fromTo(element, 
+        { y: 100, opacity: 0, scale: 0.85, filter: 'blur(12px)' },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 1.2,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: element,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+  }, []);
 
   // Continuous floating animation for premium feel
   useEffect(() => {
@@ -50,6 +67,7 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
 
   return (
     <main className="relative z-0 min-h-[100dvh] bg-transparent text-[#E6E6E6] selection:bg-[#00E5FF]/30 font-sans" ref={containerRef}>
+      <GlobalSplineBackground tintColor="bg-blue-900/40 mix-blend-color" />
       <NotchNavbar />
       <GlassAgencyHero />
 
@@ -63,51 +81,51 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
           <p className="text-white/40 text-xl font-light max-w-2xl">Modular AI architectures that integrate directly into your operations.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full auto-rows-[350px] md:auto-rows-[450px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full auto-rows-[250px]">
           
           {/* Bento Large Feature (Col 8) */}
-          <div className="scroll-reveal md:col-span-8 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
+          <div className="scroll-reveal md:col-span-8 p-1 rounded-[2rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2rem-0.25rem)] bg-[#050505]/80 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-8 flex flex-col relative overflow-hidden">
               <div className="absolute top-0 right-0 w-[60%] h-[60%] bg-[#0044ff]/10 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="w-16 h-16 rounded-full border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
-                <Mic className="w-8 h-8 text-[#0044ff]" strokeWidth={1.5} />
+              <div className="w-12 h-12 rounded-2xl border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
+                <Mic className="w-6 h-6 text-[#0044ff]" strokeWidth={1.5} />
               </div>
-              <h3 className="text-4xl font-bold tracking-tight text-white mb-4 relative z-10">Voice Agents</h3>
-              <p className="text-white/50 text-xl font-light relative z-10 leading-relaxed max-w-lg">Human-sounding AI that handles inbound support and outbound sales calls flawlessly.</p>
+              <h3 className="text-2xl font-bold tracking-tight text-white mb-2 relative z-10">Voice Agents</h3>
+              <p className="text-white/50 text-sm font-light relative z-10 leading-relaxed max-w-lg">Human-sounding AI that handles inbound support and outbound sales calls flawlessly.</p>
             </div>
           </div>
 
           {/* Bento Small Feature (Col 4) */}
-          <div className="scroll-reveal md:col-span-4 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
-              <div className="w-16 h-16 rounded-full border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
-                <Zap className="w-8 h-8 text-[#0044ff]" strokeWidth={1.5} />
+          <div className="scroll-reveal md:col-span-4 p-1 rounded-[2rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2rem-0.25rem)] bg-[#050505]/80 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-8 flex flex-col relative overflow-hidden">
+              <div className="w-12 h-12 rounded-2xl border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
+                <Zap className="w-6 h-6 text-[#0044ff]" strokeWidth={1.5} />
               </div>
-              <h3 className="text-3xl font-bold tracking-tight text-white mb-3 relative z-10">Automation</h3>
-              <p className="text-white/50 text-lg font-light relative z-10 leading-relaxed">Trigger-based LLM routing connecting your CRM seamlessly.</p>
+              <h3 className="text-2xl font-bold tracking-tight text-white mb-2 relative z-10">Automation</h3>
+              <p className="text-white/50 text-sm font-light relative z-10 leading-relaxed">Trigger-based LLM routing connecting your CRM seamlessly.</p>
             </div>
           </div>
 
           {/* Bento Small Feature (Col 5) */}
-          <div className="scroll-reveal md:col-span-5 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
-              <div className="w-16 h-16 rounded-full border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
-                <MessageSquare className="w-8 h-8 text-[#0044ff]" strokeWidth={1.5} />
+          <div className="scroll-reveal md:col-span-5 p-1 rounded-[2rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2rem-0.25rem)] bg-[#050505]/80 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-8 flex flex-col relative overflow-hidden">
+              <div className="w-12 h-12 rounded-2xl border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
+                <MessageSquare className="w-6 h-6 text-[#0044ff]" strokeWidth={1.5} />
               </div>
-              <h3 className="text-3xl font-bold tracking-tight text-white mb-3 relative z-10">Knowledge Chatbots</h3>
-              <p className="text-white/50 text-lg font-light relative z-10 leading-relaxed">Trained on your internal wiki to answer complex employee queries instantly.</p>
+              <h3 className="text-2xl font-bold tracking-tight text-white mb-2 relative z-10">Knowledge Chatbots</h3>
+              <p className="text-white/50 text-sm font-light relative z-10 leading-relaxed">Trained on your internal wiki to answer complex employee queries instantly.</p>
             </div>
           </div>
 
           {/* Bento Wide Feature (Col 7) */}
-          <div className="scroll-reveal md:col-span-7 p-2 rounded-[2.5rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
-            <div className="h-full w-full rounded-[calc(2.5rem-0.5rem)] bg-black/40 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-12 flex flex-col relative overflow-hidden">
+          <div className="scroll-reveal md:col-span-7 p-1 rounded-[2rem] bg-white/[0.03] border border-white/10 group hover:border-[#0044ff]/40 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-2xl">
+            <div className="h-full w-full rounded-[calc(2rem-0.25rem)] bg-[#050505]/80 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-8 flex flex-col relative overflow-hidden">
               <div className="absolute top-0 left-0 w-[50%] h-[50%] bg-[#0044ff]/10 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="w-16 h-16 rounded-full border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
-                <BrainCircuit className="w-8 h-8 text-[#0044ff]" strokeWidth={1.5} />
+              <div className="w-12 h-12 rounded-2xl border border-[#0044ff]/30 bg-[#0044ff]/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 anime-float">
+                <BrainCircuit className="w-6 h-6 text-[#0044ff]" strokeWidth={1.5} />
               </div>
-              <h3 className="text-4xl font-bold tracking-tight text-white mb-4 relative z-10">Custom LLMs</h3>
-              <p className="text-white/50 text-xl font-light relative z-10 leading-relaxed max-w-lg">Fine-tuned models deployed securely on private infrastructure for absolute data privacy.</p>
+              <h3 className="text-2xl font-bold tracking-tight text-white mb-2 relative z-10">Custom LLMs</h3>
+              <p className="text-white/50 text-sm font-light relative z-10 leading-relaxed max-w-lg">Fine-tuned models deployed securely on private infrastructure for absolute data privacy.</p>
             </div>
           </div>
         </div>
@@ -198,7 +216,6 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
 
       <div className="relative z-20 py-20 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-20 md:gap-40">
         {comparisonFeatures && comparisonFeatures.length > 0 && <div className="scroll-reveal"><ServiceComparison features={comparisonFeatures} /></div>}
-        <div className="scroll-reveal"><CostEstimator service="ai" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} /></div>
         <div className="scroll-reveal"><ServiceFAQ service="ai" /></div>
       </div>
 

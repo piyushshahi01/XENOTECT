@@ -4,16 +4,12 @@ import React, { useEffect, useState } from "react";
 import { getCmsComparisonFeaturesByCategory } from "@/app/actions/cms";
 import { ComparisonForm } from "./ComparisonForm";
 import { BulkImportModal } from "./BulkImportModal";
-import { useAnimeReveal } from "@/hooks/useAnimeReveal";
 
 export default function ComparisonsCmsPage() {
   const [featuresWeb, setFeaturesWeb] = useState<any[]>([]);
   const [featuresAi, setFeaturesAi] = useState<any[]>([]);
   const [featuresGr, setFeaturesGr] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const headerRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '30px' });
-  const contentRef = useAnimeReveal<HTMLDivElement>({ direction: 'up', distance: '20px', delay: 200 });
 
   useEffect(() => {
     Promise.all([
@@ -78,7 +74,7 @@ export default function ComparisonsCmsPage() {
 
   return (
     <div className="flex flex-col gap-12 max-w-6xl mx-auto pb-32">
-      <div ref={headerRef} className="flex flex-col gap-3 relative z-10">
+      <div className="flex flex-col gap-3 relative z-10">
         <div className="inline-flex items-center rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-neutral-400 w-max mb-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
           CMS Module
         </div>
@@ -92,7 +88,7 @@ export default function ComparisonsCmsPage() {
           <div className="h-64 rounded-3xl bg-white/[0.02] border border-white/5 animate-pulse" />
         </div>
       ) : (
-        <div ref={contentRef} className="flex flex-col gap-16 relative z-10">
+        <div className="flex flex-col gap-16 relative z-10">
           {renderServiceSection("Web Solutions", "web", featuresWeb)}
           {renderServiceSection("AI Solutions", "ai", featuresAi)}
           {renderServiceSection("Growth & Marketing", "growth", featuresGr)}

@@ -26,7 +26,14 @@ export const metadata: Metadata = {
 };
 
 
-export default async function ContactPage() {
+export default async function ContactPage(props: {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const searchParams = await props.searchParams;
+  const serviceId = typeof searchParams?.serviceId === 'string' ? searchParams.serviceId : undefined;
+  const packageId = typeof searchParams?.packageId === 'string' ? searchParams.packageId : undefined;
+  const category = typeof searchParams?.category === 'string' ? searchParams.category : undefined;
+
   const services = await getCmsServices();
   const packages = await getCmsPackages();
   const features = await getCmsFeatures();
@@ -35,21 +42,30 @@ export default async function ContactPage() {
     <main className="w-full min-h-[100dvh] bg-[#020203] text-white flex flex-col md:flex-row relative">
       <XenotectNav />
       
-      {/* Left Column: Client Project Wizard */}
-      <div className="w-full lg:w-1/2 h-[100dvh] pt-24 pb-24 px-6 md:px-12 xl:px-20 flex flex-col justify-start relative z-10 bg-[#020203] overflow-y-auto">
+      {/* Left Column: scrollable wizard */}
+      <div className="w-full md:w-1/2 min-h-[100dvh] pt-28 pb-24 px-6 md:px-12 xl:px-16 flex flex-col relative z-20 bg-[#020203] overflow-y-auto">
         
-        <Link href="/" className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors mb-8 w-max text-[10px] uppercase tracking-[0.2em] font-bold mt-8 md:mt-0">
+        {/* Ambient glow */}
+        <div className="absolute top-0 left-0 w-full h-[400px] bg-gradient-to-b from-white/[0.025] to-transparent pointer-events-none" />
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-emerald-500/8 rounded-full blur-[100px] pointer-events-none" />
+
+        <Link href="/" className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors mb-10 w-max text-[10px] uppercase tracking-[0.2em] font-bold relative z-10">
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
         
-        <ProjectWizard 
-          initialServices={services} 
-          initialPackages={packages} 
-          initialFeatures={features} 
-        />
+        <div className="relative z-10 flex-1">
+          <ProjectWizard 
+            initialServices={services} 
+            initialPackages={packages} 
+            initialFeatures={features} 
+            preSelectedServiceId={serviceId}
+            preSelectedPackageId={packageId}
+            preSelectedCategory={category}
+          />
+        </div>
 
         {/* Alternative Contact Methods */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center gap-8">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center gap-8 relative z-10">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">Or reach out directly:</span>
           <div className="flex items-center gap-6">
             <a href="mailto:hello@xenotect.com" className="text-neutral-400 hover:text-white transition-colors">
@@ -63,12 +79,16 @@ export default async function ContactPage() {
         
       </div>
 
-      {/* Right Column: 3D Robot */}
-      <div className="hidden md:block w-1/2 min-h-screen relative overflow-hidden bg-[#020203] border-l border-white/5 fixed right-0 top-0 bottom-0">
-        <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[150%] xl:w-[120%] flex items-center justify-center">
-          <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full scale-75 origin-center" />
+      {/* Right Column: 3D Robot — sticky, no pointer events on canvas */}
+      <div className="hidden md:block md:w-1/2 h-[100dvh] sticky top-0 bg-[#020203] border-l border-white/5 overflow-hidden">
+        {/* Robot scene — pointer-events-none so it NEVER captures mouse scroll */}
+        <div className="absolute inset-0 pointer-events-none">
+          <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full" />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#020203_100%)] pointer-events-none"></div>
+        {/* Vignette overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#020203_85%)] pointer-events-none" />
+        {/* Left edge fade so robot doesn't bleed into wizard */}
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#020203] to-transparent pointer-events-none" />
       </div>
     </main>
   );

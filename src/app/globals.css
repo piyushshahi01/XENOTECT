@@ -4,9 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: 'Suisse Intl', 'Suisse Int\'l', var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Suisse Intl', 'Suisse Int\'l', var(--font-display), ui-sans-serif, system-ui, sans-serif;
-  --font-kanit: var(--font-kanit), sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-kanit: var(--font-kanit-custom), sans-serif;
   --animate-spotlight: spotlight 2s ease .75s 1 forwards;
   @keyframes spotlight {
     0% {
@@ -31,8 +31,31 @@
     background-color: #000000;
     font-family: var(--font-sans), system-ui, sans-serif;
     color: #ffffff;
+    /* Smoother scrolling on all platforms */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto; /* Let JS control smooth scrolling, not CSS (avoids jank) */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* GPU-accelerate fixed/sticky background layers */
+  [class*="fixed"], [class*="sticky"] {
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 }
+
+/* ─── Scroll performance: promote animated elements to their own layer ─── */
+.ind-card,
+.cta-bezel,
+[data-framer-motion],
+.spline-bg-wrapper {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 
 /* ─── Premium Nested Architecture (Double-Bezel) ─── */
 .double-bezel {

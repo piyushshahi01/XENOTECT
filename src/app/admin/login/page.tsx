@@ -4,7 +4,7 @@ import React, { Suspense, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { ShieldAlert, ArrowRight } from "lucide-react";
-import { animate, stagger } from "animejs";
+import { animate, stagger, utils } from "animejs";
 
 function LoginContent() {
   const searchParams = useSearchParams();

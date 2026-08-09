@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ArrowRight, BarChart, TrendingUp, Search, Megaphone, Target, Share2 } from "lucide-react";
+import { ArrowRight, BarChart, TrendingUp, Search, Megaphone, Target, Share2, MousePointerClick, DollarSign } from "lucide-react";
 import { Footer } from "@/components/sections/Footer";
 import { NotchNavbar } from "@/components/ui/notch-navbar";
 import { gsap } from "gsap";
@@ -17,18 +17,46 @@ import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
 import { useWizard } from "@/context/WizardContext";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 import { HeroVerticalStripes } from "@/components/ui/HeroVerticalStripes";
+import { HoverFeatureCards } from "@/components/unlumen-ui/hover-feature-cards";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const growthFeatures = [
+  {
+    name: "Traffic Generation",
+    description: "Omnichannel SEO & Paid Ads targeting high-intent keywords across Google and Meta.",
+    icon: <Search />,
+    containerClassName: "bg-rose-500/5",
+  },
+  {
+    name: "Audience Engagement",
+    description: "Data-driven UI/UX engineered to reduce bounce rates and capture extreme attention.",
+    icon: <MousePointerClick />,
+    containerClassName: "bg-orange-500/5",
+  },
+  {
+    name: "Lead Conversion",
+    description: "Aggressive CRO strategies turning passive website visitors into qualified pipeline leads.",
+    icon: <TrendingUp />,
+    containerClassName: "bg-rose-500/5",
+  },
+  {
+    name: "Revenue Scaling",
+    description: "Continuous optimization maximizing your long-term ROI and Customer Lifetime Value.",
+    icon: <DollarSign />,
+    containerClassName: "bg-orange-500/5",
+  }
+];
 
 export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice, comparisonFeatures = [], cmsFeatures = [] }: { growthTiers: any[], exchangeRate: number, basePrice: number, comparisonFeatures?: any[], cmsFeatures?: any[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { openWizard } = useWizard();
 
   useGSAP(() => {
-    // Cinematic fade-up
+    // Cinematic pop-up scale reveal
     gsap.utils.toArray('.reveal-up').forEach((el: any) => {
       gsap.fromTo(el, 
-        { y: 80, opacity: 0, filter: 'blur(8px)' },
+        { y: 100, opacity: 0, scale: 0.85, filter: 'blur(12px)' },
         { 
           scrollTrigger: {
             trigger: el,
@@ -36,9 +64,10 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
           },
           y: 0, 
           opacity: 1, 
+          scale: 1,
           filter: 'blur(0px)',
-          duration: 1.5, 
-          ease: "power4.out"
+          duration: 1.2, 
+          ease: "expo.out"
         }
       );
     });
@@ -153,38 +182,36 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
         </div>
       </section>
 
-      {/* 2. Marketing Services (Massive Typography Blocks) */}
-      <section className="relative w-full py-40 bg-transparent">
+      {/* 2. Marketing Services (Bento Grid) */}
+      <section className="relative w-full py-24 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 mb-24 reveal-up">
-          <div className="mb-32 reveal-up">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-6">Omnichannel Dominance</h2>
-            <p className="text-white/40 text-xl font-light">Engineered campaigns across every high-intent touchpoint.</p>
+          <div className="flex flex-col gap-4 mb-16">
+            <div className="inline-flex rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium bg-rose-500/10 border border-rose-500/20 text-rose-400 w-fit">
+              Omnichannel Dominance
+            </div>
+            <h2 className="font-sans text-4xl md:text-5xl font-bold tracking-tighter text-white">
+              Engineered campaigns across <br /> every high-intent touchpoint.
+            </h2>
           </div>
 
-          <div className="flex flex-col gap-8 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
             {[
-              { icon: <Search />, title: "Technical SEO", desc: "Dominate search engine real estate with programmatic architectures and elite content clusters." },
-              { icon: <Target />, title: "Performance Ads", desc: "Hyper-targeted Google and Meta campaigns optimized purely for CPA and ROAS." },
-              { icon: <Megaphone />, title: "Brand Engineering", desc: "Positioning strategies that command premium pricing and absolute market authority." },
-              { icon: <Share2 />, title: "Social Acquisition", desc: "Viral organic loops combined with precise paid amplification." }
+              { icon: <Search />, title: "Technical SEO", desc: "Dominate search engine real estate with programmatic architectures and elite content clusters.", colSpan: "col-span-1 md:col-span-2" },
+              { icon: <Target />, title: "Performance Ads", desc: "Hyper-targeted Google and Meta campaigns optimized purely for CPA and ROAS.", colSpan: "col-span-1 md:col-span-1" },
+              { icon: <Megaphone />, title: "Brand Engineering", desc: "Positioning strategies that command premium pricing and absolute market authority.", colSpan: "col-span-1 md:col-span-1" },
+              { icon: <Share2 />, title: "Social Acquisition", desc: "Viral organic loops combined with precise paid amplification.", colSpan: "col-span-1 md:col-span-2" }
             ].map((service, i) => (
-              <div key={i} className="reveal-up w-full p-2 rounded-[2.5rem] bg-white/[0.02] border border-white/[0.05] group hover:bg-rose-900/10 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer">
-                <div className="w-full rounded-[calc(2.5rem-0.5rem)] bg-black/30 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-10 md:p-16 flex flex-col md:flex-row items-start md:items-center gap-10 relative overflow-hidden">
+              <div key={i} className={`reveal-up w-full ${service.colSpan} p-1 rounded-[2rem] bg-white/[0.02] border border-white/[0.05] group hover:bg-rose-900/10 transition-colors duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] cursor-pointer shadow-2xl`}>
+                <div className="w-full h-full rounded-[calc(2rem-0.25rem)] bg-[#050505]/80 backdrop-blur-3xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-8 flex flex-col relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(244,63,94,0.05),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" />
                   
-                  <div className="w-20 h-20 shrink-0 rounded-full border border-white/10 bg-white/5 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]">
-                    {React.cloneElement(service.icon as React.ReactElement<{ className?: string; strokeWidth?: number }>, { className: "w-8 h-8 text-rose-400", strokeWidth: 1.5 })}
+                  <div className="w-12 h-12 rounded-2xl border border-rose-500/20 bg-rose-500/10 flex items-center justify-center backdrop-blur-md mb-auto group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]">
+                    {React.cloneElement(service.icon as React.ReactElement<{ className?: string; strokeWidth?: number }>, { className: "w-6 h-6 text-rose-400", strokeWidth: 1.5 })}
                   </div>
                   
                   <div className="flex flex-col z-10">
-                    <h3 className="text-4xl md:text-5xl font-bold tracking-tight text-white/90 mb-4">{service.title}</h3>
-                    <p className="text-white/40 text-xl font-light leading-relaxed max-w-3xl">{service.desc}</p>
-                  </div>
-                  
-                  <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden md:block z-10">
-                    <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center bg-white/5">
-                      <ArrowRight className="w-6 h-6 text-white/50" />
-                    </div>
+                    <h3 className="text-2xl font-bold tracking-tight text-white mb-2">{service.title}</h3>
+                    <p className="text-white/50 text-sm font-light leading-relaxed max-w-sm">{service.desc}</p>
                   </div>
                 </div>
               </div>
@@ -199,26 +226,13 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
           <div className="inline-flex rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-medium border border-rose-500/20 text-rose-400 mb-16">
             The Framework
           </div>
-          <h2 className="text-5xl lg:text-7xl font-bold tracking-tighter mb-24">Revenue Physics</h2>
+          <h2 className="text-5xl lg:text-7xl font-bold tracking-tighter mb-24">Website Growth Engine</h2>
           
-          <div className="relative w-full max-w-4xl flex flex-col items-center justify-center gap-6 perspective-[1500px]">
-            {/* Background connection line */}
-            <div className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-rose-500/0 via-rose-500/50 to-orange-500/0 -z-10" />
-
-            {[
-              { title: "Acquisition", stat: "100K+ Impressions", color: "from-rose-500 to-rose-600", width: "w-full" },
-              { title: "Activation", stat: "15% Click Rate", color: "from-rose-600 to-orange-500", width: "w-[85%]" },
-              { title: "Conversion", stat: "4.2% Lead Gen", color: "from-orange-500 to-orange-600", width: "w-[70%]" },
-              { title: "Retention", stat: "$450 LTV", color: "from-orange-600 to-amber-500", width: "w-[55%]" }
-            ].map((layer, i) => (
-              <div key={i} className={`funnel-step ${layer.width} h-36 rounded-[2rem] bg-gradient-to-r ${layer.color} p-[1px] transform-style-3d shadow-[0_20px_50px_rgba(0,0,0,0.5)]`}>
-                <div className="w-full h-full bg-black/60 rounded-[calc(2rem-1px)] flex items-center justify-between px-12 relative overflow-hidden backdrop-blur-xl">
-                  <div className="absolute inset-0 bg-white/5 mix-blend-overlay" />
-                  <span className="text-3xl font-bold text-white relative z-10">{layer.title}</span>
-                  <span className="text-xl font-medium text-white/50 relative z-10">{layer.stat}</span>
-                </div>
-              </div>
-            ))}
+          <div className="relative w-full max-w-6xl mt-12 mb-12 reveal-up">
+            <HoverFeatureCards 
+              items={growthFeatures} 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full" 
+            />
           </div>
         </div>
       </section>
@@ -237,7 +251,6 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
 
       <div className="relative z-20 py-20 max-w-7xl mx-auto px-4 sm:px-6 flex flex-col gap-20 md:gap-40">
         {comparisonFeatures && comparisonFeatures.length > 0 && <div className="scroll-reveal"><ServiceComparison features={comparisonFeatures} /></div>}
-        <div className="scroll-reveal"><CostEstimator service="growth" exchangeRate={exchangeRate} basePrice={basePrice} cmsFeatures={cmsFeatures} /></div>
         <div className="scroll-reveal"><ServiceFAQ service="growth" /></div>
       </div>
 
