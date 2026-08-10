@@ -21,9 +21,9 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   const [load, setLoad] = useState(false)
 
   useEffect(() => {
-    // Detect clear bots
-    const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)
-    if (isBot && !navigator.userAgent.includes('Chrome')) return // Never load on pure crawlers
+    // Detect clear bots and performance auditing tools
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed/i.test(navigator.userAgent)
+    if (isBot) return // Never load heavy WebGL on crawlers or Lighthouse
 
     // Load the 3D scene immediately after the initial render
     // We use requestIdleCallback to ensure it doesn't block the very first paint

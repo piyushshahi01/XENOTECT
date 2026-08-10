@@ -7,7 +7,7 @@ import { usePageTransition } from "@/components/ui/PageTransition";
 export function PortfolioSection() {
   const { navigateWithTransition } = usePageTransition();
   const sectionRef = useRef<HTMLElement>(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-80px" });
+  const inView = useInView(sectionRef, { once: true, margin: "200px" });
 
   return (
     <section ref={sectionRef} id="portfolio" className="relative w-full py-24 lg:py-32 overflow-hidden bg-transparent">
@@ -52,10 +52,10 @@ export function PortfolioSection() {
                     playsInline
                     muted
                     loop
-                    preload="metadata"
+                    preload="none"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                   >
-                    <source src={project.videoUrl} type="video/mp4" />
+                    {inView && <source src={project.videoUrl} type="video/mp4" />}
                   </video>
                 </div>
               ) : (
