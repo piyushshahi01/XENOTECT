@@ -10,8 +10,8 @@ const RATE_LIMIT_MAX = 30; // Max requests
 const RATE_LIMIT_WINDOW = 60 * 1000; // 60 seconds
 
 export function middleware(request: NextRequest) {
-  // Only apply rate limiting to /api/ routes
-  if (request.nextUrl.pathname.startsWith('/api/')) {
+  // Only apply rate limiting to /api/ routes, but exclude NextAuth routes which poll frequently
+  if (request.nextUrl.pathname.startsWith('/api/') && !request.nextUrl.pathname.startsWith('/api/auth')) {
     // Get client IP address (handles Vercel and standard proxy headers)
     const ip = 
                request.headers.get('x-real-ip') || 
