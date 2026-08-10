@@ -36,10 +36,17 @@ export function HeroSection() {
     mouseY.set(20);
   };
 
-  const [isBotRender, setIsBotRender] = useState(false);
+  const [shouldRenderSpline, setShouldRenderSpline] = useState(false);
 
   useEffect(() => {
-    setIsBotRender(/bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed|gtmetrix/i.test(navigator.userAgent));
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|pagespeed|gtmetrix/i.test(navigator.userAgent);
+    if (!isBot) {
+      // Defer WebGL initialization by 500ms to free up the main thread during initial load (Fixes TBT)
+      const timer = setTimeout(() => {
+        setShouldRenderSpline(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   useGSAP(() => {
@@ -142,7 +149,7 @@ export function HeroSection() {
         {/* 3D Scene */}
         <div className="hero-spline-wrap relative z-10 flex-1 min-h-[50vh] md:min-h-[100dvh] border-t md:border-t-0 md:border-l border-white/10 opacity-0 scale-95">
           <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-            {!isBotRender && (
+            {shouldRenderSpline && (
               <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full scale-[1.2] md:scale-100" interactive={true} />
             )}
           </div>
