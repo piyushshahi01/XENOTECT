@@ -74,7 +74,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
-              "media-src 'self' blob:",
+              "media-src 'self' blob: data:",
               "connect-src 'self' https://prod.spline.design https://*.vercel-insights.com https://unpkg.com",
               "frame-src 'self' https://prod.spline.design",
               "worker-src 'self' blob:",
