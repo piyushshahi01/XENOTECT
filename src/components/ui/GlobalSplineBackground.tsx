@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import the Spline component with SSR disabled
@@ -11,10 +11,6 @@ const Spline = dynamic(() => import("@splinetool/react-spline"), {
 
 export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string }) {
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [isHeroVisible, setIsHeroVisible] = useState(true);
-  // We observe a sentinel element placed at the bottom of the hero section
-  // (viewport height) to know when the user has scrolled past it.
-  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Skip for bots/Lighthouse
@@ -26,23 +22,12 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       ? (window as any).requestIdleCallback(() => setShouldLoad(true), { timeout: 4000 })
       : setTimeout(() => setShouldLoad(true), 3500);
 
-    // Use scroll position to show/hide the background — fixed elements are
-    // always considered "visible" by IntersectionObserver so we use scroll instead.
-    const handleScroll = () => {
-      // Hide Spline when scrolled more than 100vh past the hero
-      const scrolled = window.scrollY > window.innerHeight * 1.2;
-      setIsHeroVisible(!scrolled);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => {
       if ("cancelIdleCallback" in window) {
         (window as any).cancelIdleCallback(loadTimer);
       } else {
         clearTimeout(loadTimer as any);
       }
-      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -56,10 +41,8 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       className="spline-bg-wrapper fixed inset-0 z-[-1] overflow-hidden bg-[#050505]"
       aria-hidden="true"
     >
-      <div
-        className="absolute inset-0 w-full h-full transition-opacity duration-500"
-        style={{ opacity: isHeroVisible ? 0.9 : 0 }}
-      >
+      {/* 3D Cube — always visible, never hides on scroll */}
+      <div className="absolute inset-0 w-full h-full opacity-90">
         {shouldLoad && (
           <Spline 
             scene="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode" 
