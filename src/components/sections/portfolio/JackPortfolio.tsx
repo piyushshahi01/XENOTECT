@@ -595,7 +595,13 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
   const heroTextOpacity = useTransform(heroScroll, [0, 1], [1, 0]);
   const heroImageY = useTransform(heroScroll, [0, 1], ['0%', '30%']);
   
-  const [scrollOffset, setScrollOffset] = useState(0);
+  const { scrollYProgress: marqueeScroll } = useScroll({
+    target: marqueeSectionRef,
+    offset: ['start end', 'end start']
+  });
+  
+  const row1X = useTransform(marqueeScroll, [0, 1], [-300, 300]);
+  const row2X = useTransform(marqueeScroll, [0, 1], [300, -300]);
 
   useEffect(() => {
     document.title = 'Xeno — 3D Creator';
@@ -610,17 +616,6 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
         delay: utils.stagger(150)
       });
     }
-
-    const handleScroll = () => {
-      if (!marqueeSectionRef.current) return;
-      const sectionTop = marqueeSectionRef.current.offsetTop;
-      const offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
-      setScrollOffset(offset);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const row1Items = [...MARQUEE_IMAGES.slice(0, 11), ...MARQUEE_IMAGES.slice(0, 11), ...MARQUEE_IMAGES.slice(0, 11)];
@@ -716,9 +711,9 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
         className="w-full bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden flex flex-col gap-3"
       >
         {/* Row 1 */}
-        <div
+        <motion.div
           className="flex gap-3 will-change-transform"
-          style={{ transform: `translate3d(${scrollOffset - 200}px, 0, 0)` }}
+          style={{ x: row1X }}
         >
           {row1Items.map((item, i) => (
             <a 
@@ -748,12 +743,12 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
               )}
             </a>
           ))}
-        </div>
+        </motion.div>
 
         {/* Row 2 */}
-        <div
+        <motion.div
           className="flex gap-3 will-change-transform"
-          style={{ transform: `translate3d(${-(scrollOffset - 200)}px, 0, 0)` }}
+          style={{ x: row2X }}
         >
           {row2Items.map((item, i) => (
             <a 
@@ -782,7 +777,7 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
               )}
             </a>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. ABOUT SECTION */}
@@ -941,14 +936,14 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
             return (
               <motion.div
                 key={proj.id}
-                className="sticky rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden"
+                className="sticky rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 shadow-2xl overflow-hidden flex flex-col h-[calc(100vh-140px)] min-h-[500px]"
                 style={{
                   top: `${96 + index * 28}px`,
                   scale,
                 }}
               >
                 {/* Top row */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12 gap-4 border-b border-white/10 pb-6 sm:pb-8">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4 border-b border-white/10 pb-4 sm:pb-6 shrink-0">
                   <div className="flex items-center gap-4 sm:gap-8 flex-wrap">
                     <span
                       className="font-black leading-none text-[#D7E2EA]"
@@ -971,20 +966,20 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
                 </div>
 
                 {/* Bottom row: Two-column image grid */}
-                <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
+                <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 flex-1 min-h-0">
                   {/* Left Column (40%) - 2 stacked images */}
-                  <div className="lg:w-[40%] flex flex-col gap-4 sm:gap-6">
-                    <div className="w-full relative overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-video">
+                  <div className="lg:w-[40%] flex flex-col gap-4 sm:gap-6 h-full min-h-0">
+                    <div className="w-full relative overflow-hidden rounded-[20px] bg-white/5 flex-1 min-h-0">
                       <Image src={proj.col1Img1} alt="" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
-                    <div className="w-full relative overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3]">
+                    <div className="w-full relative overflow-hidden rounded-[20px] bg-white/5 flex-1 min-h-0">
                       <Image src={proj.col1Img2} alt="" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
                   </div>
 
                   {/* Right Column (60%) - 1 tall image */}
-                  <div className="lg:w-[60%] flex">
-                    <div className="w-full relative h-full overflow-hidden rounded-[24px] sm:rounded-[32px] bg-white/5 aspect-[4/3] lg:aspect-auto">
+                  <div className="lg:w-[60%] flex h-full min-h-0">
+                    <div className="w-full relative h-[300px] lg:h-full overflow-hidden rounded-[20px] bg-white/5">
                       <Image src={(proj as any).col2Img} alt="" fill sizes="(max-width: 768px) 100vw, 60vw" className="object-cover transition-transform duration-700 hover:scale-105" />
                     </div>
                   </div>

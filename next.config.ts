@@ -46,6 +46,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.figma.site",
       },
+      // Icons8
+      {
+        protocol: "https",
+        hostname: "img.icons8.com",
+      },
     ],
     // Enable next-gen WebP/AVIF formats for automatic image optimization
     formats: ["image/avif", "image/webp"],
