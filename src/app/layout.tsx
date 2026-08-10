@@ -104,6 +104,17 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  category: "technology",
+  other: {
+    "google-site-verification": "", // Add your Google Search Console verification token here
+  },
+};
+
+export const viewport = {
+  themeColor: "#050505",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default async function RootLayout({
