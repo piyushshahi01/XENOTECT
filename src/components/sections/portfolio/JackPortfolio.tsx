@@ -738,10 +738,11 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
                   className="w-full h-[270px] rounded-2xl object-cover bg-white/5"
                 />
               ) : (
-                <img
+                <Image
                   src={item.url}
-                  alt=""
-                  loading="lazy"
+                  alt="Portfolio Item"
+                  width={420}
+                  height={270}
                   className="w-full h-[270px] rounded-2xl object-cover bg-white/5"
                 />
               )}

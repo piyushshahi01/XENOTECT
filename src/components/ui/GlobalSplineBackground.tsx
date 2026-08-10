@@ -11,8 +11,10 @@ const Spline = dynamic(() => import("@splinetool/react-spline"), {
 
 export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string }) {
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  // We observe a sentinel element placed at the bottom of the hero section
+  // (viewport height) to know when the user has scrolled past it.
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Skip for bots/Lighthouse
@@ -24,13 +26,15 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       ? (window as any).requestIdleCallback(() => setShouldLoad(true), { timeout: 4000 })
       : setTimeout(() => setShouldLoad(true), 3500);
 
-    // Use IntersectionObserver to pause/resume based on visibility
-    // (Spline keeps animating even off-screen which burns GPU)
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0, rootMargin: "200px" }
-    );
-    if (wrapperRef.current) observer.observe(wrapperRef.current);
+    // Use scroll position to show/hide the background — fixed elements are
+    // always considered "visible" by IntersectionObserver so we use scroll instead.
+    const handleScroll = () => {
+      // Hide Spline when scrolled more than 100vh past the hero
+      const scrolled = window.scrollY > window.innerHeight * 1.2;
+      setIsHeroVisible(!scrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       if ("cancelIdleCallback" in window) {
@@ -38,7 +42,7 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
       } else {
         clearTimeout(loadTimer as any);
       }
-      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -49,13 +53,12 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
 
   return (
     <div
-      ref={wrapperRef}
       className="spline-bg-wrapper fixed inset-0 z-[-1] overflow-hidden bg-[#050505]"
       aria-hidden="true"
     >
       <div
-        className="absolute inset-0 w-full h-full opacity-90 transition-opacity duration-500"
-        style={{ opacity: isVisible ? 0.9 : 0, willChange: "opacity" }}
+        className="absolute inset-0 w-full h-full transition-opacity duration-500"
+        style={{ opacity: isHeroVisible ? 0.9 : 0 }}
       >
         {shouldLoad && (
           <Spline 

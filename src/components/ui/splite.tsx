@@ -28,9 +28,9 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
     // Load the 3D scene immediately after the initial render
     // We use requestIdleCallback to ensure it doesn't block the very first paint
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => setLoad(true))
+      requestIdleCallback(() => setLoad(true), { timeout: 1500 })
     } else {
-      setTimeout(() => setLoad(true), 100)
+      setTimeout(() => setLoad(true), 1500)
     }
   }, [])
 

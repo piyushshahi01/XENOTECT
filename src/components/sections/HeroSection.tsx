@@ -48,19 +48,12 @@ export function HeroSection() {
       return;
     }
 
-    document.body.style.overflow = "hidden";
-    window.scrollTo(0, 0);
-
     // Initial states
     gsap.set(".hero-content-layer", { opacity: 0 });
     gsap.set(".hero-reveal-elem", { y: 40, opacity: 0 }); 
     gsap.set(".hero-spline-wrap", { opacity: 0, scale: 0.95 });
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        document.body.style.overflow = "";
-      }
-    });
+    const tl = gsap.timeline();
 
     // 1. Hero content layer fades in FAST
     tl.to(".hero-content-layer", {
@@ -142,7 +135,7 @@ export function HeroSection() {
 
         {/* 3D Scene */}
         <div className="hero-spline-wrap relative z-10 flex-1 min-h-[50vh] md:min-h-[100dvh] border-t md:border-t-0 md:border-l border-white/10 opacity-0 scale-95">
-          <div className="absolute inset-0 float-slow flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
             <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full scale-[1.2] md:scale-100" />
           </div>
         </div>

@@ -39,21 +39,19 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* GPU-accelerate fixed/sticky background layers */
-  [class*="fixed"], [class*="sticky"] {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-  }
 }
 
-/* ─── Scroll performance: promote animated elements to their own layer ─── */
-.ind-card,
-.cta-bezel,
-[data-framer-motion],
+/* ─── Performance: off-screen section rendering optimization ─── */
+/* Browser completely skips paint/layout for sections not in viewport */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+  contain: layout style paint;
+}
+
+/* ─── Spline background: isolated compositing layer ─── */
 .spline-bg-wrapper {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+  isolation: isolate;
 }
 
 
