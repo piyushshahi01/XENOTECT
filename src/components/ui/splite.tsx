@@ -32,12 +32,8 @@ export function SplineScene({ scene, className, interactive = false }: SplineSce
     const observer = new IntersectionObserver(([entry]) => {
       setInView(entry.isIntersecting)
       if (entry.isIntersecting && !load) {
-        // Load it if it hasn't been loaded yet
-        if ('requestIdleCallback' in window) {
-          (window as any).requestIdleCallback(() => setLoad(true), { timeout: 1500 })
-        } else {
-          setTimeout(() => setLoad(true), 1500)
-        }
+        // Load instantly without artificial delay
+        setLoad(true)
       }
     }, { rootMargin: '400px' }) // Load slightly before it comes into view
 
