@@ -164,7 +164,7 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
             velocity.
           </h1>
           
-          <p className="reveal-up text-lg md:text-2xl text-white/40 max-w-2xl mb-16 font-light leading-relaxed tracking-wide">
+          <p className="reveal-up text-lg md:text-2xl text-neutral-400 max-w-2xl mb-16 font-light leading-relaxed tracking-wide">
             We don't guess. We engineer data-driven growth pipelines that consistently capture market share and drive exponential revenue.
           </p>
           

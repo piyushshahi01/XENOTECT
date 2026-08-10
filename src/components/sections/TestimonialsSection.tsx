@@ -110,7 +110,7 @@ export function TestimonialsSection() {
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold text-white tracking-tighter mb-5">
             Trusted by founders<br />
-            <span className="text-white/30">& scaling teams worldwide.</span>
+            <span className="text-neutral-400">& scaling teams worldwide.</span>
           </h2>
           <p className="text-white/50 text-lg leading-relaxed">
             Real results from real clients. No cherry-picked metrics — just honest outcomes.

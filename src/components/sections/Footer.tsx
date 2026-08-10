@@ -134,7 +134,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="footer-bottom flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-white/40 text-[10px] font-medium uppercase tracking-[0.15em] gap-4">
+        <div className="footer-bottom flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-neutral-400 text-[10px] font-medium uppercase tracking-[0.15em] gap-4">
           <p>© {new Date().getFullYear()} Xenotect. All rights reserved.</p>
           <div className="flex gap-8">
             {legalLinks.map((link) => (

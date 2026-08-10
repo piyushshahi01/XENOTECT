@@ -106,7 +106,7 @@ export function GrowthCategoryCards({ tiers, service }: { tiers: any[]; service:
           >
             Transparent pricing for{" "}
             <br className="hidden md:block" />
-            <span className="text-white/40">premium quality.</span>
+            <span className="text-neutral-400">premium quality.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -206,7 +206,7 @@ export function GrowthCategoryCards({ tiers, service }: { tiers: any[]; service:
                           className="flex items-center justify-between gap-3 py-3.5 border-b border-white/[0.06] last:border-0"
                         >
                           <div className="flex items-center gap-3 min-w-0">
-                            <Check className="w-4 h-4 text-white/40 shrink-0" />
+                            <Check className="w-4 h-4 text-neutral-400 shrink-0" />
                             <span className="text-white/80 font-medium text-xs sm:text-sm">{pkg.name}</span>
                           </div>
                           <div className="shrink-0 pl-3 text-right">
@@ -234,14 +234,14 @@ export function GrowthCategoryCards({ tiers, service }: { tiers: any[]; service:
                           className="flex items-center justify-between gap-3 py-3.5 border-b border-white/[0.06] last:border-0"
                         >
                           <div className="flex items-center gap-3 min-w-0">
-                            <Check className="w-4 h-4 text-white/40 shrink-0" />
+                            <Check className="w-4 h-4 text-neutral-400 shrink-0" />
                             <span className="text-white/80 font-medium text-xs sm:text-sm">{row.name}</span>
                           </div>
                           <div className="shrink-0 pl-3 text-right">
                             {row.price === "Custom Quote" ? (
                               <span className="text-[10px] uppercase tracking-widest text-rose-400 font-bold">Custom Quote</span>
                             ) : (
-                              <span className="text-[10px] uppercase tracking-widest text-white/40 font-semibold">Included</span>
+                              <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-semibold">Included</span>
                             )}
                           </div>
                         </motion.li>
@@ -279,7 +279,7 @@ export function GrowthCategoryCards({ tiers, service }: { tiers: any[]; service:
           transition={{ delay: 0.5, duration: 0.8 }}
           className="mt-16 max-w-3xl mx-auto text-center px-4"
         >
-          <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">
+          <p className="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
             * Prices are starting estimates. Final pricing depends on project scope, features, and timeline.{" "}
             <button onClick={() => openWizard(service, "custom")} className="text-white hover:underline transition-all">
               Contact us for a custom quote.

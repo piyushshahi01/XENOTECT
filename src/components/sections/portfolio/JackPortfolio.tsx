@@ -347,7 +347,7 @@ function ServiceCardReveal({ srv }: { srv: ServiceItem }) {
       >
         <div className="flex items-center justify-between w-full mb-8">
           <span
-            className="font-black text-white/30 leading-none"
+            className="font-black text-neutral-400 leading-none"
             style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
           >
             {srv.number}
@@ -706,6 +706,7 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
             playsInline
             className="w-full h-full object-cover opacity-90"
           />
+<track kind='captions' />
         </div>
 
         {/* Navbar */}
@@ -895,7 +896,7 @@ export default function JackPortfolio({ onBackToToonhub }: JackPortfolioProps) {
           
           {/* Top Label */}
           <FadeIn delay={0} y={20}>
-            <p className="text-white/40 uppercase tracking-[0.3em] text-xs font-semibold">
+            <p className="text-neutral-400 uppercase tracking-[0.3em] text-xs font-semibold">
               [ 01 &mdash; The Studio ]
             </p>
           </FadeIn>

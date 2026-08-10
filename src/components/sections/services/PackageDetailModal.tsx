@@ -111,7 +111,7 @@ function ModalBody({ pkg, onClose, onGetStarted }: { pkg: any, onClose: () => vo
                   </p>
 
                   <div className="mt-auto pt-8 border-t border-white/[0.06]">
-                    <p className="text-white/30 text-[10px] uppercase tracking-widest font-mono mb-3 font-semibold">Investment</p>
+                    <p className="text-neutral-400 text-[10px] uppercase tracking-widest font-mono mb-3 font-semibold">Investment</p>
                     <div className="flex items-baseline gap-2">
                       <p className="text-4xl md:text-5xl font-bold tracking-tight" style={{ color: "#00E5FF" }}>
                         {pkg.priceUsd !== undefined ? (typeof pkg.priceUsd === 'number' ? `$${pkg.priceUsd.toLocaleString('en-US')}` : (pkg.priceUsd.toString().startsWith('$') ? pkg.priceUsd : `$${pkg.priceUsd}`)) : pkg.price}
@@ -134,7 +134,7 @@ function ModalBody({ pkg, onClose, onGetStarted }: { pkg: any, onClose: () => vo
               
               {/* Features Module */}
               <div className="p-8 md:p-10 rounded-[2rem] border border-white/[0.04] bg-white/[0.01] flex-1">
-                <p className="text-white/30 text-[10px] uppercase tracking-[0.25em] font-mono mb-8 font-semibold flex items-center gap-4">
+                <p className="text-neutral-400 text-[10px] uppercase tracking-[0.25em] font-mono mb-8 font-semibold flex items-center gap-4">
                   <span className="w-10 h-[1px] bg-white/10"></span> Deliverables
                 </p>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
@@ -162,7 +162,7 @@ function ModalBody({ pkg, onClose, onGetStarted }: { pkg: any, onClose: () => vo
                 <div className="p-8 rounded-[2rem] border border-white/[0.04] bg-black/20 flex flex-col justify-center">
                    {pkg.time && (
                      <>
-                        <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] font-mono mb-6 font-semibold">
+                        <p className="text-neutral-400 text-[10px] uppercase tracking-[0.2em] font-mono mb-6 font-semibold">
                           Delivery Timeline
                         </p>
                         <div className="flex items-center gap-4">

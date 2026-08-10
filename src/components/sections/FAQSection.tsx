@@ -28,10 +28,10 @@ export function FAQSection() {
           
           <h2 className="font-display font-black tracking-tighter leading-[0.85] uppercase text-[clamp(2.5rem,5vw,4.5rem)] mb-8">
             <span className="text-white block">Common</span>
-            <span className="text-white/30 block">Inquiries.</span>
+            <span className="text-neutral-400 block">Inquiries.</span>
           </h2>
           
-          <p className="text-white/40 text-lg md:text-xl font-normal leading-relaxed max-w-2xl">
+          <p className="text-neutral-400 text-lg md:text-xl font-normal leading-relaxed max-w-2xl">
             Everything you need to know about our engineering process, architectural choices, and how we operate as your elite technical partner.
           </p>
         </div>
@@ -95,7 +95,7 @@ export function FAQSection() {
             >
               
               <div className="mb-6">
-                <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-3">
+                <p className="text-neutral-400 text-[10px] font-bold uppercase tracking-widest mb-3">
                   Still have questions?
                 </p>
                 <p className="text-white text-2xl font-sans font-medium tracking-tight">

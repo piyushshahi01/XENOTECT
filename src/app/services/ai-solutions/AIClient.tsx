@@ -78,7 +78,7 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] mb-6">
             Autonomous <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6699ff] to-[#0044ff] italic font-[family-name:var(--font-instrument)] font-normal">Workflows</span>
           </h2>
-          <p className="text-white/40 text-xl font-light max-w-2xl">Modular AI architectures that integrate directly into your operations.</p>
+          <p className="text-neutral-400 text-xl font-light max-w-2xl">Modular AI architectures that integrate directly into your operations.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full auto-rows-[250px]">
@@ -142,10 +142,10 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
             The Bottleneck
           </div>
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] mb-8">
-            Human scaling is <span className="text-white/40">linear.</span><br/>
+            Human scaling is <span className="text-neutral-400">linear.</span><br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6699ff] to-[#0044ff] italic">AI scaling is exponential.</span>
           </h2>
-          <p className="text-white/40 text-xl font-light max-w-2xl mx-auto">
+          <p className="text-neutral-400 text-xl font-light max-w-2xl mx-auto">
             Decouple your revenue growth from your headcount. Scale indefinitely with fixed software costs.
           </p>
         </div>

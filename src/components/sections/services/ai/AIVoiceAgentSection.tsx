@@ -54,7 +54,7 @@ export function AIVoiceAgentSection() {
               <p className="font-display text-2xl leading-tight mb-4 text-white/90">
                 “It handles 10,000 concurrent calls without breaking a sweat.”
               </p>
-              <p className="text-[10px] font-mono uppercase tracking-widest text-white/40">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
                 Infinite Concurrency
               </p>
             </div>

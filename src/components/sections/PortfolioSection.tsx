@@ -55,6 +55,7 @@ export function PortfolioSection() {
                     preload="none"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                   >
+                    <track kind="captions" />
                     {inView && <source src={project.videoUrl} type="video/mp4" />}
                   </video>
                 </div>
@@ -64,7 +65,7 @@ export function PortfolioSection() {
               
               {!project.videoUrl && (
                 <div className="relative z-10 flex flex-col items-center gap-2 group-hover:opacity-0 transition-opacity duration-300">
-                  <span className="text-white/40 font-medium tracking-widest uppercase text-sm">
+                  <span className="text-neutral-400 font-medium tracking-widest uppercase text-sm">
                     Project Slot {project.id}
                   </span>
                   <span className="text-white/20 text-xs">Video coming soon</span>

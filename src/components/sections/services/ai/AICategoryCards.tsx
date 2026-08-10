@@ -57,7 +57,7 @@ export function AICategoryCards({ tiers, service }: { tiers: any[], service: str
             className="font-serif text-4xl lg:text-6xl text-white tracking-tight mb-6"
           >
             Transparent pricing for <br className="hidden md:block" />
-            <span className="text-white/40">premium quality.</span>
+            <span className="text-neutral-400">premium quality.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -145,7 +145,7 @@ export function AICategoryCards({ tiers, service }: { tiers: any[], service: str
                         className="flex items-center justify-between gap-3 text-sm pb-4 border-b border-white/5 last:border-0 last:pb-0"
                       >
                         <div className="flex items-center gap-3 shrink-0">
-                          <Check className="w-4 h-4 text-white/40 shrink-0" />
+                          <Check className="w-4 h-4 text-neutral-400 shrink-0" />
                           <span className="text-white/80 font-medium text-xs sm:text-sm">{pkg.name}</span>
                         </div>
                         <div className="text-right whitespace-nowrap pl-2">
@@ -182,7 +182,7 @@ export function AICategoryCards({ tiers, service }: { tiers: any[], service: str
           transition={{ delay: 0.5, duration: 0.8 }}
           className="mt-16 max-w-3xl mx-auto text-center px-4"
         >
-          <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">
+          <p className="text-neutral-400 text-sm md:text-base font-light leading-relaxed">
             * Prices are starting estimates. Final pricing depends on project scope, features, integrations, and timeline. <button onClick={() => openWizard(service, "custom")} className="text-white hover:underline transition-all">Contact us for a custom quote.</button>
           </p>
         </motion.div>

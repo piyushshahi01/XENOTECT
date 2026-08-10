@@ -193,7 +193,7 @@ function PricingCard({ service, index, onExpand }: { service: typeof pricingServ
           {/* Includes preview */}
           <div className="mb-6 flex flex-wrap gap-1.5">
             {service.includes.slice(0, 3).map((item, i) => (
-              <span key={i} className="text-[10px] text-white/40 bg-white/[0.04] border border-white/[0.07] px-2.5 py-1 rounded-full">
+              <span key={i} className="text-[10px] text-neutral-400 bg-white/[0.04] border border-white/[0.07] px-2.5 py-1 rounded-full">
                 {item}
               </span>
             ))}
@@ -373,7 +373,7 @@ export function PricingSection() {
                           </p>
 
                           <div className="mt-auto pt-8 border-t border-white/[0.06]">
-                            <p className="text-white/30 text-[10px] uppercase tracking-widest font-mono mb-3 font-semibold">Investment</p>
+                            <p className="text-neutral-400 text-[10px] uppercase tracking-widest font-mono mb-3 font-semibold">Investment</p>
                             <div className="flex items-baseline gap-2">
                               <p className="text-4xl md:text-5xl font-bold tracking-tight" style={{ color: expandedService.accentHex }}>
                                 {expandedService.basePrice}
@@ -394,7 +394,7 @@ export function PricingSection() {
                       
                       {/* Features Module */}
                       <div className="p-8 md:p-10 rounded-[2rem] border border-white/[0.04] bg-white/[0.01] flex-1">
-                        <p className="text-white/30 text-[10px] uppercase tracking-[0.25em] font-mono mb-8 font-semibold flex items-center gap-4">
+                        <p className="text-neutral-400 text-[10px] uppercase tracking-[0.25em] font-mono mb-8 font-semibold flex items-center gap-4">
                           <span className="w-10 h-[1px] bg-white/10"></span> Deliverables
                         </p>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
@@ -421,12 +421,12 @@ export function PricingSection() {
                         {/* Good to know Module */}
                         {expandedService.goodToKnow.length > 0 ? (
                           <div className="p-8 rounded-[2rem] border border-white/[0.04] bg-black/20">
-                            <p className="text-white/30 text-[10px] uppercase tracking-[0.2em] font-mono mb-6 font-semibold">
+                            <p className="text-neutral-400 text-[10px] uppercase tracking-[0.2em] font-mono mb-6 font-semibold">
                               Good to know
                             </p>
                             <ul className="space-y-4">
                               {expandedService.goodToKnow.map((item, i) => (
-                                <li key={i} className="flex items-start gap-4 text-xs text-white/40 leading-relaxed font-light">
+                                <li key={i} className="flex items-start gap-4 text-xs text-neutral-400 leading-relaxed font-light">
                                   <Info className="w-4 h-4 shrink-0 mt-[1px] opacity-40" style={{ color: expandedService.accentHex }} />
                                   {item}
                                 </li>

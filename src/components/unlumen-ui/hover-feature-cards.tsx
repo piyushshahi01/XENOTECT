@@ -76,7 +76,7 @@ function HoverFeatureCard({
           <span
             className={cn(
               "font-medium text-2xl tracking-tight text-white/90",
-              item.soon ? "text-white/40" : "text-white",
+              item.soon ? "text-neutral-400" : "text-white",
             )}
           >
             {item.name}

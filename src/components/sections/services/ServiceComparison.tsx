@@ -42,7 +42,7 @@ export function ServiceComparison({ features = [] }: { features: any[] }) {
               <table className="w-full text-left border-collapse min-w-[800px]">
                 <thead>
                   <tr className="border-b border-white/5 bg-white/[0.01]">
-                    <th className="py-8 px-8 text-xs uppercase tracking-widest font-medium text-white/40 w-1/4">Features</th>
+                    <th className="py-8 px-8 text-xs uppercase tracking-widest font-medium text-neutral-400 w-1/4">Features</th>
                     <th className="py-8 px-8 text-xs uppercase tracking-widest font-medium text-white/80 w-1/4">Starter</th>
                     <th className="py-8 px-8 text-xs uppercase tracking-widest font-medium text-white/80 w-1/4">Business</th>
                     <th className="py-8 px-8 text-xs uppercase tracking-widest font-medium text-white/80 w-1/4">Enterprise</th>

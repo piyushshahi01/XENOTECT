@@ -94,7 +94,7 @@ export function HeroSection() {
 
         <div className="relative z-10 flex-1 px-6 sm:px-12 md:px-16 lg:px-24 py-20 flex flex-col justify-center max-w-4xl pt-32 md:pt-32">
           
-          <div className="hero-reveal-elem flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-12 opacity-0 translate-y-10">
+          <div className="hero-reveal-elem flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-12 opacity-0">
             <span className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">
               <span className="w-8 h-[1px] bg-neutral-600"></span>
               Xenotect Studio
@@ -106,16 +106,16 @@ export function HeroSection() {
             </span>
           </div>
 
-          <h1 className="hero-reveal-elem display font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 translate-y-10">
+          <h1 className="hero-reveal-elem display font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0">
             <span className="block opacity-90 transition-opacity duration-500 group-hover/title:opacity-100 drop-shadow-xl">DIGITAL</span>
             <span className="block text-neutral-500 italic font-light tracking-tight transition-colors duration-500 group-hover/title:text-white">ENGINEERING</span>
           </h1>
 
-          <p className="hero-reveal-elem text-lg md:text-xl text-neutral-400 max-w-lg leading-[1.7] mb-14 font-light tracking-wide opacity-0 translate-y-10">
+          <p className="hero-reveal-elem text-lg md:text-xl text-neutral-400 max-w-lg leading-[1.7] mb-14 font-light tracking-wide opacity-0">
             Bridging Business with Intelligent Digital Solutions. We craft premium web experiences, UI/UX design, AI agents, and business automation.
           </p>
 
-          <div className="hero-reveal-elem flex flex-col sm:flex-row items-center gap-6 opacity-0 translate-y-10">
+          <div className="hero-reveal-elem flex flex-col sm:flex-row items-center gap-6 opacity-0">
             <RadialGlowButton
               className="group flex items-center gap-4 w-full sm:w-auto"
               onClick={() => navigateWithTransition("/contact")}

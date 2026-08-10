@@ -72,7 +72,7 @@ export function EstimatorSummary({
           <div className="mb-10 flex-1">
             <h3 className="text-sm font-semibold mb-4 uppercase tracking-widest text-white/80">Included in Scope</h3>
             {features.length === 0 ? (
-              <p className="text-white/40 text-xs italic">Configure options to build your package...</p>
+              <p className="text-neutral-400 text-xs italic">Configure options to build your package...</p>
             ) : (
               <ul className="space-y-3">
                 {features.map((feature: string, idx: number) => (

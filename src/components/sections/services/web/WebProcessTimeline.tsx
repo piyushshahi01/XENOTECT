@@ -121,7 +121,7 @@ export function WebProcessTimeline() {
 
               {/* Content */}
               <div className="flex flex-col gap-4 pt-2">
-                <span className="text-sm font-mono text-white/30 tracking-widest uppercase">Phase 0{i + 1}</span>
+                <span className="text-sm font-mono text-neutral-400 tracking-widest uppercase">Phase 0{i + 1}</span>
                 <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight">{step.title}</h3>
                 <p className="text-white/50 text-lg leading-relaxed max-w-md">
                   {step.description}

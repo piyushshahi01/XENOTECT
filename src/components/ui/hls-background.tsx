@@ -50,7 +50,9 @@ export function HLSBackground({ url }: HLSBackgroundProps) {
         loop
         playsInline
         className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover -translate-x-1/2 -translate-y-1/2"
-      />
+      >
+        <track kind="captions" />
+      </video>
       {/* Dark overlay to match image */}
       <div className="absolute inset-0 bg-black/40" />
       {/* Bottom fade */}

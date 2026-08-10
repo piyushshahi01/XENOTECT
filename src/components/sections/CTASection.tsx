@@ -54,7 +54,7 @@ export function CTASection() {
 
           <h2 className="cta-reveal font-display font-bold tracking-tight text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/50 mb-6 max-w-3xl">
             Let's build <br />
-            <span className="italic font-light text-white/40">the future.</span>
+            <span className="italic font-light text-neutral-400">the future.</span>
           </h2>
           
           <p className="cta-reveal text-[15px] md:text-[17px] text-white/50 font-light max-w-lg mb-12">
