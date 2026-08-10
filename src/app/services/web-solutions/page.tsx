@@ -4,7 +4,9 @@ import WebClientPage from "./WebClient";
 import { getExchangeRates } from "@/lib/currency";
 import type { Metadata } from "next";
 import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
+import dynamic from "next/dynamic";
 
+const ChromaBackground = dynamic(() => import("@/components/ui/ChromaBackground"));
 export const metadata: Metadata = {
   title: "Custom Web Development Services — Next.js, React & SaaS",
   description:
@@ -66,6 +68,7 @@ export default async function PremiumWebSolutions() {
 
   return (
     <>
+      <ChromaBackground />
       <ServiceSchema 
         name="Web & SaaS Architecture" 
         description="Premium web development, SaaS platforms, and enterprise digital experiences engineered for performance." 

@@ -122,10 +122,10 @@ export function Footer() {
               Contact &amp; Socials
             </h4>
             <a
-              href="mailto:hello@xenotect.com"
+              href="mailto:xenotectdigital@gmail.com"
               className="text-white/60 hover:text-white transition-colors text-sm font-medium"
             >
-              hello@xenotect.com
+              xenotectdigital@gmail.com
             </a>
             <div className="-ml-2 md:-ml-2">
               <SocialFlipButton />

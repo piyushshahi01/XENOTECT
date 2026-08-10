@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { WebPageSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
-import PortfolioClient from "./PortfolioClient";
+import dynamic from "next/dynamic";
+
+const PortfolioClient = dynamic(() => import("./PortfolioClient"));
 
 export const metadata: Metadata = {
   title: "Portfolio — Our Work in Web, AI & Digital Design",

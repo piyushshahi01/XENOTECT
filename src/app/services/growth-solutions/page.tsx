@@ -4,7 +4,9 @@ import GrowthClientPage from "./GrowthClient";
 import { getExchangeRates } from "@/lib/currency";
 import type { Metadata } from "next";
 import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
+import dynamic from "next/dynamic";
 
+const ChromaBackground = dynamic(() => import("@/components/ui/ChromaBackground"));
 export const metadata: Metadata = {
   title: "Digital Marketing Agency — SEO, Performance Ads & Brand Growth",
   description:
@@ -66,6 +68,7 @@ export default async function PremiumGrowthSolutions() {
 
   return (
     <>
+      <ChromaBackground />
       <ServiceSchema 
         name="Growth & Marketing" 
         description="Data-driven marketing, SEO, and paid acquisition designed to scale digital businesses predictably." 

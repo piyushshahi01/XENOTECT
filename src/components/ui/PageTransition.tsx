@@ -22,10 +22,17 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
   const router = useRouter();
   const pathname = usePathname();
   const isNavigating = useRef(false);
+  const isInitialMount = useRef(true);
 
   // When pathname changes → run EXIT animation (reveal new page)
   useEffect(() => {
-    if (!isNavigating.current) return;
+    if (isInitialMount.current) {
+      // On first load, we WANT to run the reveal animation!
+      isInitialMount.current = false;
+    } else {
+      // On subsequent path changes, only run if we navigated via our custom function
+      if (!isNavigating.current) return;
+    }
     isNavigating.current = false;
 
     const overlay = overlayRef.current;
@@ -167,15 +174,15 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
       {/* Single solid overlay — opacity-based, no slices */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-[9999] pointer-events-none"
-        style={{ opacity: 0, backgroundColor: "#030305" }}
+        className="fixed inset-0 z-[9999] pointer-events-all flex items-center justify-center"
+        style={{ opacity: 1, backgroundColor: "#030305" }}
         aria-hidden="true"
       >
         {/* Centered Brand Text */}
         <h1
           ref={brandRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 font-display font-black text-white text-[clamp(2.5rem,8vw,7rem)] uppercase tracking-tighter leading-none select-none whitespace-nowrap opacity-0"
-          style={{ filter: "blur(20px)", pointerEvents: "none", visibility: "hidden" }}
+          className="font-display font-black text-white text-[clamp(2.5rem,8vw,7rem)] uppercase tracking-tighter leading-none select-none whitespace-nowrap"
+          style={{ opacity: 1, filter: "blur(0px)", visibility: "visible" }}
         >
           XENOTECT
         </h1>

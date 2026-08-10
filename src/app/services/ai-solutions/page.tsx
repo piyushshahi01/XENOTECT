@@ -4,7 +4,9 @@ import AIClientPage from "./AIClient";
 import { getExchangeRates } from "@/lib/currency";
 import type { Metadata } from "next";
 import { ServiceSchema, BreadcrumbSchema } from "@/components/seo/JsonLd";
+import dynamic from "next/dynamic";
 
+const ChromaBackground = dynamic(() => import("@/components/ui/ChromaBackground"));
 export const metadata: Metadata = {
   title: "AI Solutions & Automation Agency — Voice AI, Chatbots & AI Agents",
   description:
@@ -67,6 +69,7 @@ export default async function PremiumAISolutions() {
 
   return (
     <>
+      <ChromaBackground />
       <ServiceSchema 
         name="AI Solutions & Automation" 
         description="Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate." 

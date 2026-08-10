@@ -8,16 +8,17 @@ import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import RadialGlowButton from "@/components/ui/radial-glow-button"
+import { usePageTransition } from "@/components/ui/PageTransition"
 
 // Helper component for navigation links
-const NavLink = ({ href, icon: Icon, label }: { href: string; icon: React.ComponentType<{ className?: string }>; label: string }) => (
-  <Link 
-    href={href} 
-    className="group flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors whitespace-nowrap"
+const NavLink = ({ href, icon: Icon, label, onClick }: { href: string; icon: React.ComponentType<{ className?: string }>; label: string; onClick: (href: string) => void }) => (
+  <button 
+    onClick={() => onClick(href)}
+    className="group flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors whitespace-nowrap cursor-pointer"
   >
     <Icon className="w-4 h-4 opacity-70 group-hover:opacity-100" />
     <span>{label}</span>
-  </Link>
+  </button>
 )
 
 // Simple Theme Toggle for Mobile
@@ -44,6 +45,7 @@ const MobileThemeToggle = () => {
 
 export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLElement> & { logo?: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { navigateWithTransition } = usePageTransition()
 
   const items = {
     left: [
@@ -62,7 +64,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
       <header className={cn("fixed top-0 inset-x-0 z-50 h-16 flex px-0 pointer-events-auto", className)} {...props}>
         
         {/* Left Side Bar - Flexible width */}
-        <div className="flex-1 h-10 bg-[#0C0C0C]/50 backdrop-blur-md z-20 relative min-w-0">
+        <div className="flex-1 h-10 bg-[#0C0C0C]/60 backdrop-blur-2xl saturate-150 z-20 relative min-w-0">
           <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
             <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
             <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -75,7 +77,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
           {/* Left Slice (Corner) */}
           <div className="w-[50px] h-full relative shrink-0">
             {/* Glass Background */}
-            <div className="absolute inset-0 bg-[#0C0C0C]/50 backdrop-blur-md" style={{ clipPath: "path('M0 0 H50 V64 C25 64 25 40 0 40 Z')" }} />
+            <div className="absolute inset-0 bg-[#0C0C0C]/60 backdrop-blur-2xl saturate-150" style={{ clipPath: "path('M0 0 H50 V64 C25 64 25 40 0 40 Z')" }} />
             {/* Outlines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 50 64">
               <path d="M0 39.5 C25 39.5 25 63.5 50 63.5" fill="none" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -86,7 +88,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
           {/* Center Slice (Flexible Content Area) */}
           <div className="flex-1 h-full relative min-w-0 -ml-px">
              {/* Background & Lines Layer */}
-             <div className="absolute inset-0 bg-[#0C0C0C]/50 backdrop-blur-md">
+             <div className="absolute inset-0 bg-[#0C0C0C]/60 backdrop-blur-2xl saturate-150">
                  <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
                    <line x1="0" y1="63.5" x2="100%" y2="63.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
                    <line x1="0" y1="60.5" x2="100%" y2="60.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -99,7 +101,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
                {/* Desktop Left Nav */}
                <nav className="hidden md:flex gap-8 mb-1 shrink-0">
                 {items.left.map(item => (
-                  <NavLink key={item.label} {...item} />
+                  <NavLink key={item.label} {...item} onClick={navigateWithTransition} />
                 ))}
               </nav>
 
@@ -115,24 +117,24 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
               {/* Logo (Center) */}
               <div className="flex justify-center shrink-0 mx-2 md:mx-4 mt-1">
                 {props.logo || (
-                  <Link href="/" className="flex items-center justify-center relative group">
+                  <button onClick={() => navigateWithTransition("/")} className="flex items-center justify-center relative group cursor-pointer">
                     <div className="text-xl md:text-2xl font-black tracking-tight text-white uppercase hover:scale-105 transition-transform">XENOTECT</div>
-                  </Link>
+                  </button>
                 )}
               </div>
 
               {/* Desktop Right Nav */}
               <nav className="hidden md:flex gap-6 items-center shrink-0">
                 {items.right.map(item => (
-                  <NavLink key={item.label} {...item} />
+                  <NavLink key={item.label} {...item} onClick={navigateWithTransition} />
                 ))}
                 
                 <div className="flex gap-4 pl-4 border-l border-white/10 shrink-0 items-center">
-                  <Link href="/contact" className="whitespace-nowrap">
+                  <div role="button" tabIndex={0} onClick={() => navigateWithTransition("/contact")} className="whitespace-nowrap cursor-pointer">
                     <RadialGlowButton style={{ minWidth: 'auto', minHeight: 'auto', padding: '10px 20px', borderRadius: '9999px', fontSize: '14px' }}>
                       Start a Project
                     </RadialGlowButton>
-                  </Link>
+                  </div>
                 </div>
               </nav>
 
@@ -147,7 +149,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
           {/* Right Slice (Corner) */}
           <div className="w-[50px] h-full relative shrink-0 -ml-px">
             {/* Glass Background */}
-            <div className="absolute inset-0 bg-[#0C0C0C]" style={{ clipPath: "path('M0 0 H50 V40 C25 40 25 64 0 64 Z')" }} />
+            <div className="absolute inset-0 bg-[#0C0C0C]/60 backdrop-blur-2xl saturate-150" style={{ clipPath: "path('M0 0 H50 V40 C25 40 25 64 0 64 Z')" }} />
             {/* Outlines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 50 64">
               <path d="M0 63.5 C25 63.5 25 39.5 50 39.5" fill="none" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -158,7 +160,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
         </div>
 
         {/* Right Side Bar - Flexible width */}
-        <div className="flex-1 h-10 bg-[#0C0C0C] z-20 relative min-w-0 -ml-px">
+        <div className="flex-1 h-10 bg-[#0C0C0C]/60 backdrop-blur-2xl saturate-150 z-20 relative min-w-0 -ml-px">
           <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
             <line x1="0" y1="39.5" x2="100%" y2="39.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
             <line x1="0" y1="36.5" x2="100%" y2="36.5" stroke="currentColor" strokeOpacity={0.05} strokeWidth={0.5} className="text-white" />
@@ -171,36 +173,42 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-16 z-40 bg-[#0C0C0C] border-b border-white/5 p-4 md:hidden shadow-lg pointer-events-auto"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+            className="fixed inset-x-0 top-16 z-40 bg-[#0C0C0C]/70 backdrop-blur-3xl saturate-200 border-b border-white/10 p-4 md:hidden shadow-2xl pointer-events-auto"
           >
              <nav className="flex flex-col gap-2">
                {/* Combine all items */}
                {[...items.left, ...items.right].map(item => (
-                 <Link 
+                 <button 
                    key={item.label} 
-                   href={item.href}
-                   className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors"
-                   onClick={() => setIsMobileMenuOpen(false)}
+                   onClick={() => {
+                     setIsMobileMenuOpen(false);
+                     navigateWithTransition(item.href);
+                   }}
+                   className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors cursor-pointer w-full text-left"
                  >
                    <item.icon className="w-5 h-5 opacity-70 text-white" />
                    <span className="font-medium text-white/90">{item.label}</span>
-                 </Link>
+                 </button>
                ))}
                <div className="h-px bg-white/10 my-2" />
                <div className="flex flex-col gap-2">
-                 <Link 
-                    href="/#contact" 
-                    className="flex justify-center mt-2"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                 <div 
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigateWithTransition("/contact");
+                    }}
+                    className="flex justify-center mt-2 cursor-pointer w-full"
                  >
                    <RadialGlowButton className="w-full" style={{ minWidth: 'auto', minHeight: 'auto', padding: '12px 20px', borderRadius: '12px' }}>
                      Start a Project
                    </RadialGlowButton>
-                 </Link>
+                 </div>
                </div>
              </nav>
 

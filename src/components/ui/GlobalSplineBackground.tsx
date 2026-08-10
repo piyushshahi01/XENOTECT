@@ -6,7 +6,7 @@ export function GlobalSplineBackground({ tintColor = "" }: { tintColor?: string 
   // Completely pure black background, no tints, no Spline cubes.
   return (
     <div
-      className="fixed inset-0 z-[-1] overflow-hidden bg-black"
+      className="fixed inset-0 z-[-1] overflow-hidden bg-transparent"
       aria-hidden="true"
     >
       {/* Soft vignette only */}

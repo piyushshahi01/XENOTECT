@@ -106,7 +106,7 @@ export function HeroSection() {
             </span>
           </div>
 
-          <h1 className="hero-reveal-elem font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 translate-y-10">
+          <h1 className="hero-reveal-elem display font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 translate-y-10">
             <span className="block opacity-90 transition-opacity duration-500 group-hover/title:opacity-100 drop-shadow-xl">DIGITAL</span>
             <span className="block text-neutral-500 italic font-light tracking-tight transition-colors duration-500 group-hover/title:text-white">ENGINEERING</span>
           </h1>
@@ -136,7 +136,7 @@ export function HeroSection() {
         {/* 3D Scene */}
         <div className="hero-spline-wrap relative z-10 flex-1 min-h-[50vh] md:min-h-[100dvh] border-t md:border-t-0 md:border-l border-white/10 opacity-0 scale-95">
           <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-            <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full scale-[1.2] md:scale-100" />
+            <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" className="w-full h-full scale-[1.2] md:scale-100" interactive={true} />
           </div>
         </div>
 

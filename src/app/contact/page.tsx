@@ -2,8 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Mail, MessageCircle } from "lucide-react";
 import { XenotectNav } from "@/components/ui/XenotectNav";
-import { SplineScene } from "@/components/ui/splite";
 import { ProjectWizard } from "@/components/sections/wizard/ProjectWizard";
+import dynamic from "next/dynamic";
+
+const SplineScene = dynamic(() => import("@/components/ui/splite").then(mod => mod.SplineScene));
 import { getCmsServices, getCmsPackages, getCmsFeatures } from "@/app/actions/cms";
 import type { Metadata } from "next";
 
@@ -68,7 +70,7 @@ export default async function ContactPage(props: {
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center gap-8 relative z-10">
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">Or reach out directly:</span>
           <div className="flex items-center gap-6">
-            <a href="mailto:hello@xenotect.com" className="text-neutral-400 hover:text-white transition-colors">
+            <a href="mailto:xenotectdigital@gmail.com" className="text-neutral-400 hover:text-white transition-colors">
               <Mail className="w-5 h-5" />
             </a>
             <a href="#" className="text-neutral-400 hover:text-white transition-colors">
