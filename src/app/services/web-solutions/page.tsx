@@ -8,21 +8,20 @@ import dynamic from "next/dynamic";
 
 const ChromaBackground = dynamic(() => import("@/components/ui/ChromaBackground"));
 export const metadata: Metadata = {
-  title: "Custom Web Development Services — Next.js, React & SaaS",
+  title: "Website Development Company in India & Worldwide | XENOTECT",
   description:
-    "Expert custom web development agency. We build high-performance websites, SaaS platforms, ecommerce stores, and web apps using Next.js, React, TypeScript, and Tailwind CSS. Fast, scalable, and SEO-ready.",
+    "XENOTECT is an expert custom website development company. We build high-performance websites, SaaS platforms, ecommerce stores, and web apps using React and Next.js.",
   keywords: [
-    "custom web development", "Next.js agency", "React development agency",
-    "SaaS development", "ecommerce website development", "web app development",
-    "hire Next.js developer", "TypeScript developer", "Tailwind CSS development",
-    "full stack development", "website redesign", "landing page development",
-    "web development India", "affordable web development",
+    "website development company", "website development services", "custom website development",
+    "web development company India", "business website development", "e-commerce website development",
+    "custom web application development", "SaaS development", "website redesign",
+    "website development pricing"
   ],
   openGraph: {
-    title: "Custom Web Development — Next.js, React & SaaS | XENOTECT",
+    title: "Website Development Company in India & Worldwide | XENOTECT",
     description: "High-performance custom websites and web apps built with Next.js, React & TypeScript.",
     url: "https://www.xenotectsolution.com/services/web-solutions",
-    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "Custom Web Development by XENOTECT" }],
+    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "Website Development by XENOTECT" }],
   },
   alternates: { canonical: "https://www.xenotectsolution.com/services/web-solutions" },
 };
@@ -47,8 +46,8 @@ export default async function PremiumWebSolutions() {
     return {
       id: pkg.id,
       name: pkg.title,
-      price: isCustom ? "Custom" : `$${pkg.priceUsd.toLocaleString('en-US')}`,
-      priceInr: isCustom ? "" : `₹${pkg.priceInr.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`,
+      price: isCustom ? "Custom" : `Starting at ₹${pkg.priceInr.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`,
+      priceInr: isCustom ? "" : `(~$${pkg.priceUsd.toLocaleString('en-US')})`,
       description: `Timeline: ${pkg.time}`,
       features: pkg.features,
       detailedContent: pkg.detailedContent,

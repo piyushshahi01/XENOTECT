@@ -32,14 +32,20 @@ export function TechnologiesSection() {
     <section className="py-24 relative bg-black border-t border-white/5">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0B] to-transparent opacity-50" />
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
+        >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
             Website Development Technologies
           </h2>
           <p className="text-neutral-400 max-w-2xl text-lg font-light leading-relaxed">
             We engineer premium digital products using modern, scalable, and secure technology stacks optimized for performance.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {technologies.map((tech, idx) => (
@@ -47,9 +53,10 @@ export function TechnologiesSection() {
               key={tech.category}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5, borderColor: "rgba(255,255,255,0.3)", boxShadow: "0px 10px 30px rgba(0,0,0,0.5)" }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="bg-[#050505] border border-white/10 rounded-2xl p-8 hover:border-white/20 transition-colors"
+              transition={{ delay: idx * 0.1, duration: 0.3 }}
+              className="bg-[#050505] border border-white/10 rounded-2xl p-8 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 border border-white/10">
                 {tech.icon}

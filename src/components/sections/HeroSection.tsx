@@ -120,16 +120,16 @@ export function HeroSection() {
           </div>
 
           <h1 className="hero-reveal-elem text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-6 opacity-0 tracking-tight leading-tight">
-            Website Development Company <span className="text-neutral-500 font-light">in India & Worldwide</span>
+            Digital Engineering <span className="text-neutral-500 font-light">& Growth Agency</span>
           </h1>
 
-          <div className="hero-reveal-elem display font-sans text-[clamp(2.5rem,6vw,5.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 select-none">
-            <span className="block opacity-90 transition-opacity duration-500 group-hover/title:opacity-100 drop-shadow-xl">DIGITAL</span>
-            <span className="block text-neutral-500 italic font-light tracking-tight transition-colors duration-500 group-hover/title:text-white">ENGINEERING</span>
+          <div className="hero-reveal-elem display font-sans text-[clamp(2rem,5vw,4.5rem)] font-semibold leading-[0.9] tracking-tighter text-white mb-8 group/title cursor-default flex flex-col opacity-0 select-none">
+            <span className="block opacity-90 transition-opacity duration-500 group-hover/title:opacity-100 drop-shadow-xl">WEB, AI &</span>
+            <span className="block text-neutral-500 italic font-light tracking-tight transition-colors duration-500 group-hover/title:text-white">SEO SOLUTIONS</span>
           </div>
 
           <p className="hero-reveal-elem text-lg md:text-xl text-neutral-400 max-w-lg leading-[1.7] mb-14 font-light tracking-wide opacity-0">
-            Custom websites, web applications, SaaS platforms and AI-powered digital products engineered for ambitious businesses.
+            Web Development, AI Automation & SEO Growth Solutions engineered for modern businesses in India and worldwide.
           </p>
 
           <div className="hero-reveal-elem flex flex-col sm:flex-row items-center gap-6 opacity-0">

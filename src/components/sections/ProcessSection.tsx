@@ -18,14 +18,20 @@ export function ProcessSection() {
   return (
     <section className="py-24 relative bg-black">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="mb-20 text-center max-w-3xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-20 text-center max-w-3xl mx-auto"
+        >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
             Our Website Development Process
           </h2>
           <p className="text-neutral-400 text-lg font-light leading-relaxed">
             A proven engineering methodology that transforms complex business requirements into fast, scalable digital products.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
           {processSteps.map((item, idx) => (

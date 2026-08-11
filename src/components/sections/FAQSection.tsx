@@ -6,18 +6,13 @@ import { usePageTransition } from '../ui/PageTransition';
 import { FAQSchema } from '../seo/JsonLd';
 
 const faqs = [
-  { q: "What does website development include?", a: "Our website development process includes discovery, strategy, UI/UX design, frontend & backend development, QA testing, SEO optimization, deployment, and ongoing support." },
-  { q: "How much does website development cost in India?", a: "Costs vary based on complexity, features, and integrations. A custom corporate website may start around ₹50,000 to ₹1,500,000+, while complex web applications and SaaS platforms require tailored estimates." },
-  { q: "How long does it take to develop a website?", a: "A standard custom website takes 4-8 weeks. E-commerce platforms and complex web applications typically take 2-4 months depending on the required features and third-party integrations." },
-  { q: "Do you build custom websites?", a: "Yes, we specialize in 100% custom website development. We do not use pre-made templates; everything is engineered from scratch to match your specific brand and business logic." },
-  { q: "Do you develop e-commerce websites?", a: "Yes, we build high-converting e-commerce websites using custom Node.js backends or headless architectures (like Shopify Headless) to ensure lightning-fast checkouts." },
-  { q: "Can you redesign an existing website?", a: "Absolutely. We can audit your current website and completely redesign and rebuild it to improve Core Web Vitals, user experience, and conversion rates." },
-  { q: "Which technologies do you use?", a: "We build modern, scalable architectures using React, Next.js, Node.js, Python, PostgreSQL, and Supabase. We focus on modern stacks that ensure speed and security." },
-  { q: "Can you integrate AI into my website?", a: "Yes, as an AI-engineering firm, we can integrate generative AI, intelligent chatbots, automated customer support voice agents, and custom AI workflows directly into your web application." },
-  { q: "Will my website be SEO-friendly?", a: "Yes. Every website we develop includes technical SEO best practices out of the box—including fast server-side rendering, optimized metadata, semantic HTML, and dynamic sitemaps." },
-  { q: "Do you provide website maintenance?", a: "Yes, we offer ongoing support and maintenance retainers to keep your website secure, updated, and continually optimized as your business grows." },
-  { q: "Do you work with international clients?", a: "Yes, we work with businesses in India as well as international markets including the US, UK, Canada, and UAE, delivering globally competitive digital products." },
-  { q: "How do I start a website development project?", a: "Simply click 'Get a Project Estimate' or contact us. We will schedule a brief discovery call to understand your requirements and then provide a detailed proposal and timeline." }
+  { q: "What services does XENOTECT provide?", a: "We are a full-service digital engineering and growth agency. We specialize in custom website development, AI automation (including voice agents and chatbots), and technical SEO strategies." },
+  { q: "Do you work with international clients?", a: "Yes, we partner with businesses globally, including the US, UK, Canada, Australia, and the UAE, alongside our domestic clients in India." },
+  { q: "Do you build custom digital products?", a: "Absolutely. We engineer 100% custom web applications, SaaS platforms, and enterprise websites tailored entirely to your specific business logic and brand identity." },
+  { q: "Can you combine web development with AI automation?", a: "Yes, this is our core strength. We frequently integrate intelligent AI agents, automated workflows, and custom LLM solutions directly into the web platforms we build." },
+  { q: "Do you provide ongoing support?", a: "Yes, we offer flexible post-launch maintenance and support retainers to ensure your digital infrastructure remains secure, fast, and fully optimized." },
+  { q: "Can XENOTECT help with SEO and growth?", a: "Yes, our dedicated growth team implements advanced technical SEO, programmatic content strategies, and comprehensive marketing campaigns to scale your visibility." },
+  { q: "How do I start a project?", a: "Click 'Get a Project Estimate' or contact us through our website. We'll schedule a discovery call to understand your goals, map out a custom strategy, and provide a transparent timeline and quote." }
 ];
 
 export function FAQSection() {
@@ -36,12 +31,12 @@ export function FAQSection() {
           </div>
           
           <h2 className="font-display font-black tracking-tighter leading-[0.85] uppercase text-[clamp(2.5rem,5vw,4.5rem)] mb-8">
-            <span className="text-white block">Frequently</span>
-            <span className="text-neutral-400 block">Asked Questions.</span>
+            <span className="text-white block">Common</span>
+            <span className="text-neutral-400 block">Inquiries.</span>
           </h2>
           
           <p className="text-neutral-400 text-lg md:text-xl font-normal leading-relaxed max-w-2xl">
-            Everything you need to know about our website development services, pricing, and project methodology.
+            Everything you need to know about our engineering process, full-stack capabilities, and how we operate as your elite technical partner.
           </p>
         </div>
 

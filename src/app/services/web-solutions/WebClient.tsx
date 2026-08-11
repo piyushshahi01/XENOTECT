@@ -16,11 +16,15 @@ import { WebProblems } from "@/components/sections/services/web/WebProblems";
 import { WebProcessTimeline } from "@/components/sections/services/web/WebProcessTimeline";
 import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
 import { WebIncludedFeatures } from "@/components/sections/services/web/WebIncludedFeatures";
+import { TechnologiesSection } from "@/components/sections/TechnologiesSection";
+import { BusinessNeedsSection } from "@/components/sections/BusinessNeedsSection";
+import { ProcessSection } from "@/components/sections/ProcessSection";
+import { GlobalReachSection } from "@/components/sections/GlobalReachSection";
 
 import { ServicePricing } from "@/components/sections/services/ServicePricing";
 import { ServiceComparison } from "@/components/sections/services/ServiceComparison";
 import { CostEstimator } from "@/components/sections/services/CostEstimator";
-import { ServiceFAQ } from "@/components/sections/services/ServiceFAQ";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { useWizard } from "@/context/WizardContext";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 
@@ -59,18 +63,17 @@ export default function WebClientPage({ webTiers, exchangeRate, basePrice, compa
       {/* 2. What We Build */}
       <WebBentoGrid />
 
-      {/* 3. Problems We Solve */}
-      <WebProblems />
+      {/* 3. Technologies */}
+      <TechnologiesSection />
 
-      {/* 4. Development Process */}
-      <WebProcessTimeline />
+      {/* 4. Business Needs */}
+      <BusinessNeedsSection />
 
-      {/* 5. Technology Stack */}
-      <AnimatedTechStack 
-        title="Modern Web Stack" 
-        technologies={["React", "Next.js", "TypeScript", "Node.js", "Three.js", "PostgreSQL", "TailwindCSS", "GSAP"]} 
-        theme="dark" 
-      />
+      {/* 5. Development Process */}
+      <ProcessSection />
+
+      {/* 6. Global Reach */}
+      <GlobalReachSection />
 
       {/* 6. Pricing */}
       <ServicePricing service="web" tiers={webTiers} />
@@ -90,11 +93,7 @@ export default function WebClientPage({ webTiers, exchangeRate, basePrice, compa
       <WebIncludedFeatures />
 
       {/* 10. FAQs */}
-      <div className="relative z-20 py-24 bg-transparent">
-        <div className="max-w-7xl mx-auto px-6 reveal-up">
-          <ServiceFAQ service="web" />
-        </div>
-      </div>
+      <FAQSection />
 
       {/* 11. Massive CTA */}
       <section className="relative w-full py-56 overflow-hidden bg-transparent">

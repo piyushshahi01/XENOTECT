@@ -13,12 +13,8 @@ const GlobalSplineBackground = dynamic(() => import("@/components/ui/GlobalSplin
 // Below-the-fold sections dynamically imported to reduce initial TTFB and JS payload
 const StatsSection = dynamic(() => import("@/components/sections/StatsSection").then(mod => mod.StatsSection));
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection").then(mod => mod.AboutSection));
-const ServicesSection = dynamic(() => import("@/components/sections/services/web/WebBentoGrid").then(mod => mod.WebBentoGrid));
+const ServicesSection = dynamic(() => import("@/components/sections/ServicesSection").then(mod => mod.ServicesSection));
 const WhySection = dynamic(() => import("@/components/sections/WhySection").then(mod => mod.WhySection));
-const TechnologiesSection = dynamic(() => import("@/components/sections/TechnologiesSection").then(mod => mod.TechnologiesSection));
-const BusinessNeedsSection = dynamic(() => import("@/components/sections/BusinessNeedsSection").then(mod => mod.BusinessNeedsSection));
-const ProcessSection = dynamic(() => import("@/components/sections/ProcessSection").then(mod => mod.ProcessSection));
-const GlobalReachSection = dynamic(() => import("@/components/sections/GlobalReachSection").then(mod => mod.GlobalReachSection));
 const PortfolioSection = dynamic(() => import("@/components/sections/PortfolioSection").then(mod => mod.PortfolioSection));
 const PricingSection = dynamic(() => import("@/components/sections/PricingSection").then(mod => mod.PricingSection));
 const BlogSection = dynamic(() => import("@/components/sections/BlogSection").then(mod => mod.BlogSection));
@@ -30,9 +26,9 @@ function SectionDivider() {
 }
 
 export const metadata: Metadata = {
-  title: "Website Development & AI Agency | XENOTECT",
-  description: "XENOTECT builds custom websites and web applications for businesses in India and worldwide. Explore website development, AI automation, SaaS and SEO solutions.",
-  keywords: ["website development company", "custom web development", "AI automation agency", "custom SaaS platforms", "technical SEO services"],
+  title: "Web Development, AI & SEO Agency | XENOTECT",
+  description: "XENOTECT is a digital engineering and growth agency. We build custom websites, AI automation agents, and technical SEO strategies for modern businesses.",
+  keywords: ["digital engineering agency", "web development agency", "AI automation agency", "SEO growth agency"],
   alternates: {
     canonical: "https://www.xenotectsolution.com",
   }
@@ -59,14 +55,6 @@ export default async function Home() {
         <ServicesSection />
         <SectionDivider />
         <WhySection />
-        <SectionDivider />
-        <TechnologiesSection />
-        <SectionDivider />
-        <BusinessNeedsSection />
-        <SectionDivider />
-        <ProcessSection />
-        <SectionDivider />
-        <GlobalReachSection />
         <SectionDivider />
         <PortfolioSection />
         <SectionDivider />

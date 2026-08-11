@@ -34,14 +34,20 @@ export function BusinessNeedsSection() {
   return (
     <section className="py-24 relative bg-[#050505]">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
+        >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
             Website Development for Different Business Needs
           </h2>
           <p className="text-neutral-400 max-w-2xl text-lg font-light leading-relaxed">
             We build custom digital products tailored specifically to your industry's operational requirements and target audience.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {needs.map((need, idx) => (
@@ -49,9 +55,10 @@ export function BusinessNeedsSection() {
               key={need.title}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.03, y: -5, backgroundColor: "rgba(255,255,255,0.08)" }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              transition={{ delay: idx * 0.1, duration: 0.3 }}
+              className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-all cursor-default"
             >
               <h3 className="text-xl font-bold text-white mb-4">{need.title}</h3>
               <p className="text-neutral-400 text-sm leading-relaxed">

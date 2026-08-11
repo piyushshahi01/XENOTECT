@@ -55,14 +55,14 @@ export function WebHero() {
         </div>
         
         {/* Massive Headline */}
-        <h1 className="hero-title font-sans text-5xl md:text-[72px] lg:text-[88px] font-bold leading-[0.9] tracking-tighter text-white max-w-5xl drop-shadow-2xl">
-          Architect the <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-neutral-700">Digital Realm.</span>
+        <h1 className="hero-title font-sans text-5xl md:text-[64px] lg:text-[76px] font-bold leading-[1.1] tracking-tighter text-white max-w-5xl drop-shadow-2xl">
+          Website Development Company <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-neutral-500">in India & Worldwide</span>
         </h1>
         
         {/* Description */}
-        <p className="hero-desc font-sans text-xl leading-relaxed text-neutral-400 max-w-2xl mt-4">
-          Bespoke high-performance web applications, striking landing pages, and complex digital platforms engineered for absolute market dominance.
+        <p className="hero-desc font-sans text-xl leading-relaxed text-neutral-400 max-w-3xl mt-4">
+          Custom websites, web applications, e-commerce platforms, and digital products engineered for startups and ambitious businesses.
         </p>
         
         {/* CTAs */}

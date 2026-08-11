@@ -48,10 +48,13 @@ export function ServicePricing({ service, tiers }: { service: "web" | "ai" | "gr
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-4xl lg:text-6xl text-white tracking-tight mb-6"
+            className="font-serif text-4xl lg:text-5xl text-white tracking-tight mb-6"
           >
-            Transparent pricing for <br className="hidden md:block" />
-            <span className="text-neutral-400">premium quality.</span>
+            {service === "web" ? (
+              <>Website Development Pricing <span className="text-neutral-400 font-light">in India</span></>
+            ) : (
+              <>Transparent pricing for <br className="hidden md:block" /><span className="text-neutral-400">premium quality.</span></>
+            )}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -60,7 +63,9 @@ export function ServicePricing({ service, tiers }: { service: "web" | "ai" | "gr
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-white/60 text-lg leading-relaxed"
           >
-            No hidden fees, no surprises. Just straightforward packages designed to deliver maximum return on your investment.
+            {service === "web" 
+              ? "Our website development packages are designed for startups, growing businesses, and organizations that need custom digital experiences. Choose a starting package or contact XENOTECT for a tailored estimate." 
+              : "No hidden fees, no surprises. Just straightforward packages designed to deliver maximum return on your investment."}
           </motion.p>
         </div>
 

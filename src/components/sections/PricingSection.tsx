@@ -21,11 +21,11 @@ export function PricingSection() {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-8">
-            Website Development Pricing
+            Build Something Exceptional
           </h2>
           
           <p className="text-neutral-400 text-lg md:text-xl font-light leading-relaxed max-w-3xl mx-auto mb-12">
-            Every project is different. Website development costs depend on scope, design complexity, custom integrations, content needs, advanced features, and ongoing requirements. We engineer tailored solutions designed to generate a positive return on investment.
+            Whether you need a high-performance website, intelligent automation, or a growth-focused digital strategy, XENOTECT builds technology around your business goals.
           </p>
 
           <Link
