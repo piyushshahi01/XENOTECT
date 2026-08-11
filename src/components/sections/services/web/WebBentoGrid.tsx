@@ -7,7 +7,7 @@ import { Globe, Rocket, Database, ShoppingCart, Layout, Cpu, X, ArrowRight } fro
 const bentoItems = [
   {
     id: "business",
-    title: "Business Websites",
+    title: "Business Website Development",
     icon: <Globe className="w-8 h-8" />,
     description: "High-end corporate presences engineered to establish absolute market authority and trust.",
     colSpan: "col-span-1 md:col-span-2",
@@ -16,54 +16,54 @@ const bentoItems = [
     fullContent: "Corporate websites that act as your most valuable asset. We build SEO-optimized, blazing-fast Next.js architectures that turn visitors into enterprise leads."
   },
   {
-    id: "landing",
-    title: "Landing Pages",
-    icon: <Rocket className="w-8 h-8" />,
-    description: "High-conversion marketing funnels.",
+    id: "custom-web-app",
+    title: "Custom Web Application Development",
+    icon: <Cpu className="w-8 h-8" />,
+    description: "We build secure, scalable web applications tailored to your workflows, users and business requirements.",
     colSpan: "col-span-1 md:col-span-1",
     gradient: "from-rose-500/20 to-orange-500/5",
     accent: "text-rose-400",
-    fullContent: "Every pixel engineered for conversion. A/B tested layouts, instant load times, and GSAP micro-interactions that keep users scrolling."
-  },
-  {
-    id: "saas",
-    title: "SaaS Platforms",
-    icon: <Database className="w-8 h-8" />,
-    description: "Complex logic disguised as simple UI.",
-    colSpan: "col-span-1 md:col-span-1",
-    gradient: "from-emerald-500/20 to-teal-500/5",
-    accent: "text-emerald-400",
-    fullContent: "Scalable multi-tenant applications built on React and Node.js. State management, role-based access, and real-time data sync without the technical debt."
+    fullContent: "Every pixel engineered for performance and utility. We utilize modern stacks like React and Node.js to create seamless, application-like experiences on the web."
   },
   {
     id: "ecommerce",
-    title: "Ecommerce",
+    title: "E-Commerce Website Development",
     icon: <ShoppingCart className="w-8 h-8" />,
-    description: "Bespoke digital storefronts designed for maximum cart value.",
+    description: "Bespoke digital storefronts designed for maximum cart value and seamless checkout.",
+    colSpan: "col-span-1 md:col-span-1",
+    gradient: "from-emerald-500/20 to-teal-500/5",
+    accent: "text-emerald-400",
+    fullContent: "Custom Node backends or headless architectures. We decouple the frontend to achieve lightning-fast load times, dramatically reducing bounce rates and increasing sales."
+  },
+  {
+    id: "saas",
+    title: "SaaS Development",
+    icon: <Database className="w-8 h-8" />,
+    description: "Complex software logic disguised as beautifully simple user interfaces.",
     colSpan: "col-span-1 md:col-span-2",
     gradient: "from-purple-500/20 to-pink-500/5",
     accent: "text-purple-400",
-    fullContent: "Headless Shopify or custom Node backends. We decouple the frontend to achieve 100/100 Lighthouse scores, dramatically reducing bounce rates and increasing sales."
+    fullContent: "Scalable multi-tenant applications. We handle complex state management, role-based access control, and real-time data synchronization without accruing technical debt."
   },
   {
-    id: "portals",
-    title: "Web Portals",
+    id: "redesign",
+    title: "Website Redesign & Modernization",
     icon: <Layout className="w-8 h-8" />,
-    description: "Secure environments for teams.",
+    description: "Transform outdated legacy systems into fast, modern, high-converting digital assets.",
     colSpan: "col-span-1 md:col-span-2",
     gradient: "from-amber-500/20 to-yellow-500/5",
     accent: "text-amber-400",
-    fullContent: "Custom dashboards for internal operations, vendor management, or client communication. Integrated directly with your existing ERPs and CRMs."
+    fullContent: "We audit, redesign, and rebuild legacy websites from the ground up to meet modern core web vitals, accessibility standards, and premium design expectations."
   },
   {
-    id: "custom",
-    title: "Custom Solutions",
-    icon: <Cpu className="w-8 h-8" />,
-    description: "If it involves a browser, we build it.",
+    id: "api",
+    title: "API & Third-Party Integrations",
+    icon: <Rocket className="w-8 h-8" />,
+    description: "Connect your website seamlessly with CRMs, payment gateways, and enterprise software.",
     colSpan: "col-span-1 md:col-span-1",
     gradient: "from-cyan-500/20 to-blue-500/5",
     accent: "text-cyan-400",
-    fullContent: "WebRTC video tools, WebGL experiences, or custom algorithms. We solve the engineering problems other agencies decline."
+    fullContent: "We architect intelligent integrations that synchronize data across your business stack, from Salesforce and HubSpot to Stripe and custom internal APIs."
   }
 ];
 
@@ -80,8 +80,8 @@ export function WebBentoGrid() {
           <div className="inline-flex rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-medium bg-white/5 border border-white/10 text-white/70 w-fit">
             What We Build
           </div>
-          <h2 className="font-sans text-4xl md:text-5xl font-bold tracking-tighter text-white">
-            Architecture for <br /> every scale.
+          <h2 className="font-sans text-3xl md:text-5xl font-bold tracking-tighter text-white">
+            Custom Website Development Services
           </h2>
         </div>
 

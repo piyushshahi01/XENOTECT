@@ -66,52 +66,32 @@ export function OrganizationSchema() {
           addressCountry: "US"
         }
       },
-      {
-        "@type": "FAQPage",
-        mainEntity: [
-          {
-            "@type": "Question",
-            name: "What services does XENOTECT offer?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "XENOTECT offers custom web development (Next.js, React), AI solutions (AI agents, voice AI, chatbots), digital marketing (SEO, Google Ads, Meta campaigns), and UI/UX design services.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "How long does it take to build a website?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Project timelines vary by scope. A standard business website takes 2–4 weeks, while complex SaaS platforms or AI solutions typically take 6–12 weeks. We'll give you an exact timeline in your free consultation.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "How much does a custom website cost?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Our web development packages start at $2,000 for a professional business website. Complex SaaS platforms and AI solutions are priced based on requirements. Use our Project Wizard to get an instant estimate.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "Do you work with startups and small businesses?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes! We work with startups, small businesses, and enterprises worldwide. We have packages designed for every stage of business growth.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "What technologies do you use for web development?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "We specialise in Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, Prisma, and Vercel. For AI, we use OpenAI, LangChain, and n8n automation.",
-            },
-          },
-        ],
-      },
     ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/**
+ * Dynamic FAQPage schema for specific sections.
+ */
+export function FAQSchema({ faqs }: { faqs: { q: string; a: string }[] }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.a,
+      },
+    })),
   };
 
   return (

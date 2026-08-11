@@ -3,13 +3,21 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { usePageTransition } from '../ui/PageTransition';
+import { FAQSchema } from '../seo/JsonLd';
 
 const faqs = [
-  { q: "How long does a typical project take?", a: "Project timelines vary based on scope and complexity. A standard landing page takes 2-4 weeks, while a full web application might take 2-4 months. We always provide a detailed timeline before starting." },
-  { q: "Do you offer post-launch support?", a: "Absolutely. We offer various maintenance and support packages to ensure your digital product remains secure, updated, and optimized long after launch." },
-  { q: "What technologies do you use?", a: "We specialize in modern stacks, primarily React, Next.js, and Tailwind CSS for the frontend, ensuring high performance, SEO friendliness, and stunning animations." },
-  { q: "Can you work with our existing design team?", a: "Yes! We frequently collaborate with internal design teams, taking their Figma files and bringing them to life with pixel-perfect, highly-animated engineering." },
-  { q: "How do you handle project management?", a: "We use a transparent, agile methodology. You'll have access to our Jira/Linear boards and a dedicated Slack channel for real-time communication with the engineering team." }
+  { q: "What does website development include?", a: "Our website development process includes discovery, strategy, UI/UX design, frontend & backend development, QA testing, SEO optimization, deployment, and ongoing support." },
+  { q: "How much does website development cost in India?", a: "Costs vary based on complexity, features, and integrations. A custom corporate website may start around ₹50,000 to ₹1,500,000+, while complex web applications and SaaS platforms require tailored estimates." },
+  { q: "How long does it take to develop a website?", a: "A standard custom website takes 4-8 weeks. E-commerce platforms and complex web applications typically take 2-4 months depending on the required features and third-party integrations." },
+  { q: "Do you build custom websites?", a: "Yes, we specialize in 100% custom website development. We do not use pre-made templates; everything is engineered from scratch to match your specific brand and business logic." },
+  { q: "Do you develop e-commerce websites?", a: "Yes, we build high-converting e-commerce websites using custom Node.js backends or headless architectures (like Shopify Headless) to ensure lightning-fast checkouts." },
+  { q: "Can you redesign an existing website?", a: "Absolutely. We can audit your current website and completely redesign and rebuild it to improve Core Web Vitals, user experience, and conversion rates." },
+  { q: "Which technologies do you use?", a: "We build modern, scalable architectures using React, Next.js, Node.js, Python, PostgreSQL, and Supabase. We focus on modern stacks that ensure speed and security." },
+  { q: "Can you integrate AI into my website?", a: "Yes, as an AI-engineering firm, we can integrate generative AI, intelligent chatbots, automated customer support voice agents, and custom AI workflows directly into your web application." },
+  { q: "Will my website be SEO-friendly?", a: "Yes. Every website we develop includes technical SEO best practices out of the box—including fast server-side rendering, optimized metadata, semantic HTML, and dynamic sitemaps." },
+  { q: "Do you provide website maintenance?", a: "Yes, we offer ongoing support and maintenance retainers to keep your website secure, updated, and continually optimized as your business grows." },
+  { q: "Do you work with international clients?", a: "Yes, we work with businesses in India as well as international markets including the US, UK, Canada, and UAE, delivering globally competitive digital products." },
+  { q: "How do I start a website development project?", a: "Simply click 'Get a Project Estimate' or contact us. We will schedule a brief discovery call to understand your requirements and then provide a detailed proposal and timeline." }
 ];
 
 export function FAQSection() {
@@ -18,21 +26,22 @@ export function FAQSection() {
 
   return (
     <section className="bg-transparent py-24 md:py-32 px-6 md:px-12 relative z-10 w-full font-sans text-white">
+      <FAQSchema faqs={faqs} />
       <div className="max-w-[1400px] mx-auto">
         
         {/* Header Section */}
         <div className="mb-20 md:mb-28">
-          <div className="inline-flex items-center rounded-full border border-white/10 bg-transparent px-4 py-1.5 text-[10px] uppercase font-bold text-[#FF5656] tracking-[0.2em] mb-8">
+          <div className="inline-flex items-center rounded-full border border-white/10 bg-transparent px-4 py-1.5 text-[10px] uppercase font-bold text-[#00C853] tracking-[0.2em] mb-8">
             Knowledge Base
           </div>
           
           <h2 className="font-display font-black tracking-tighter leading-[0.85] uppercase text-[clamp(2.5rem,5vw,4.5rem)] mb-8">
-            <span className="text-white block">Common</span>
-            <span className="text-neutral-400 block">Inquiries.</span>
+            <span className="text-white block">Frequently</span>
+            <span className="text-neutral-400 block">Asked Questions.</span>
           </h2>
           
           <p className="text-neutral-400 text-lg md:text-xl font-normal leading-relaxed max-w-2xl">
-            Everything you need to know about our engineering process, architectural choices, and how we operate as your elite technical partner.
+            Everything you need to know about our website development services, pricing, and project methodology.
           </p>
         </div>
 

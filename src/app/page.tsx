@@ -13,11 +13,14 @@ const GlobalSplineBackground = dynamic(() => import("@/components/ui/GlobalSplin
 // Below-the-fold sections dynamically imported to reduce initial TTFB and JS payload
 const StatsSection = dynamic(() => import("@/components/sections/StatsSection").then(mod => mod.StatsSection));
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection").then(mod => mod.AboutSection));
-const ServicesSection = dynamic(() => import("@/components/sections/ServicesSection").then(mod => mod.ServicesSection));
+const ServicesSection = dynamic(() => import("@/components/sections/services/web/WebBentoGrid").then(mod => mod.WebBentoGrid));
+const WhySection = dynamic(() => import("@/components/sections/WhySection").then(mod => mod.WhySection));
+const TechnologiesSection = dynamic(() => import("@/components/sections/TechnologiesSection").then(mod => mod.TechnologiesSection));
+const BusinessNeedsSection = dynamic(() => import("@/components/sections/BusinessNeedsSection").then(mod => mod.BusinessNeedsSection));
+const ProcessSection = dynamic(() => import("@/components/sections/ProcessSection").then(mod => mod.ProcessSection));
+const GlobalReachSection = dynamic(() => import("@/components/sections/GlobalReachSection").then(mod => mod.GlobalReachSection));
 const PortfolioSection = dynamic(() => import("@/components/sections/PortfolioSection").then(mod => mod.PortfolioSection));
 const PricingSection = dynamic(() => import("@/components/sections/PricingSection").then(mod => mod.PricingSection));
-const WhySection = dynamic(() => import("@/components/sections/WhySection").then(mod => mod.WhySection));
-const IndustriesSection = dynamic(() => import("@/components/sections/IndustriesSection").then(mod => mod.IndustriesSection));
 const BlogSection = dynamic(() => import("@/components/sections/BlogSection").then(mod => mod.BlogSection));
 const FAQSection = dynamic(() => import("@/components/sections/FAQSection").then(mod => mod.FAQSection));
 const CTASection = dynamic(() => import("@/components/sections/CTASection").then(mod => mod.CTASection));
@@ -27,9 +30,9 @@ function SectionDivider() {
 }
 
 export const metadata: Metadata = {
-  title: "XENOTECT | Premium Web Development & AI Automation Agency",
-  description: "XENOTECT is an elite digital engineering studio specializing in custom web development, SaaS platforms, AI voice agents, and technical SEO.",
-  keywords: ["premium web development", "AI automation agency", "custom SaaS platforms", "technical SEO services", "React Next.js agency"],
+  title: "Website Development & AI Agency | XENOTECT",
+  description: "XENOTECT builds custom websites and web applications for businesses in India and worldwide. Explore website development, AI automation, SaaS and SEO solutions.",
+  keywords: ["website development company", "custom web development", "AI automation agency", "custom SaaS platforms", "technical SEO services"],
   alternates: {
     canonical: "https://www.xenotectsolution.com",
   }
@@ -55,13 +58,19 @@ export default async function Home() {
         <SectionDivider />
         <ServicesSection />
         <SectionDivider />
+        <WhySection />
+        <SectionDivider />
+        <TechnologiesSection />
+        <SectionDivider />
+        <BusinessNeedsSection />
+        <SectionDivider />
+        <ProcessSection />
+        <SectionDivider />
+        <GlobalReachSection />
+        <SectionDivider />
         <PortfolioSection />
         <SectionDivider />
         <PricingSection />
-        <SectionDivider />
-        <WhySection />
-        <SectionDivider />
-        <IndustriesSection />
         <SectionDivider />
         <BlogSection posts={latestPosts} />
         <SectionDivider />
