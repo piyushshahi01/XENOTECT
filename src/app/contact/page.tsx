@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Start a Project | XENOTECT",
     description: "Tell us about your project and get a custom quote in minutes.",
-    url: "https://xenotect.com/contact",
+    url: "https://www.xenotectsolution.com/contact",
   },
-  alternates: { canonical: "https://xenotect.com/contact" },
+  alternates: { canonical: "https://www.xenotectsolution.com/contact" },
 };
 
 

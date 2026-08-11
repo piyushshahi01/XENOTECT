@@ -9,7 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/admin/", "/api/"],
       },
     ],
-    sitemap: "https://xenotect.com/sitemap.xml",
-    host: "https://xenotect.com",
+    sitemap: "https://www.xenotectsolution.com/sitemap.xml",
   };
 }

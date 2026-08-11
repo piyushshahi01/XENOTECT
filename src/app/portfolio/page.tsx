@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Portfolio — Our Work | XENOTECT",
     description: "Real-world examples of premium web development, AI solutions, and UI/UX design by XENOTECT.",
-    url: "https://xenotect.com/portfolio",
-    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "XENOTECT Portfolio" }],
+    url: "https://www.xenotectsolution.com/portfolio",
+    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "XENOTECT Portfolio" }],
   },
-  alternates: { canonical: "https://xenotect.com/portfolio" },
+  alternates: { canonical: "https://www.xenotectsolution.com/portfolio" },
 };
 
 export default function PortfolioPage() {
@@ -33,12 +33,12 @@ export default function PortfolioPage() {
       <WebPageSchema
         name="XENOTECT Portfolio"
         description="Explore our work in web development, AI solutions, and UI/UX design."
-        url="https://xenotect.com/portfolio"
+        url="https://www.xenotectsolution.com/portfolio"
       />
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: "https://xenotect.com" },
-          { name: "Portfolio", url: "https://xenotect.com/portfolio" },
+          { name: "Home", url: "https://www.xenotectsolution.com" },
+          { name: "Portfolio", url: "https://www.xenotectsolution.com/portfolio" },
         ]}
       />
       <PortfolioClient />

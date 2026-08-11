@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Digital Marketing & SEO Agency | XENOTECT",
     description: "SEO, Google Ads, Meta campaigns and brand growth strategies that generate real business results.",
-    url: "https://xenotect.com/services/growth-solutions",
-    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "Digital Marketing Agency by XENOTECT" }],
+    url: "https://www.xenotectsolution.com/services/growth-solutions",
+    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "Digital Marketing Agency by XENOTECT" }],
   },
-  alternates: { canonical: "https://xenotect.com/services/growth-solutions" },
+  alternates: { canonical: "https://www.xenotectsolution.com/services/growth-solutions" },
 };
 
 export default async function PremiumGrowthSolutions() {
@@ -72,12 +72,12 @@ export default async function PremiumGrowthSolutions() {
       <ServiceSchema 
         name="Growth & Marketing" 
         description="Data-driven marketing, SEO, and paid acquisition designed to scale digital businesses predictably." 
-        url="https://xenotect.com/services/growth-solutions" 
+        url="https://www.xenotectsolution.com/services/growth-solutions" 
       />
       <BreadcrumbSchema items={[
-        { name: "Home", url: "https://xenotect.com" },
-        { name: "Services", url: "https://xenotect.com/#services" },
-        { name: "Growth & Marketing", url: "https://xenotect.com/services/growth-solutions" },
+        { name: "Home", url: "https://www.xenotectsolution.com" },
+        { name: "Services", url: "https://www.xenotectsolution.com/#services" },
+        { name: "Growth & Marketing", url: "https://www.xenotectsolution.com/services/growth-solutions" },
       ]} />
       <GrowthClientPage 
         growthTiers={growthTiers} 

@@ -247,12 +247,25 @@ model CmsGlobalSetting {
 model BlogPost {
   id          String   @id @default(uuid())
   title       String
-  slug        String   @unique
-  excerpt     String?  @db.Text
-  content     String   @db.Text
-  category    String   @default("Engineering")
-  coverImage  String?
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  slug              String   @unique
+  excerpt           String?  @db.Text
+  content           String   @db.Text
+  category          String   @default("Engineering")
+  tags              String[] @default([])
+  author            String?  @default("XENOTECT Team")
+  coverImage        String?
+  featuredImageAlt  String?
+  seoTitle          String?
+  metaDescription   String?
+  canonicalUrl      String?
+  noindex           Boolean  @default(false)
+  ogTitle           String?
+  ogDescription     String?
+  ogImage           String?
+  readingTime       Int?     @default(0)
+  status            String   @default("DRAFT") // DRAFT, PUBLISHED, SCHEDULED
+  publishedAt       DateTime?
+  published         Boolean  @default(false) // Keeping this for backward compatibility temporarily if needed, but we will mostly use status
+  createdAt         DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

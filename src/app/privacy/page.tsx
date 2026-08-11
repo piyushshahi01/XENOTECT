@@ -6,7 +6,7 @@ import { Footer } from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Privacy Policy | XENOTECT",
   description: "Read XENOTECT's privacy policy to understand how we collect, use, and protect your personal data.",
-  alternates: { canonical: "https://xenotect.com/privacy" },
+  alternates: { canonical: "https://www.xenotectsolution.com/privacy" },
   robots: { index: true, follow: true },
 };
 

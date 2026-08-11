@@ -1,14 +1,17 @@
 import type { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
 
-const BASE_URL = "https://xenotect.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.xenotectsolution.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Fetch all published blog post slugs for dynamic entries
+  // Fetch all published blog post slugs for dynamic entries, excluding noindex
   let blogPosts: { slug: string; updatedAt: Date; createdAt: Date }[] = [];
   try {
     blogPosts = await prisma.blogPost.findMany({
-      where: { published: true },
+      where: { 
+        OR: [{ published: true }, { status: "PUBLISHED" }],
+        noindex: false
+      },
       select: { slug: true, updatedAt: true, createdAt: true },
       orderBy: { createdAt: "desc" },
     });

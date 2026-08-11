@@ -24,10 +24,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Blog — Insights on Web, AI & Digital Marketing | XENOTECT",
     description: "Expert perspectives on web development, AI automation, SEO, and digital growth from the XENOTECT team.",
-    url: "https://xenotect.com/blog",
-    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "XENOTECT Blog" }],
+    url: "https://www.xenotectsolution.com/blog",
+    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "XENOTECT Blog" }],
   },
-  alternates: { canonical: "https://xenotect.com/blog" },
+  alternates: { canonical: "https://www.xenotectsolution.com/blog" },
 };
 
 export default async function BlogPage() {
@@ -38,12 +38,12 @@ export default async function BlogPage() {
       <WebPageSchema
         name="XENOTECT Blog"
         description="Insights, tutorials, and case studies on web development, AI, and digital marketing."
-        url="https://xenotect.com/blog"
+        url="https://www.xenotectsolution.com/blog"
       />
       <BreadcrumbSchema
         items={[
-          { name: "Home", url: "https://xenotect.com" },
-          { name: "Blog", url: "https://xenotect.com/blog" },
+          { name: "Home", url: "https://www.xenotectsolution.com" },
+          { name: "Blog", url: "https://www.xenotectsolution.com/blog" },
         ]}
       />
       <AmbientBackground />

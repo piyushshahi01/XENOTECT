@@ -8,12 +8,12 @@ export function OrganizationSchema() {
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://xenotect.com/#organization",
+        "@id": "https://www.xenotectsolution.com/#organization",
         name: "XENOTECT",
-        url: "https://xenotect.com",
+        url: "https://www.xenotectsolution.com",
         logo: {
           "@type": "ImageObject",
-          url: "https://xenotect.com/og-image.png",
+          url: "https://www.xenotectsolution.com/og-image.png",
         },
         description:
           "XENOTECT is a premium digital engineering studio specializing in custom web development, AI automation, voice AI agents, UI/UX design, SEO, and digital marketing.",
@@ -40,23 +40,23 @@ export function OrganizationSchema() {
       },
       {
         "@type": "WebSite",
-        "@id": "https://xenotect.com/#website",
-        url: "https://xenotect.com",
+        "@id": "https://www.xenotectsolution.com/#website",
+        url: "https://www.xenotectsolution.com",
         name: "XENOTECT",
-        publisher: { "@id": "https://xenotect.com/#organization" },
+        publisher: { "@id": "https://www.xenotectsolution.com/#organization" },
         potentialAction: {
           "@type": "SearchAction",
-          target: "https://xenotect.com/?q={search_term_string}",
+          target: "https://www.xenotectsolution.com/?q={search_term_string}",
           "query-input": "required name=search_term_string",
         },
       },
       {
         "@type": "LocalBusiness",
-        "@id": "https://xenotect.com/#localbusiness",
+        "@id": "https://www.xenotectsolution.com/#localbusiness",
         name: "XENOTECT",
-        url: "https://xenotect.com",
-        logo: "https://xenotect.com/og-image.png",
-        image: "https://xenotect.com/og-image.png",
+        url: "https://www.xenotectsolution.com",
+        logo: "https://www.xenotectsolution.com/og-image.png",
+        image: "https://www.xenotectsolution.com/og-image.png",
         description: "Premium digital engineering studio providing custom software, web development, and AI solutions.",
         telephone: "+1-800-000-0000",
         priceRange: "$$$",
@@ -144,7 +144,7 @@ export function ServiceSchema({
     provider: {
       "@type": "Organization",
       name: providerName,
-      "@id": "https://xenotect.com/#organization",
+      "@id": "https://www.xenotectsolution.com/#organization",
     },
     url,
   };
@@ -209,19 +209,19 @@ export function ArticleSchema({
     url,
     datePublished,
     dateModified: dateModified || datePublished,
-    image: imageUrl || "https://xenotect.com/og-image.png",
+    image: imageUrl || "https://www.xenotectsolution.com/og-image.png",
     author: {
       "@type": "Organization",
       name: authorName,
-      url: "https://xenotect.com",
+      url: "https://www.xenotectsolution.com",
     },
     publisher: {
       "@type": "Organization",
       name: "XENOTECT",
-      "@id": "https://xenotect.com/#organization",
+      "@id": "https://www.xenotectsolution.com/#organization",
       logo: {
         "@type": "ImageObject",
-        url: "https://xenotect.com/og-image.png",
+        url: "https://www.xenotectsolution.com/og-image.png",
       },
     },
     mainEntityOfPage: {
@@ -257,10 +257,10 @@ export function WebPageSchema({
     description,
     url,
     isPartOf: {
-      "@id": "https://xenotect.com/#website",
+      "@id": "https://www.xenotectsolution.com/#website",
     },
     publisher: {
-      "@id": "https://xenotect.com/#organization",
+      "@id": "https://www.xenotectsolution.com/#organization",
     },
   };
 

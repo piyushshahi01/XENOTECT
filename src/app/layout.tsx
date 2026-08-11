@@ -28,7 +28,7 @@ const instrument = Instrument_Serif({
   variable: "--font-instrument",
 });
 
-const BASE_URL = "https://xenotect.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.xenotectsolution.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

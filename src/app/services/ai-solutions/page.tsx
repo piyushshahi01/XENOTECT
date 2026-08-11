@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AI Solutions & Automation | XENOTECT",
     description: "Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate.",
-    url: "https://xenotect.com/services/ai-solutions",
-    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "AI Solutions by XENOTECT" }],
+    url: "https://www.xenotectsolution.com/services/ai-solutions",
+    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "AI Solutions by XENOTECT" }],
   },
-  alternates: { canonical: "https://xenotect.com/services/ai-solutions" },
+  alternates: { canonical: "https://www.xenotectsolution.com/services/ai-solutions" },
 };
 
 export default async function PremiumAISolutions() {
@@ -73,12 +73,12 @@ export default async function PremiumAISolutions() {
       <ServiceSchema 
         name="AI Solutions & Automation" 
         description="Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate." 
-        url="https://xenotect.com/services/ai-solutions" 
+        url="https://www.xenotectsolution.com/services/ai-solutions" 
       />
       <BreadcrumbSchema items={[
-        { name: "Home", url: "https://xenotect.com" },
-        { name: "Services", url: "https://xenotect.com/#services" },
-        { name: "AI Solutions", url: "https://xenotect.com/services/ai-solutions" },
+        { name: "Home", url: "https://www.xenotectsolution.com" },
+        { name: "Services", url: "https://www.xenotectsolution.com/#services" },
+        { name: "AI Solutions", url: "https://www.xenotectsolution.com/services/ai-solutions" },
       ]} />
       <AIClientPage 
         aiTiers={aiTiers} 

@@ -6,7 +6,7 @@ import { Footer } from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Terms of Service | XENOTECT",
   description: "Read XENOTECT's terms of service governing the use of our website and professional digital services.",
-  alternates: { canonical: "https://xenotect.com/terms" },
+  alternates: { canonical: "https://www.xenotectsolution.com/terms" },
   robots: { index: true, follow: true },
 };
 

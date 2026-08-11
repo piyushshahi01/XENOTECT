@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   description: "XENOTECT is an elite digital engineering studio specializing in custom web development, SaaS platforms, AI voice agents, and technical SEO.",
   keywords: ["premium web development", "AI automation agency", "custom SaaS platforms", "technical SEO services", "React Next.js agency"],
   alternates: {
-    canonical: "https://xenotect.com",
+    canonical: "https://www.xenotectsolution.com",
   }
 };
 

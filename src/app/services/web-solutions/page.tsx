@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Custom Web Development — Next.js, React & SaaS | XENOTECT",
     description: "High-performance custom websites and web apps built with Next.js, React & TypeScript.",
-    url: "https://xenotect.com/services/web-solutions",
-    images: [{ url: "https://xenotect.com/og-image.png", width: 1200, height: 630, alt: "Custom Web Development by XENOTECT" }],
+    url: "https://www.xenotectsolution.com/services/web-solutions",
+    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "Custom Web Development by XENOTECT" }],
   },
-  alternates: { canonical: "https://xenotect.com/services/web-solutions" },
+  alternates: { canonical: "https://www.xenotectsolution.com/services/web-solutions" },
 };
 
 export default async function PremiumWebSolutions() {
@@ -72,12 +72,12 @@ export default async function PremiumWebSolutions() {
       <ServiceSchema 
         name="Web & SaaS Architecture" 
         description="Premium web development, SaaS platforms, and enterprise digital experiences engineered for performance." 
-        url="https://xenotect.com/services/web-solutions" 
+        url="https://www.xenotectsolution.com/services/web-solutions" 
       />
       <BreadcrumbSchema items={[
-        { name: "Home", url: "https://xenotect.com" },
-        { name: "Services", url: "https://xenotect.com/#services" },
-        { name: "Web Development", url: "https://xenotect.com/services/web-solutions" },
+        { name: "Home", url: "https://www.xenotectsolution.com" },
+        { name: "Services", url: "https://www.xenotectsolution.com/#services" },
+        { name: "Web Development", url: "https://www.xenotectsolution.com/services/web-solutions" },
       ]} />
       <WebClientPage 
         webTiers={webTiers} 
