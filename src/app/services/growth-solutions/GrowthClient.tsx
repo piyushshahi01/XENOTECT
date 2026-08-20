@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 
 import React, { useRef } from "react";
 import { ArrowRight, BarChart, TrendingUp, Search, Megaphone, Target, Share2, MousePointerClick, DollarSign } from "lucide-react";
@@ -8,16 +9,22 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Shader, Swirl, ChromaFlow, FlutedGlass, FilmGrain } from "shaders/react";
-import { ServiceComparison } from "@/components/sections/services/ServiceComparison";
-import { CostEstimator } from "@/components/sections/services/CostEstimator";
-import { ServiceFAQ } from "@/components/sections/services/ServiceFAQ";
-import { ServicePricing } from "@/components/sections/services/ServicePricing";
+const ServiceComparison = dynamic(() => import("@/components/sections/services/ServiceComparison").then(mod => mod.ServiceComparison));
+const CostEstimator = dynamic(() => import("@/components/sections/services/CostEstimator").then(mod => mod.CostEstimator));
+const ServiceFAQ = dynamic(() => import("@/components/sections/services/ServiceFAQ").then(mod => mod.ServiceFAQ));
+const ServicePricing = dynamic(() => import("@/components/sections/services/ServicePricing").then(mod => mod.ServicePricing));
 import { GrowthCategoryCards } from "@/components/sections/services/growth/GrowthCategoryCards";
 import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
 import { useWizard } from "@/context/WizardContext";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 import { HeroVerticalStripes } from "@/components/ui/HeroVerticalStripes";
 import { HoverFeatureCards } from "@/components/unlumen-ui/hover-feature-cards";
+
+// SEO Sections
+const BusinessNeedsSection = dynamic(() => import("@/components/sections/BusinessNeedsSection").then(mod => mod.BusinessNeedsSection));
+const ProcessSection = dynamic(() => import("@/components/sections/ProcessSection").then(mod => mod.ProcessSection));
+const GlobalReachSection = dynamic(() => import("@/components/sections/GlobalReachSection").then(mod => mod.GlobalReachSection));
+const TechnologiesSection = dynamic(() => import("@/components/sections/TechnologiesSection").then(mod => mod.TechnologiesSection));
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -46,6 +53,33 @@ const growthFeatures = [
     icon: <DollarSign />,
     containerClassName: "bg-orange-500/5",
   }
+];
+
+const growthNeeds = [
+  { title: "B2B Lead Generation", desc: "Engineered funnels that capture high-intent enterprise prospects through LinkedIn and programmatic SEO." },
+  { title: "E-Commerce Scaling", desc: "Aggressive ROAS optimization for Shopify and WooCommerce stores across Google Shopping and Meta Ads." },
+  { title: "SaaS Growth", desc: "Lowering Customer Acquisition Cost (CAC) while scaling trial sign-ups through content clusters." },
+  { title: "Local SEO Dominance", desc: "Capturing regional search intent with optimized Google Business Profiles and localized landing pages." },
+  { title: "Brand Authority", desc: "Digital PR and premium content marketing that positions your company as the definitive industry leader." },
+  { title: "Conversion Optimization", desc: "A/B testing and behavioral analytics that squeeze maximum revenue from your existing website traffic." }
+];
+
+const growthProcessSteps = [
+  { step: "01", title: "Comprehensive Audit", desc: "Deep technical analysis of your current SEO, ad accounts, and conversion funnels." },
+  { step: "02", title: "Strategy Architecture", desc: "Mapping out the highest-ROI channels and creating a 12-month growth roadmap." },
+  { step: "03", title: "Technical Foundation", desc: "Fixing Core Web Vitals, site speed, and indexability issues before scaling." },
+  { step: "04", title: "Campaign Launch", desc: "Deploying highly targeted paid media campaigns and rolling out programmatic content." },
+  { step: "05", title: "Conversion Optimization", desc: "Running continuous A/B tests on landing pages to maximize lead capture." },
+  { step: "06", title: "Data Analysis", desc: "Tracking granular metrics through GA4, PostHog, and server-side tracking." },
+  { step: "07", title: "Aggressive Scaling", desc: "Pouring budget into winning campaigns while ruthlessly cutting underperformers." },
+  { step: "08", title: "Transparent Reporting", desc: "Providing real-time dashboards that show exactly how your marketing dollars turn into revenue." }
+];
+
+const growthTechs = [
+  { category: "Performance Media", icon: <Target className="w-6 h-6 text-emerald-400" />, techs: ["Google Ads (PMax & Search)", "Meta Ads (Facebook/IG)", "LinkedIn Ads", "TikTok For Business", "Programmatic Display"] },
+  { category: "SEO & Content", icon: <Search className="w-6 h-6 text-blue-400" />, techs: ["Ahrefs / Semrush", "Screaming Frog", "Programmatic SEO", "Schema Markup", "Content Clusters", "Digital PR"] },
+  { category: "Analytics & Data", icon: <BarChart className="w-6 h-6 text-purple-400" />, techs: ["Google Analytics 4", "PostHog / Mixpanel", "Segment", "Server-Side GTM", "Looker Studio"] },
+  { category: "Conversion (CRO)", icon: <MousePointerClick className="w-6 h-6 text-orange-400" />, techs: ["VWO / Optimizely", "Hotjar / Clarity", "Unbounce", "Figma", "Custom Landing Pages"] }
 ];
 
 export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice, comparisonFeatures = [], cmsFeatures = [] }: { growthTiers: any[], exchangeRate: number, basePrice: number, comparisonFeatures?: any[], cmsFeatures?: any[] }) {
@@ -242,6 +276,30 @@ export default function GrowthClientPage({ growthTiers, exchangeRate, basePrice,
         title="Ad Networks & Analytics" 
         technologies={["Google Ads", "Meta", "LinkedIn", "TikTok", "PostHog", "Google Analytics 4", "Segment", "Mixpanel"]} 
         theme="dark" 
+      />
+
+      {/* SEO Expansion Sections */}
+      <TechnologiesSection 
+        title="Growth & Marketing Stack"
+        description="We leverage enterprise-grade analytics, programmatic SEO architectures, and algorithmic bidding platforms to dominate your market."
+        technologies={growthTechs}
+      />
+      
+      <BusinessNeedsSection 
+        title="Digital Marketing for Every Business Stage"
+        description="We architect data-driven acquisition pipelines tailored to your precise target audience and unit economics."
+        items={growthNeeds}
+      />
+
+      <ProcessSection 
+        title="Our Growth Methodology"
+        description="A mathematical, test-driven approach to digital marketing that eliminates guesswork and maximizes ROI."
+        steps={growthProcessSteps}
+      />
+
+      <GlobalReachSection 
+        title="Marketing Solutions for Indian & Global Brands"
+        description="XENOTECT drives exponential growth for companies worldwide. From hyper-localized SEO in India to cross-border performance campaigns targeting North America and Europe, we engineer marketing strategies that scale globally."
       />
 
       {/* Components from Existing Architecture (Wrapped in Premium Spacing) */}

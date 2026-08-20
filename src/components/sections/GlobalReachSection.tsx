@@ -4,7 +4,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Globe } from "lucide-react";
 
-export function GlobalReachSection() {
+interface GlobalReachProps {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+}
+
+export function GlobalReachSection({
+  title = "Website Development for Indian & Global Businesses",
+  description = "XENOTECT works with businesses in India and international markets to build modern websites, web applications, and digital products tailored to their specific business goals, audiences, and operational requirements. We architect scalable solutions that seamlessly handle multiple regions, compliance standards, and user bases."
+}: GlobalReachProps) {
   return (
     <section className="py-24 relative overflow-hidden bg-[#050505]">
       {/* Decorative Background */}
@@ -22,11 +30,11 @@ export function GlobalReachSection() {
           </div>
           
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Website Development for Indian & Global Businesses
+            {title}
           </h2>
           
           <p className="text-neutral-400 text-lg leading-relaxed font-light">
-            XENOTECT works with businesses in India and international markets to build modern websites, web applications, and digital products tailored to their specific business goals, audiences, and operational requirements. We architect scalable solutions that seamlessly handle multiple regions, compliance standards, and user bases.
+            {description}
           </p>
         </motion.div>
       </div>

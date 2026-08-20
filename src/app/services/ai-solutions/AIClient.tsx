@@ -1,33 +1,68 @@
 "use client";
+import dynamic from "next/dynamic";
 
 import React, { useRef, useEffect } from "react";
-import { animate, utils } from "animejs";
 import { ArrowRight, Mic, MessageSquare, PhoneCall, Zap, BrainCircuit, Activity, BarChart3, Fingerprint, Clock, Play, ArrowDownRight, Bot, Cpu } from "lucide-react";
 import { Footer } from "@/components/sections/Footer";
 import { NotchNavbar } from "@/components/ui/notch-navbar";
 import { ParticleNetwork } from "@/components/ui/particle-network";
 import { useAnimeReveal } from "@/hooks/useAnimeReveal";
-import { ServiceComparison } from "@/components/sections/services/ServiceComparison";
-import { CostEstimator } from "@/components/sections/services/CostEstimator";
-import { ServiceFAQ } from "@/components/sections/services/ServiceFAQ";
+const ServiceComparison = dynamic(() => import("@/components/sections/services/ServiceComparison").then(mod => mod.ServiceComparison));
+const CostEstimator = dynamic(() => import("@/components/sections/services/CostEstimator").then(mod => mod.CostEstimator));
+const ServiceFAQ = dynamic(() => import("@/components/sections/services/ServiceFAQ").then(mod => mod.ServiceFAQ));
 import { Shader, Swirl, ChromaFlow, FlutedGlass, FilmGrain } from "shaders/react";
 import { AICategoryCards } from "@/components/sections/services/ai/AICategoryCards";
 import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
+
+// SEO Sections - Dynamic
+const BusinessNeedsSection = dynamic(() => import("@/components/sections/BusinessNeedsSection").then(mod => mod.BusinessNeedsSection));
+const ProcessSection = dynamic(() => import("@/components/sections/ProcessSection").then(mod => mod.ProcessSection));
+const GlobalReachSection = dynamic(() => import("@/components/sections/GlobalReachSection").then(mod => mod.GlobalReachSection));
+const TechnologiesSection = dynamic(() => import("@/components/sections/TechnologiesSection").then(mod => mod.TechnologiesSection));
+
 import { useWizard } from "@/context/WizardContext";
 import { HeroVerticalStripes } from "@/components/ui/HeroVerticalStripes";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 import { GlassAgencyHero } from "@/components/sections/services/ai/GlassAgencyHero";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const aiNeeds = [
+  { title: "AI Customer Support", desc: "Deploy intelligent voice agents and chatbots that resolve tier-1 and tier-2 tickets instantly, 24/7." },
+  { title: "Sales Automation", desc: "Outbound AI callers and inbound lead qualification bots that book meetings and increase pipeline velocity." },
+  { title: "Internal Knowledge", desc: "RAG-powered AI search over your company wiki and Slack for instant employee onboarding and querying." },
+  { title: "Operational Workflows", desc: "n8n and Zapier automation connecting your CRM, emails, and internal databases to eliminate manual entry." },
+  { title: "Custom LLM Development", desc: "Fine-tuned language models deployed securely on private infrastructure for sensitive data processing." },
+  { title: "Voice AI & Telephony", desc: "Twilio and Vapi integrations for seamless, human-like conversational AI over standard phone lines." }
+];
+
+const aiProcessSteps = [
+  { step: "01", title: "Process Audit", desc: "Identifying bottlenecks, manual tasks, and high-ROI automation opportunities." },
+  { step: "02", title: "Data Preparation", desc: "Structuring your internal knowledge base and cleaning training data." },
+  { step: "03", title: "Model Selection", desc: "Choosing the optimal LLMs (OpenAI, Claude, Llama) for latency and accuracy." },
+  { step: "04", title: "Agent Engineering", desc: "Building the RAG pipeline, prompt chains, and tool-calling capabilities." },
+  { step: "05", title: "System Integration", desc: "Connecting the AI to your CRM, telephony, and existing software stack." },
+  { step: "06", title: "Safety & Guardrails", desc: "Implementing strict boundaries to prevent hallucinations and off-topic responses." },
+  { step: "07", title: "Testing", desc: "Shadow testing alongside human operators before pushing to production." },
+  { step: "08", title: "Optimization", desc: "Monitoring conversation logs and refining the AI models over time." }
+];
+
+const aiTechs = [
+  { category: "Language Models", icon: <Bot className="w-6 h-6 text-emerald-400" />, techs: ["OpenAI GPT-4o", "Anthropic Claude 3.5", "Google Gemini", "Meta Llama 3", "Mistral", "Cohere"] },
+  { category: "Agent Frameworks", icon: <Cpu className="w-6 h-6 text-blue-400" />, techs: ["LangChain", "LlamaIndex", "CrewAI", "AutoGPT", "Semantic Kernel", "Vapi"] },
+  { category: "Vector Databases", icon: <Activity className="w-6 h-6 text-purple-400" />, techs: ["Pinecone", "Milvus", "Weaviate", "Qdrant", "ChromaDB", "pgvector"] },
+  { category: "Automation", icon: <Zap className="w-6 h-6 text-orange-400" />, techs: ["n8n", "Zapier", "Make (Integromat)", "Custom Webhooks", "Twilio", "AWS Lambda"] }
+];
 
 export default function AIClientPage({ aiTiers, exchangeRate, basePrice, comparisonFeatures = [], cmsFeatures = [] }: { aiTiers: any[], exchangeRate: number, basePrice: number, comparisonFeatures?: any[], cmsFeatures?: any[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { openWizard } = useWizard();
 
-  // Initialize GSAP scroll reveal hook for all elements with .scroll-reveal
-  useEffect(() => {
+  // Initialize GSAP scroll reveal hook and handle cleanup
+  useGSAP(() => {
     // Reveal animations (Pop-up scale reveal)
     const reveals = gsap.utils.toArray('.scroll-reveal');
     
@@ -49,21 +84,17 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
         }
       );
     });
-  }, []);
 
-  // Continuous floating animation for premium feel
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    
-    animate('.anime-float', {
-      translateY: ['-5px', '5px'],
-      direction: 'alternate',
-      loop: true,
-      ease: 'inOutSine',
-      duration: 2000,
-      delay: utils.stagger(200)
+    // Continuous floating animation for premium feel
+    gsap.to('.anime-float', {
+      y: 10,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
+      duration: 2,
+      stagger: 0.2
     });
-  }, []);
+  }, { scope: containerRef });
 
   return (
     <main className="relative z-0 min-h-[100dvh] bg-transparent text-[#E6E6E6] selection:bg-[#00E5FF]/30 font-sans" ref={containerRef}>
@@ -205,6 +236,30 @@ export default function AIClientPage({ aiTiers, exchangeRate, basePrice, compari
         title="Neural Ecosystem" 
         technologies={["OpenAI", "Claude 3.5", "Gemini 1.5 Pro", "LangChain", "Llama 3", "Vapi"]} 
         theme="dark" 
+      />
+
+      {/* SEO Expansion Sections */}
+      <TechnologiesSection 
+        title="AI Engineering Stack"
+        description="We architect autonomous systems using the absolute cutting edge in natural language processing and agentic frameworks."
+        technologies={aiTechs}
+      />
+      
+      <BusinessNeedsSection 
+        title="AI Automation for Different Operations"
+        description="We build custom neural products tailored specifically to your industry's workflows and data structures."
+        items={aiNeeds}
+      />
+
+      <ProcessSection 
+        title="Our AI Engineering Process"
+        description="A rigorous methodology that transforms chaotic internal data into reliable, autonomous systems."
+        steps={aiProcessSteps}
+      />
+
+      <GlobalReachSection 
+        title="AI Solutions for Indian & Global Businesses"
+        description="XENOTECT builds artificial intelligence systems for companies worldwide. From multi-lingual support agents to complex data compliance frameworks (GDPR/HIPAA), we engineer scalable AI that operates autonomously across any timezone."
       />
 
       {/* Components from Existing Architecture 

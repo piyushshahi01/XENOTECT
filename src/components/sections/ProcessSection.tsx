@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const processSteps = [
+const defaultSteps = [
   { step: "01", title: "Discovery", desc: "Understanding your business goals, target audience, and operational requirements." },
   { step: "02", title: "Strategy", desc: "Mapping the architecture, user journeys, and technical stack." },
   { step: "03", title: "UI/UX Design", desc: "Crafting premium, accessible, and high-converting visual interfaces." },
@@ -14,7 +14,17 @@ const processSteps = [
   { step: "08", title: "Support", desc: "Ongoing maintenance, monitoring, and continuous iterations." }
 ];
 
-export function ProcessSection() {
+interface ProcessSectionProps {
+  title?: React.ReactNode;
+  description?: string;
+  steps?: { step: string; title: string; desc: string }[];
+}
+
+export function ProcessSection({ 
+  title = "Our Website Development Process", 
+  description = "A proven engineering methodology that transforms complex business requirements into fast, scalable digital products.",
+  steps = defaultSteps
+}: ProcessSectionProps) {
   return (
     <section className="py-24 relative bg-black">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -26,15 +36,15 @@ export function ProcessSection() {
           className="mb-20 text-center max-w-3xl mx-auto"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Our Website Development Process
+            {title}
           </h2>
           <p className="text-neutral-400 text-lg font-light leading-relaxed">
-            A proven engineering methodology that transforms complex business requirements into fast, scalable digital products.
+            {description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
-          {processSteps.map((item, idx) => (
+          {steps.map((item, idx) => (
             <motion.div 
               key={item.step}
               initial={{ opacity: 0, y: 20 }}
@@ -44,7 +54,7 @@ export function ProcessSection() {
               className="relative"
             >
               {/* Connector Line for Desktop */}
-              {idx % 4 !== 3 && idx !== processSteps.length - 1 && (
+              {idx % 4 !== 3 && idx !== steps.length - 1 && (
                 <div className="hidden lg:block absolute top-6 left-12 right-[-2rem] h-px bg-white/10" />
               )}
               

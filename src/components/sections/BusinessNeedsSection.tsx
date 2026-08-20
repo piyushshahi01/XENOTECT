@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const needs = [
+const defaultNeeds = [
   {
     title: "Startup Websites",
     desc: "Launch rapidly with scalable architectures designed for growth, investor pitches, and user acquisition."
@@ -30,7 +30,17 @@ const needs = [
   }
 ];
 
-export function BusinessNeedsSection() {
+interface BusinessNeedsProps {
+  title?: React.ReactNode;
+  description?: string;
+  items?: { title: string; desc: string }[];
+}
+
+export function BusinessNeedsSection({ 
+  title = "Website Development for Different Business Needs", 
+  description = "We build custom digital products tailored specifically to your industry's operational requirements and target audience.",
+  items = defaultNeeds 
+}: BusinessNeedsProps) {
   return (
     <section className="py-24 relative bg-[#050505]">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -42,15 +52,15 @@ export function BusinessNeedsSection() {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Website Development for Different Business Needs
+            {title}
           </h2>
           <p className="text-neutral-400 max-w-2xl text-lg font-light leading-relaxed">
-            We build custom digital products tailored specifically to your industry's operational requirements and target audience.
+            {description}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {needs.map((need, idx) => (
+          {items.map((need, idx) => (
             <motion.div 
               key={need.title}
               initial={{ opacity: 0, scale: 0.95 }}

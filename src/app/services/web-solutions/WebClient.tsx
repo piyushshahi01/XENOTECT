@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 
 import React, { useRef } from "react";
 import { ArrowRight } from "lucide-react";
@@ -15,16 +16,16 @@ import { WebBentoGrid } from "@/components/sections/services/web/WebBentoGrid";
 import { WebProblems } from "@/components/sections/services/web/WebProblems";
 import { WebProcessTimeline } from "@/components/sections/services/web/WebProcessTimeline";
 import { AnimatedTechStack } from "@/components/sections/AnimatedTechStack";
-import { WebIncludedFeatures } from "@/components/sections/services/web/WebIncludedFeatures";
-import { TechnologiesSection } from "@/components/sections/TechnologiesSection";
-import { BusinessNeedsSection } from "@/components/sections/BusinessNeedsSection";
-import { ProcessSection } from "@/components/sections/ProcessSection";
-import { GlobalReachSection } from "@/components/sections/GlobalReachSection";
+const WebIncludedFeatures = dynamic(() => import("@/components/sections/services/web/WebIncludedFeatures").then(mod => mod.WebIncludedFeatures));
+const TechnologiesSection = dynamic(() => import("@/components/sections/TechnologiesSection").then(mod => mod.TechnologiesSection));
+const BusinessNeedsSection = dynamic(() => import("@/components/sections/BusinessNeedsSection").then(mod => mod.BusinessNeedsSection));
+const ProcessSection = dynamic(() => import("@/components/sections/ProcessSection").then(mod => mod.ProcessSection));
+const GlobalReachSection = dynamic(() => import("@/components/sections/GlobalReachSection").then(mod => mod.GlobalReachSection));
 
-import { ServicePricing } from "@/components/sections/services/ServicePricing";
-import { ServiceComparison } from "@/components/sections/services/ServiceComparison";
-import { CostEstimator } from "@/components/sections/services/CostEstimator";
-import { FAQSection } from "@/components/sections/FAQSection";
+const ServicePricing = dynamic(() => import("@/components/sections/services/ServicePricing").then(mod => mod.ServicePricing));
+const ServiceComparison = dynamic(() => import("@/components/sections/services/ServiceComparison").then(mod => mod.ServiceComparison));
+const CostEstimator = dynamic(() => import("@/components/sections/services/CostEstimator").then(mod => mod.CostEstimator));
+const FAQSection = dynamic(() => import("@/components/sections/FAQSection").then(mod => mod.FAQSection));
 import { useWizard } from "@/context/WizardContext";
 import { GlobalSplineBackground } from "@/components/ui/GlobalSplineBackground";
 

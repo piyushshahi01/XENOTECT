@@ -110,13 +110,21 @@ export function ServiceSchema({
   description,
   url,
   providerName = "XENOTECT",
+  category,
+  areaServed,
+  audience,
+  offers
 }: {
   name: string;
   description: string;
   url: string;
   providerName?: string;
+  category?: string;
+  areaServed?: string | string[];
+  audience?: string;
+  offers?: any;
 }) {
-  const schema = {
+  const schema: any = {
     "@context": "https://schema.org",
     "@type": "Service",
     name,
@@ -128,6 +136,16 @@ export function ServiceSchema({
     },
     url,
   };
+
+  if (category) schema.category = category;
+  if (areaServed) schema.areaServed = areaServed;
+  if (audience) {
+    schema.audience = {
+      "@type": "Audience",
+      audienceType: audience
+    };
+  }
+  if (offers) schema.offers = offers;
 
   return (
     <script

@@ -8,23 +8,58 @@ import dynamic from "next/dynamic";
 
 const ChromaBackground = dynamic(() => import("@/components/ui/ChromaBackground"));
 export const metadata: Metadata = {
-  title: "Digital Marketing Agency — SEO, Performance Ads & Brand Growth",
+  title: "Digital Marketing & SEO Agency — Performance Ads & Growth | XENOTECT",
   description:
-    "Full-service digital marketing agency. We drive growth through technical SEO, Google Ads, Meta campaigns, brand engineering, and social media acquisition strategies that generate measurable ROI.",
+    "XENOTECT is an elite digital marketing and SEO agency. We engineer data-driven growth pipelines through programmatic SEO, Google Ads, Meta Ads, B2B lead generation, and conversion rate optimization to scale your revenue exponentially.",
   keywords: [
-    "digital marketing agency", "SEO agency", "Google Ads agency", "Meta ads agency",
-    "performance marketing", "social media marketing", "brand strategy agency",
-    "content marketing", "lead generation agency", "CRO agency",
-    "ecommerce marketing", "B2B marketing agency", "startup marketing",
-    "growth hacking agency", "ROAS optimization",
+    "digital marketing agency", "top SEO agency", "Google Ads management agency", "Meta ads agency",
+    "performance marketing company", "social media marketing services", "brand strategy agency",
+    "B2B lead generation agency", "CRO agency", "conversion rate optimization services",
+    "ecommerce marketing agency", "Shopify marketing experts", "SaaS marketing agency",
+    "growth hacking agency", "ROAS optimization", "local SEO services", "programmatic SEO agency",
+    "content marketing agency", "digital PR agency", "best marketing agency USA", 
+    "digital marketing agency India", "hire SEO experts", "search engine optimization company",
+    "PPC management services", "B2B marketing consultants"
   ],
+  authors: [{ name: "XENOTECT" }],
+  category: "marketing",
   openGraph: {
     title: "Digital Marketing & SEO Agency | XENOTECT",
-    description: "SEO, Google Ads, Meta campaigns and brand growth strategies that generate real business results.",
+    description: "SEO, Google Ads, Meta campaigns, and aggressive growth marketing strategies engineered for maximum ROI.",
     url: "https://www.xenotectsolution.com/services/growth-solutions",
-    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "Digital Marketing Agency by XENOTECT" }],
+    siteName: "XENOTECT",
+    images: [{ 
+      url: "https://www.xenotectsolution.com/og-image.png", 
+      width: 1200, 
+      height: 630, 
+      alt: "Digital Marketing and SEO Agency by XENOTECT" 
+    }],
+    locale: "en_US",
+    type: "website",
   },
-  alternates: { canonical: "https://www.xenotectsolution.com/services/growth-solutions" },
+  twitter: {
+    card: "summary_large_image",
+    title: "Digital Marketing & SEO Agency | XENOTECT",
+    description: "SEO, Google Ads, Meta campaigns, and aggressive growth marketing strategies engineered for maximum ROI.",
+    images: ["https://www.xenotectsolution.com/og-image.png"],
+  },
+  alternates: { 
+    canonical: "https://www.xenotectsolution.com/services/growth-solutions",
+    languages: {
+      'en-US': 'https://www.xenotectsolution.com/services/growth-solutions',
+    }
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default async function PremiumGrowthSolutions() {
@@ -70,9 +105,19 @@ export default async function PremiumGrowthSolutions() {
     <>
       <ChromaBackground />
       <ServiceSchema 
-        name="Growth & Marketing" 
-        description="Data-driven marketing, SEO, and paid acquisition designed to scale digital businesses predictably." 
+        name="Digital Marketing & SEO Agency" 
+        description="Elite performance marketing, technical SEO, programmatic architectures, Google Ads, Meta campaigns, and B2B lead generation engineered for scale." 
         url="https://www.xenotectsolution.com/services/growth-solutions" 
+        category="Digital Marketing & SEO"
+        areaServed={["US", "GB", "CA", "AU", "IN", "Worldwide"]}
+        audience="B2B, Startups, Enterprises, E-commerce"
+        offers={{
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "2500",
+          "highPrice": "40000",
+          "offerCount": "3"
+        }}
       />
       <BreadcrumbSchema items={[
         { name: "Home", url: "https://www.xenotectsolution.com" },

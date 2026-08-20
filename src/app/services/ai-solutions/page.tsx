@@ -8,23 +8,58 @@ import dynamic from "next/dynamic";
 
 const ChromaBackground = dynamic(() => import("@/components/ui/ChromaBackground"));
 export const metadata: Metadata = {
-  title: "AI Solutions & Automation Agency — Voice AI, Chatbots & AI Agents",
+  title: "AI Solutions & Automation Agency — Voice AI, Chatbots & AI Agents | XENOTECT",
   description:
-    "Custom AI solutions for businesses. We build AI agents, voice AI, ChatGPT integrations, LangChain apps, n8n automation workflows, and intelligent chatbots that save time and drive revenue.",
+    "XENOTECT is a premier AI solutions agency. We engineer custom AI agents, human-sounding Voice AI, RAG pipelines, OpenAI integrations, LangChain apps, n8n workflows, and intelligent chatbots that radically automate business operations and scale revenue.",
   keywords: [
-    "AI solutions agency", "AI automation", "voice AI development", "chatbot development",
-    "AI agents", "OpenAI integration", "ChatGPT API", "LangChain development",
-    "n8n automation", "business automation AI", "AI for business",
-    "custom AI development", "intelligent automation", "RAG development",
-    "AI customer support", "AI lead generation",
+    "AI solutions agency", "AI automation agency", "voice AI development", "custom chatbot development",
+    "AI agents", "OpenAI API integration", "ChatGPT integration", "LangChain development company",
+    "n8n automation experts", "business workflow automation", "AI for enterprise", "AI for small business",
+    "custom AI development", "intelligent automation services", "RAG development", "vector database implementation",
+    "AI customer support agents", "AI lead generation bots", "Twilio AI voice agents", "Vapi voice AI",
+    "machine learning agency", "LLM fine tuning", "custom LLM deployment", "AI consulting services",
+    "digital transformation AI", "AI engineering studio", "top AI agency USA", "top AI agency India",
+    "AI software development company", "hire AI developers"
   ],
+  authors: [{ name: "XENOTECT" }],
+  category: "technology",
   openGraph: {
-    title: "AI Solutions & Automation | XENOTECT",
-    description: "Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate.",
+    title: "AI Solutions & Automation Agency | XENOTECT",
+    description: "Custom AI agents, voice AI, chatbots and automation workflows that transform how modern businesses operate and scale.",
     url: "https://www.xenotectsolution.com/services/ai-solutions",
-    images: [{ url: "https://www.xenotectsolution.com/og-image.png", width: 1200, height: 630, alt: "AI Solutions by XENOTECT" }],
+    siteName: "XENOTECT",
+    images: [{ 
+      url: "https://www.xenotectsolution.com/og-image.png", 
+      width: 1200, 
+      height: 630, 
+      alt: "AI Solutions, Automation, and Custom AI Agents by XENOTECT" 
+    }],
+    locale: "en_US",
+    type: "website",
   },
-  alternates: { canonical: "https://www.xenotectsolution.com/services/ai-solutions" },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Solutions & Automation Agency | XENOTECT",
+    description: "Custom AI agents, voice AI, chatbots and automation workflows that transform how modern businesses operate.",
+    images: ["https://www.xenotectsolution.com/og-image.png"],
+  },
+  alternates: { 
+    canonical: "https://www.xenotectsolution.com/services/ai-solutions",
+    languages: {
+      'en-US': 'https://www.xenotectsolution.com/services/ai-solutions',
+    }
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default async function PremiumAISolutions() {
@@ -71,9 +106,19 @@ export default async function PremiumAISolutions() {
     <>
       <ChromaBackground />
       <ServiceSchema 
-        name="AI Solutions & Automation" 
-        description="Custom AI agents, voice AI, chatbots and automation workflows that transform how businesses operate." 
+        name="AI Solutions & Automation Agency" 
+        description="Premium artificial intelligence engineering. We develop custom AI agents, conversational voice AI, generative AI workflows, RAG systems, and enterprise LLM integrations using OpenAI, Claude, and LangChain." 
         url="https://www.xenotectsolution.com/services/ai-solutions" 
+        category="Artificial Intelligence Development"
+        areaServed={["US", "GB", "CA", "AU", "IN", "Worldwide"]}
+        audience="B2B, Startups, Enterprises"
+        offers={{
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "3000",
+          "highPrice": "50000",
+          "offerCount": "3"
+        }}
       />
       <BreadcrumbSchema items={[
         { name: "Home", url: "https://www.xenotectsolution.com" },

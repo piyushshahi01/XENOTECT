@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Code2, Server, Database, Cloud } from "lucide-react";
 
-const technologies = [
+const defaultTechnologies = [
   {
     category: "Frontend",
     icon: <Code2 className="w-6 h-6 text-emerald-400" />,
@@ -27,7 +27,21 @@ const technologies = [
   }
 ];
 
-export function TechnologiesSection() {
+interface TechnologiesProps {
+  title?: React.ReactNode;
+  description?: string;
+  technologies?: {
+    category: string;
+    icon: React.ReactNode;
+    techs: string[];
+  }[];
+}
+
+export function TechnologiesSection({
+  title = "Website Development Technologies",
+  description = "We engineer premium digital products using modern, scalable, and secure technology stacks optimized for performance.",
+  technologies = defaultTechnologies
+}: TechnologiesProps) {
   return (
     <section className="py-24 relative bg-black border-t border-white/5">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0B] to-transparent opacity-50" />
@@ -40,10 +54,10 @@ export function TechnologiesSection() {
           className="mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Website Development Technologies
+            {title}
           </h2>
           <p className="text-neutral-400 max-w-2xl text-lg font-light leading-relaxed">
-            We engineer premium digital products using modern, scalable, and secure technology stacks optimized for performance.
+            {description}
           </p>
         </motion.div>
 
